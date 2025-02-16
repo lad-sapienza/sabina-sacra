@@ -1,14 +1,12 @@
 import React, { useState } from "react"
 import PropTypes from "prop-types"
-
-import { Button } from "react-bootstrap"
-
+import { Button, Spinner } from "react-bootstrap"
 import { Filter, Funnel } from "react-bootstrap-icons"
-
 import SearchUiAdv from "./searchUiAdv"
 import SearchUiSimple from "./searchUiSimple"
+import { defaultOperatorsProptypes } from "./defaultOperators"
 
-const SearchUI = ({ fieldList, processData, operators, connectors }) => {
+const SearchUI = ({ fieldList, processData, operators, connectors, isLoading }) => {
   const [isSimple, setIsSimple] = useState(true)
 
   const onClickSimple = () => setIsSimple(!isSimple)
@@ -26,24 +24,24 @@ const SearchUI = ({ fieldList, processData, operators, connectors }) => {
     <React.Fragment>
       <div className="text-end">
         <Button onClick={onClickSimple} variant="warning">
-          {isSimple && (
-            <Filter />
-          )}
-          {!isSimple && (
-            <Funnel />
-          )}
+          {isSimple ? <Filter /> : <Funnel />}
         </Button>
       </div>
-      {isSimple && (
-        <SearchUiSimple fieldList={fieldList} processData={processData} />
+      {isLoading && (
+        <div className="text-center my-3">
+          <Spinner animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+        </div>
       )}
-      {!isSimple && (
-        <SearchUiAdv
-          fieldList={fieldList}
-          operators={operators}
-          connectors={connectors}
-          processData={processData}
-        />
+      {!isLoading && (
+        <>
+          {isSimple ? (
+            <SearchUiSimple fieldList={fieldList} processData={processData} />
+          ) : (
+            <SearchUiAdv fieldList={fieldList} processData={processData} operators={operators} connectors={connectors} />
+          )}
+        </>
       )}
     </React.Fragment>
   )
@@ -51,28 +49,49 @@ const SearchUI = ({ fieldList, processData, operators, connectors }) => {
 
 SearchUI.propTypes = {
   /**
-   * Required object with list of fields (field_name: field Label) to use for searching
+   * Object with list of fields (field_name: field Label) to use for searching
+   * Required.
+   * Example: {
+   *  "field_1_name": "First field label",
+   *  "field_2_name": "Second field label",
+   * }
    */
   fieldList: PropTypes.object.isRequired,
   /**
-   * Callback function to run on data
+   * Callback function to run on data.
+   * Accepts a connector as the first parameter (_and or _or) 
+   * and an array of input data as a secon parameter. Each input is an object
+   * implementing providing: field, operator, and value
+    },
    */
   processData: PropTypes.func,
 
   /**
-   * Object with connectors to implement UI in other languages
+   * Object with operators to implement UI in other languages
    */
-  operators: PropTypes.object,
+  operators: defaultOperatorsProptypes,
 
   /**
-   * Object with connectors to implement UI in other languages
+   * Object with connectors to implement UI other languages
    * Must implement {
    * "_and": "some Label"
    * "_or": "Some Label"
    * }
    */
-  connectors: PropTypes.object,
+  connectors: PropTypes.shape({
+    /**
+     * Label for _and connector
+     */
+    _and: PropTypes.string,
+    /**
+     * Label for _or connector
+     */
+    _or: PropTypes.string,
+  }),
+  /**
+   * Boolean to indicate if the component is in loading state
+   */
+  isLoading: PropTypes.bool,
 }
-
 
 export default SearchUI

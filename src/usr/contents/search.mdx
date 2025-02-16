@@ -8,11 +8,10 @@ menu_position: 2
 
 import { Search } from "../../modules/scms.js"
 import { Link } from "gatsby"
-import SearchUiTest from "../../modules/search/searchUiTest.js"
 
 <div className="row">
   <div className="col-sm-4">
-    <SearchUiTest
+    <Search
       dataFile="static/data/f_persone.csv"
       fieldList={{
         Item_Label: "nome_e_cognome",
@@ -22,7 +21,7 @@ import SearchUiTest from "../../modules/search/searchUiTest.js"
     />
   </div>
   <div className="col-sm-8">
-    <SearchUiTest
+    <Search
       dataFile="static/data/f_persone.csv"
       fieldList={{
        Item_Label: "nome_e_cognome",

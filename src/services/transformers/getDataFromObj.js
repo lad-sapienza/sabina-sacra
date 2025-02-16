@@ -1,30 +1,21 @@
 const getDataFromObj = (obj, search) => {
-  let output = null; // Inizializza output a null
-
-  // Controlla se obj è definito e un oggetto
-  if (!obj || typeof obj !== 'object') {
-    console.warn("getDataFromObj: obj is undefined or not an object");
-    return output; // Esci anticipatamente se obj non è valido
-  }
-
-  search.forEach((searchEl) => {
-    // Controlla se obj ha la proprietà searchEl e se non è "undefined"
-    if (obj.hasOwnProperty(searchEl) && obj[searchEl] !== undefined) { // Cambiato "undefined" per gestire correttamente i valori
+  let output
+  search.forEach((searchEl, index) => {
+    if (obj[searchEl] !== "undefined") {
       if (typeof obj[searchEl] === "string") {
-        output = obj[searchEl];
-        return; // Esci da forEach una volta trovato il valore
+        output = obj[searchEl]
+        return
       } else {
-        search.shift(); // Rimuovi il primo elemento dall'array di ricerca
+        search.shift()
         if (search.length === 0) {
-          output = obj[searchEl]; // Se non ci sono più elementi da cercare, restituisci l'elemento attuale
-          return; 
+          output = obj[searchEl]
+          return
         }
-        output = getDataFromObj(obj[searchEl], search); // Chiamata ricorsiva
+        output = getDataFromObj(obj[searchEl], search)
       }
     }
-  });
-
-  return output; // Restituisci l'output trovato o null
+  })
+  return output
 }
 
-export default getDataFromObj;
+export default getDataFromObj

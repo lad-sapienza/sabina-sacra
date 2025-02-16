@@ -1,5 +1,5 @@
 import * as React from "react"
-import { useState, useCallback, useRef } from "react"
+import { useState, useCallback } from "react"
 import "maplibre-gl/dist/maplibre-gl.css"
 import Map, {
   NavigationControl,
@@ -11,14 +11,17 @@ import Map, {
 import PropTypes from "prop-types"
 import SimpleControl from "./simpleControl"
 import { RasterLayerLibre } from "./rasterLayerLibre"
-import { defaultBaseLayers } from "../../maps/defaultBaseLayers"
+import {
+  defaultBaseLayers,
+  defaultBaseLayersPropTypes,
+} from "../../maps/defaultBaseLayers"
 import parseStringTemplate from "../../../services/parseStringTemplate"
 import { withPrefix } from "gatsby"
 
-const MapCompLibre = ({
+const MapLibre = ({
   children,
-  height,
-  center,
+  height = "800px",
+  center = "0,0,2",
   mapStyle,
   geolocateControl,
   fullscreenControl,
@@ -26,12 +29,24 @@ const MapCompLibre = ({
   scaleControl,
   baseLayers,
 }) => {
-  const [lng, lat, zoom] = center
-    ? center.split(",").map(e => parseFloat(e.trim()))
-    : [0, 0, 2]
+  const [lng, lat, zoom] = center.split(",").map(Number)
+  if (mapStyle) {
+    mapStyle = mapStyle.startsWith("http") ? mapStyle : withPrefix(mapStyle)
+  }
 
   const [clickInfo, setClickInfo] = useState(null)
-  const interactiveLayersRef = useRef([])
+  const [interactiveLyrs, setInteractiveLyrs] = useState([])
+
+  const updateInteractiveLayers = useCallback(event => {
+    const mapInstance = event.target
+    const layers = mapInstance.getStyle()?.layers || []
+
+    // Log per vedere tutti i layer presenti nella mappa
+    const interactiveLayers = layers
+      .filter(layer => layer.metadata?.popupTemplate)
+      .map(layer => layer.id)
+    setInteractiveLyrs(interactiveLayers)
+  }, [])
 
   const onMapLoad = useCallback(event => {
     const mapInstance = event.target
@@ -39,36 +54,27 @@ const MapCompLibre = ({
     // test custom control
     const customControl = new SimpleControl()
     mapInstance.addControl(customControl, "top-right")
+  }, [])
 
-    // Usa map per scorrere i layer e filtrare quelli con metadata.popupTemplate
-    const dynamicInteractiveLayers = mapInstance
-      .getStyle()
-      .layers.map(layer =>
-        layer.metadata && layer.metadata.popupTemplate ? layer.id : null,
+  const onClick = useCallback(
+    event => {
+      const { lngLat, point, target: mapInstance } = event
+
+      // Use queryRenderedFeatures to get features at the clicked point
+      const clickedFeatures = mapInstance.queryRenderedFeatures(point, {
+        layers: interactiveLyrs,
+      })
+
+      const clickedFeature = clickedFeatures.find(feature =>
+        interactiveLyrs.includes(feature.layer.id),
       )
-      .filter(Boolean) // Rimuove i valori null
 
-    // Salva i layer interattivi nella variabile di riferimento
-    interactiveLayersRef.current = dynamicInteractiveLayers
-  }, [])
-
-  const onClick = useCallback(event => {
-    const { lngLat, point } = event
-    const mapInstance = event.target
-
-    // Usa queryRenderedFeatures per ottenere le feature dal punto cliccato
-    const clickedFeatures = mapInstance.queryRenderedFeatures(point, {
-      layers: interactiveLayersRef.current,
-    })
-
-    const clickedFeature = clickedFeatures.find(feature =>
-      interactiveLayersRef.current.includes(feature.layer.id),
-    )
-
-    setClickInfo(
-      clickedFeature ? { feature: clickedFeature, lngLat: lngLat } : null,
-    )
-  }, [])
+      setClickInfo(
+        clickedFeature ? { feature: clickedFeature, lngLat: lngLat } : null,
+      )
+    },
+    [interactiveLyrs],
+  )
 
   // Filtra i base layers in base alla proprietà `baseLayers`
   const filteredBaseLayers = baseLayers
@@ -85,10 +91,13 @@ const MapCompLibre = ({
           latitude: lat,
           zoom: zoom,
         }}
-        style={{ height: height ? height : `800px` }}
-        mapStyle={mapStyle && mapStyle.startsWith('http') ? mapStyle : withPrefix(mapStyle)}
+        style={{ height: height }}
+        mapStyle={mapStyle}
         onLoad={onMapLoad}
         onClick={onClick}
+        onData={updateInteractiveLayers}
+        onSourceData={updateInteractiveLayers}
+        onStyleData={updateInteractiveLayers}
       >
         {filteredBaseLayers &&
           filteredBaseLayers.map((obj, i) => (
@@ -132,7 +141,8 @@ const MapCompLibre = ({
     </React.Fragment>
   )
 }
-MapCompLibre.propTypes = {
+
+MapLibre.propTypes = {
   /**
    * Height (with units) of the map to render
    * Optional. Default: "800px"
@@ -197,25 +207,7 @@ MapCompLibre.propTypes = {
    * Can be one or more of the following: "CAWM", "OSM", "EsriSatellite","EsriStreets", "EsriTopo", "GoogleSatellite", "GoogleRoadmap", "GoogleTerrain", "GoogleAlteredRoadmap", "GoogleTerrainOnly", "GoogleHybrid", "CartoDb", "StamenTerrain", "OSMMapnick", "OSMCycle",
    * Default: null
    */
-  baseLayers: PropTypes.arrayOf(
-    PropTypes.oneOf([
-      "CAWM",
-      "OSM",
-      "EsriSatellite",
-      "EsriStreets",
-      "EsriTopo",
-      "GoogleSatellite",
-      "GoogleRoadmap",
-      "GoogleTerrain",
-      "GoogleAlteredRoadmap",
-      "GoogleTerrainOnly",
-      "GoogleHybrid",
-      "CartoDb",
-      "StamenTerrain",
-      "OSMMapnick",
-      "OSMCycle",
-    ]),
-  ),
+  baseLayers: defaultBaseLayersPropTypes,
 }
 
-export { MapCompLibre }
+export { MapLibre }
