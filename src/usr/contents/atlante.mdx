@@ -25,10 +25,11 @@ import L from "leaflet";
       
       <VectorLayer
         name="Siti"
-        source={{
+        source= {{
           dTable: "luogo_di_interesse",
           dQueryString: "fields=*,coordinate&limit=-1",
-          geoField: "coordinate"
+          geoField: "coordinate",
+          transType: "geojson",
         }}
         fitToContent={true}
         checked={true}
