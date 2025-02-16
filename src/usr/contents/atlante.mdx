@@ -1,8 +1,8 @@
 ---
-title: "mappa della sabina"
+title: "Atlante della Sabina"
 date: "2024-10-26"
-slug: "map"
-description: "mappa della sabina"
+slug: "atlante"
+description: "Atlante della Sabina"
 menu_position: 4
 ---
 
@@ -22,15 +22,12 @@ import L from "leaflet";
         console.log("Map created! Doing optional stuff with map:", map);
       }}
     >
-      {/*
-        Layer che fetcha da Directus
-      */}
+      
       <VectorLayer
         name="Siti"
         source={{
           dTable: "luogo_di_interesse",
           dQueryString: "fields=*,coordinate&limit=-1",
-          dToken: process.env.GATSBY_DIRECTUS_TOKEN,
           transType: "geojson",
           geoField: "coordinate"
         }}

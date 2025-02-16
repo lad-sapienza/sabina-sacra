@@ -21,15 +21,12 @@ const Layout = ({ children }) => {
 
   return (
     <>
-      <div className="container-fluid p-0">
-        <Navbar siteTitle={data.site.siteMetadata?.title || `Title`} />
-        
-        <Header siteTitle={data.site.siteMetadata?.title || `Title`} />
-        <main style={{ backgroundColor: '#f5e6d3', margin: 0, padding: 0 }}>
-  <Container style={{ padding: 0 }}>{children}</Container>
-</main>
-        <Footer />
-      </div>
+      <Navbar siteTitle={data.site.siteMetadata?.title} />
+      <Header siteTitle={data.site.siteMetadata?.title} />
+      <main>
+        <Container>{children}</Container>
+      </main>
+      <Footer />
     </>
   )
 }
