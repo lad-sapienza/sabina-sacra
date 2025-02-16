@@ -8,7 +8,7 @@ import getDataFromSource from "../../../services/getDataFromSource"
 import parseStringTemplate from "../../../services/parseStringTemplate"
 import sourcePropTypes from "../../../services/sourcePropTypes"
 
-require("@changey/react-leaflet-markercluster/dist/styles.min.css") // inside .js file
+import "@changey/react-leaflet-markercluster/dist/styles.min.css"
 
 const VectorLayer = ({
   source,
