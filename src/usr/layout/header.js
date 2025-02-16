@@ -11,7 +11,7 @@ const HeaderSection = () => (
         <Link to={"/"}>
           {/* Usa StaticImage per immagini ottimizzate */}
           <StaticImage
-            src="/home/erasmo/Dropbox/lavoro/Buzi-Bogdani (PNRR WP5 - Spoke 1)/sab_site/sCMS-main/static/images/logo_sabina.png"
+            src="../images/logo_sabina.jpeg"
             alt="Sabina Sacra"
             width={150}
             quality={80}
