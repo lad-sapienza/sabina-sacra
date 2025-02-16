@@ -1,0 +1,72 @@
+.record-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .text-container {
+    flex: 1 1 60%;
+    min-width: 300px;
+  }
+  
+  .image-container {
+    flex: 1 1 35%;
+    min-width: 200px;
+  }
+  
+  .image-wrapper {
+    padding: 1rem; /* Aggiungi padding per evitare la sovrapposizione */
+  }
+  
+  .collapsible {
+    background-color: #f1f1f1;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 10px;
+  }
+  
+  .collapsible-btn {
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .collapsible-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  .content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    padding: 0 10px;
+  }
+  
+  input[type="checkbox"] {
+    display: none; /* Nascondi il checkbox */
+  }
+  
+  input[type="checkbox"]:checked + .collapsible-btn + .content {
+    max-height: 200px; /* Imposta un'altezza massima per l'espansione */
+    overflow: auto; /* Aggiungi scroll se necessario */
+  }
+  .image-container {
+    display: flex;
+    justify-content: center; /* Centra l'immagine orizzontalmente */
+    margin-top: 1rem; /* Spazio sopra l'immagine */
+}
+
+.centered-image {
+    max-width: 80%; /* Aumenta la dimensione massima dell'immagine */
+    max-height: 400px; /* Imposta un'altezza massima per l'immagine */
+    border-radius: 4px; /* Mantiene il bordo arrotondato */
+}
+
+  

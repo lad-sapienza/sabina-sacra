@@ -1,0 +1,69 @@
+---
+title: "Homepage"
+date: "2023-10-01"
+slug: "home"
+description: "Homepage project"
+---
+
+import { Link } from "gatsby";
+import "../layout/homepage.css"; // Assicurati di avere il file CSS
+
+<div className="intro-section">
+  <p>
+
+  # Il progetto
+
+
+    Panorami di diversità: ebrei, cristiani e spazio sacro in Sabina e nella Valle dell’Aniene, tra
+    Tarda Antichità, Età Moderna ed Età Contemporanea è un progetto di Partenariato Esteso (PE)
+    finanziato con fondi provenienti dal Piano Nazionale di Ripresa e Resilienza (PNRR). Il progetto,
+    portato avanti in collaborazione tra i dipartimenti di Storia, Antropologia, Religioni, Arte,
+    Spettacolo (SARAS), Scienze dell’Antichità e Architettura e Progetto della Sapienza Università
+    di Roma, costituisce il WP 5 – Archeologia del Sacro nell’ambito dello Spoke 1 – Historical
+    Landscapes, Traditions and Cultural Identities del PE 5 CHANGES – Cultural Heritage Active
+    Innovation for Next-Gen Sustainable Society (PE 00000020), coordinato a livello nazionale
+    dall’Università di Bari “Aldo Moro” (Spoke leader: Prof. Giuliano Volpe). La linea di ricerca
+    portata avanti dal Dipartimento SARAS si è concentrata sull’identificazione, sulla mappatura e
+    sullo studio delle ‘presenze del sacro’ nella regione compresa tra la Valle dell’Aniene e la Sabina
+    in un periodo compreso tra la Tarda Antichità e l’Età contemporanea, dunque tra la fine del III
+    secolo d.C. e la contemporaneità.
+  </p>
+</div>
+
+<div className="row-settore-home">
+  <div className="col settore-box settore-luoghi">
+    <Link to="/map/" className="settore-link">
+      <div className="settore-content">I luoghi della Sabina</div>
+    </Link>
+  </div>
+  <div className="col settore-text">
+    <h3>Qui troverai:</h3>
+    <p>
+      I Luoghi di interesse, una sezione WebGIS con informazioni relative a località e
+      monumenti connessi alla presenza di comunità religiose tra Sabina e Valle dell’Aniene
+      nell’ampio arco cronologico considerato. Il database permette di visualizzare un elenco di
+      tutte le schede presenti nella sezione – ognuna provvista di una anteprima contenente
+      informazioni basilari quali ‘Nome luogo’, ‘Tipologia’ (luogo o monumento) e ‘Tipo di
+      monumento’ (area a destinazione funeraria, edificio civile, edificio militare, ecc.) – o di
+      effettuare ricerche specifiche, ad esempio inserendo nel campo di ricerca il nome del luogo
+      o restringendo l’arco cronologico di interesse.
+    </p>
+  </div>
+</div>
+
+<div className="row-settore-home">
+  <div className="col settore-text">
+    <h3>Qui troverai:</h3>
+    <p>
+      Una sezione dedicata ai Personaggi Storici e Sacri connessi ai luoghi e
+      ai monumenti considerati nell’Atlante. Anche in questo caso il database permetterà di
+      visualizzare un elenco con anteprima di tutte le schede presenti nella sezione o di effettuare
+      ricerche specifiche restringendo il campo di ricerca.
+    </p>
+  </div>
+  <div className="col settore-box settore-fonti">
+    <Link to="/datatable/" className="settore-link">
+      <div className="settore-content">I personaggi della Sabina</div>
+    </Link>
+  </div>
+</div>

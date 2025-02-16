@@ -1,0 +1,79 @@
+---
+title: "DataTb"
+date: "2023-10-01"
+slug: "datatable"
+description: ""
+menu_position: 4
+---
+
+import { DataTb } from "../../modules/scms";
+import "../layout/style_datatable.css"; 
+
+# Tabella Persone
+
+## Dati dalla tabella Directus "persona"
+
+<div className="row">
+  <div className="col-sm-12">
+    <DataTb
+      source={{
+        dTable: "persona",
+        dQueryString: "limit=1000&offset=0",
+      }}
+      striped={true}
+      className="data-table"
+      columns={[
+        {
+          name: "Personaggio",
+          selector: row => {
+            const nome = row["nome_e_cognome"] || "ND";
+            const soprannome = row["soprannome"] ? ` (${row["soprannome"]})` : "";
+            return `${nome}${soprannome}`;
+          },
+          sortable: true,
+        },
+        {
+          name: "Dati Biografici",
+          cell: row => {
+            const provenienza = row["provenienza"] || "ND";
+            const annoNascita = row["anno_di_nascita"] || "ND";
+            const annoMorte = row["anno_di_morte"] || "ND";
+            const diesNatalis = row["dies_natalis"] || ""; // Nessun "ND" se è null
+            const dataCerta = row["data_certa"];
+
+            const anniVita = `${annoNascita} - ${annoMorte}`;
+            return (
+              <span className={dataCerta ? "" : "red-text"}>
+                {provenienza} ({anniVita}) - {diesNatalis}
+              </span>
+            );
+          },
+          sortable: true,
+        },
+        {
+          name: "Qualifica",
+          selector: row => {
+            const qualifica = row["qualifica"] || "ND";
+            const qualificaSpecifica = row["qualifica_specifica"] ? ` (${row["qualifica_specifica"]})` : "";
+            return `${qualifica}${qualificaSpecifica}`;
+          },
+          sortable: true,
+        },
+        {
+          name: "Confessione",
+          selector: row => row["confessione"] || "ND",
+          sortable: true,
+        },
+        {
+          name: "Note",
+          cell: row => (
+            <div>
+              {row["note"] || "ND"}
+            </div>
+          ),
+          sortable: true,
+        },
+      ]}
+    />
+  </div>
+</div>

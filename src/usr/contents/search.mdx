@@ -1,0 +1,34 @@
+---
+title: "Search"
+date: "2023-10-01"
+slug: "search"
+description: "search"
+menu_position: 2
+---
+
+import { Search } from "../../modules/scms.js"
+import { Link } from "gatsby"
+import SearchUiTest from "../../modules/search/searchUiTest.js"
+
+<div className="row">
+  <div className="col-sm-4">
+    <SearchUiTest
+      dataFile="static/data/f_persone.csv"
+      fieldList={{
+        Item_Label: "nome_e_cognome",
+        Site_Name: "note_sul_personaggio",
+        Site_Description: "biografia_sintetica",
+      }}
+    />
+  </div>
+  <div className="col-sm-8">
+    <SearchUiTest
+      dataFile="static/data/f_persone.csv"
+      fieldList={{
+       Item_Label: "nome_e_cognome",
+        Site_Name: "note_sul_personaggio",
+        Site_Description: "biografia_sintetica",
+      }}
+    />
+  </div>
+</div>

@@ -1,0 +1,119 @@
+---
+title: "mappa della sabina"
+date: "2024-10-26"
+slug: "map"
+description: "mappa della sabina"
+menu_position: 4
+---
+
+import { MapLeaflet, VectorLayer } from "../../modules/scms.js";
+import L from "leaflet";
+
+### Esempio con Layer Directus e Local
+
+<div className="row mt-3 mb-5 border-top border-bottom py-3">
+  <div className="col-10">
+
+    <MapLeaflet
+      height="400px"
+      baseLayers={["OSM"]}
+      searchable={true}
+      onLoad={(map) => {
+        console.log("Map created! Doing optional stuff with map:", map);
+      }}
+    >
+      {/*
+        Layer che fetcha da Directus
+      */}
+      <VectorLayer
+        name="Siti"
+        source={{
+          dTable: "luogo_di_interesse",
+          dQueryString: "fields=*,coordinate&limit=-1",
+          dToken: process.env.GATSBY_DIRECTUS_TOKEN,
+          transType: "geojson",
+          geoField: "coordinate"
+        }}
+        fitToContent={true}
+        checked={true}
+        pointToLayer={(feature, latlng) => {
+          let iconUrl = "";
+          const tipoMonumento = feature.properties.tipo_monumento;
+
+          switch (tipoMonumento) {
+            case 'area a destinazione funeraria':
+              iconUrl = 'https://www.svgrepo.com/show/359745/cemetery.svg';
+              break;
+            case 'edificio di culto':
+              iconUrl = 'https://www.svgrepo.com/show/94475/church.svg';
+              break;
+            case 'edificio civile':
+              iconUrl = 'https://www.svgrepo.com/show/172531/old-library-building.svg';
+              break;
+            // ...
+            default:
+              iconUrl = 'https://www.svgrepo.com/show/127575/location-sign.svg';
+          }
+
+          return L.marker(latlng, {
+            icon: L.icon({
+              iconUrl,
+              iconSize: [25, 25],
+              iconAnchor: [12.5, 25],
+              popupAnchor: [0, -25],
+            }),
+          });
+        }}
+        popupTemplate="<p><strong>${nome}</strong><br /></p>"
+      />
+
+      {/*
+        Layer che carica un file .geojson locale
+      */}
+      <VectorLayer
+        name="Itinerari (locale)"
+        source={{ path2data: "/data/new_itinerario.geojson" }}
+        fitToContent={true}
+        checked={true}
+        pointToLayer={(feature, latlng) => {
+          return L.marker(latlng, {
+            icon: L.divIcon({ className: "invisible-marker" }),
+          });
+        }}
+        onEachFeature={(feature, layer) => {
+          layer.bindPopup(`<strong>${feature.properties.nome_itinerario}</strong>`);
+        }}
+      />
+    </MapLeaflet>
+
+  </div>
+  <div className="col-2">
+    <h5>Legenda</h5>
+    <ul className="list-unstyled">
+      <li>
+        <img src="https://www.svgrepo.com/show/359745/cemetery.svg" width="20" alt="Cimitero" />
+        Area a destinazione funeraria
+      </li>
+      <li>
+        <img src="https://www.svgrepo.com/show/94475/church.svg" width="20" alt="Chiesa" />
+        Edificio di culto
+      </li>
+      <li>
+        <img src="https://www.svgrepo.com/show/172531/old-library-building.svg" width="20" alt="Edificio Civile" />
+        Edificio Civile
+      </li>
+      <li>
+        <img src="https://svgsilh.com/svg_v2/40845.svg" width="20" alt="Edificio Militare" />
+        Edificio Militare
+      </li>
+      <li>
+        <img src="https://www.svgrepo.com/show/322763/martyr-memorial.svg" width="20" alt="Memoriale" />
+        Luogo dedicato alla memoria
+      </li>
+      <li>
+        <img src="https://cdn0.iconfinder.com/data/icons/maps-and-navigation-2-1/52/97-512.png" width="20" alt="Altro" />
+        Altro
+      </li>
+    </ul>
+  </div>
+</div>
