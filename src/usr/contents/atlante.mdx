@@ -28,7 +28,6 @@ import L from "leaflet";
         source={{
           dTable: "luogo_di_interesse",
           dQueryString: "fields=*,coordinate&limit=-1",
-          transType: "geojson",
           geoField: "coordinate"
         }}
         fitToContent={true}
@@ -84,33 +83,14 @@ import L from "leaflet";
     </MapLeaflet>
 
   </div>
-  <div className="col-2">
-    <h5>Legenda</h5>
-    <ul className="list-unstyled">
-      <li>
-        <img src="https://www.svgrepo.com/show/359745/cemetery.svg" width="20" alt="Cimitero" />
-        Area a destinazione funeraria
-      </li>
-      <li>
-        <img src="https://www.svgrepo.com/show/94475/church.svg" width="20" alt="Chiesa" />
-        Edificio di culto
-      </li>
-      <li>
-        <img src="https://www.svgrepo.com/show/172531/old-library-building.svg" width="20" alt="Edificio Civile" />
-        Edificio Civile
-      </li>
-      <li>
-        <img src="https://svgsilh.com/svg_v2/40845.svg" width="20" alt="Edificio Militare" />
-        Edificio Militare
-      </li>
-      <li>
-        <img src="https://www.svgrepo.com/show/322763/martyr-memorial.svg" width="20" alt="Memoriale" />
-        Luogo dedicato alla memoria
-      </li>
-      <li>
-        <img src="https://cdn0.iconfinder.com/data/icons/maps-and-navigation-2-1/52/97-512.png" width="20" alt="Altro" />
-        Altro
-      </li>
-    </ul>
+  <div className="col-2 legend">
+    ##### Legenda
+    - ![Cimitero](https://www.svgrepo.com/show/359745/cemetery.svg) Area a destinazione funeraria
+    - ![Edificio di culto](https://www.svgrepo.com/show/94475/church.svg) Edificio di culto
+    - ![Edificio civile](https://www.svgrepo.com/show/172531/old-library-building.svg) Edificio civile
+    - ![Edificio militare](https://svgsilh.com/svg_v2/40845.svg) Edificio militare
+    - ![Luogo dedicato alla memoria](https://www.svgrepo.com/show/322763/martyr-memorial.svg) Luogo dedicato alla memoria
+    - ![Altro](https://cdn0.iconfinder.com/data/icons/maps-and-navigation-2-1/52/97-512.png) Altro
+    
   </div>
 </div>
