@@ -1,7 +1,10 @@
 const json2geoJson = (json, geoDataField) => {
+
+  const filt_json = json.filter( i => i[geoDataField] !== null )
+  
   return {
     type: "FeatureCollection",
-    features: json.map(item => ({
+    features: filt_json.map(item => ({
       type: "Feature",
       properties: item,
       geometry: {

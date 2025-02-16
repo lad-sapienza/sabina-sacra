@@ -27,7 +27,7 @@ import L from "leaflet";
         name="Siti"
         source= {{
           dTable: "luogo_di_interesse",
-          dQueryString: "fields=*,coordinate&limit=-1",
+          dQueryString: "fields=tipo_monumento,nome_luogo,coordinate&limit=-1",
           geoField: "coordinate",
           transType: "geojson",
         }}
@@ -61,7 +61,7 @@ import L from "leaflet";
             }),
           });
         }}
-        popupTemplate="<p><strong>${nome}</strong><br /></p>"
+        popupTemplate="<p><strong>${nome_luogo}</strong></p>"
       />
 
       {/*
