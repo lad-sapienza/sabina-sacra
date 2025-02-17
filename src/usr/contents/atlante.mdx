@@ -98,7 +98,9 @@ import L from "leaflet";
 
   <MapLibre
       height="400px"
-      baseLayers={["EsriSatellite"]}>
+      baseLayers={["EsriSatellite"]}
+      sprite='https://demotiles.maplibre.org/styles/osm-bright-gl-style/sprite'
+      >
 
       <VectorLayerLibre
         name="Luoghi di interesse"
@@ -118,28 +120,14 @@ import L from "leaflet";
         }}
         style={{
           id: "luogo_di_interesse",
-          type: "circle",
-          paint: {
-            "circle-radius": 4,
-            "circle-color": [
-              'match',
-              ['get', 'tipo_monumento'],
-              "area a destinazione funeraria",
-              'red',
-              
-              "edificio di culto",
-              'blue',
-
-              "edificio civile",
-              'black',
-
-              'white'
-            ],
-            "circle-stroke-width": 1.5,
-            "circle-stroke-color": "#000000"
+          type: "symbol",
+          layout: {
+            'icon-image': 'airfield_11',
+            'icon-size': 2
           },
+          
         }}
         popupTemplate="<p><strong>${nome_luogo}</strong></p>"
       />
-      
+
     </MapLibre>
