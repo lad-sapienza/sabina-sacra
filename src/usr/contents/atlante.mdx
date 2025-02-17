@@ -6,7 +6,7 @@ description: "Atlante della Sabina"
 menu_position: 4
 ---
 
-import { MapLeaflet, VectorLayer } from "../../modules/scms.js";
+import { MapLeaflet, VectorLayer, MapLibre, VectorLayerLibre } from "../../modules/scms.js";
 import L from "leaflet";
 
 ### Esempio con Layer Directus e Local
@@ -95,3 +95,51 @@ import L from "leaflet";
     
   </div>
 </div>
+
+  <MapLibre
+      height="400px"
+      baseLayers={["EsriSatellite"]}>
+
+      <VectorLayerLibre
+        name="Luoghi di interesse"
+        source={{
+          dTable: "luogo_di_interesse",
+          geoField: "coordinate",
+          dQueryString: "fields=tipo_monumento,nome_luogo,coordinate&limit=-1"  ,
+          transType: "geojson",
+        }}
+        checked={true}
+        fitToContent={true}
+        type="geojson"
+        searchInFields={{
+          "Item_Label": "Label",
+          "Site_Name": "Site name",
+          "Site_Description": "Site description"
+        }}
+        style={{
+          id: "luogo_di_interesse",
+          type: "circle",
+          paint: {
+            "circle-radius": 4,
+            "circle-color": [
+              'match',
+              ['get', 'tipo_monumento'],
+              "area a destinazione funeraria",
+              'red',
+              
+              "edificio di culto",
+              'blue',
+
+              "edificio civile",
+              'black',
+
+              'white'
+            ],
+            "circle-stroke-width": 1.5,
+            "circle-stroke-color": "#000000"
+          },
+        }}
+        popupTemplate="<p><strong>${nome_luogo}</strong></p>"
+      />
+      
+    </MapLibre>
