@@ -34,10 +34,8 @@ import L from "leaflet";
         fitToContent={true}
         checked={true}
         pointToLayer={(feature, latlng) => {
-          let iconUrl = "";
-          const tipoMonumento = feature.properties.tipo_monumento;
-
-          switch (tipoMonumento) {
+          let iconUrl = 'https://www.svgrepo.com/show/127575/location-sign.svg';
+          switch (feature.properties.tipo_monumento) {
             case 'area a destinazione funeraria':
               iconUrl = 'https://www.svgrepo.com/show/359745/cemetery.svg';
               break;
@@ -47,9 +45,6 @@ import L from "leaflet";
             case 'edificio civile':
               iconUrl = 'https://www.svgrepo.com/show/172531/old-library-building.svg';
               break;
-            // ...
-            default:
-              iconUrl = 'https://www.svgrepo.com/show/127575/location-sign.svg';
           }
 
           return L.marker(latlng, {
@@ -114,20 +109,26 @@ import L from "leaflet";
         fitToContent={true}
         type="geojson"
         searchInFields={{
-          "Item_Label": "Label",
-          "Site_Name": "Site name",
-          "Site_Description": "Site description"
+          "nome_luogo": "Toponimo",
+          "tipo_monumento": {"label": "Tipo di monumento", "values": ["area a destinazione funeraria", "edificio di culto", "edificio civile"]},
         }}
         style={{
           id: "luogo_di_interesse",
           type: "symbol",
           layout: {
-            'icon-image': 'airfield_11',
+            'icon-image': [
+              'match',
+              ['get', 'tipo_monumento'],
+              'area a destinazione funeraria', 'airfield_11',
+              'edificio di culto', 'bank_11',
+              'edificio civile', 'bicycle_11',
+              'aquarium_11'
+            ],
             'icon-size': 2
           },
           
         }}
-        popupTemplate="<p><strong>${nome_luogo}</strong></p>"
+        popupTemplate="<p><strong>${nome_luogo}</strong><br />(${tipo_monumento})</p>"
       />
 
     </MapLibre>
