@@ -11,35 +11,40 @@ import { DataTb } from "../../modules/scms";
 # Persone
 
 
-    <DataTb
-      source={{
-        dTable: "persona",
-        dQueryString: "limit=-1&offset=0",
-      }}
-      striped={true}
-      className="data-table shadow"
-      columns={[
-        {
-          name: "Personaggio",
-          selector: row =>  `${row.nome_e_cognome || "ND"}${(row.soprannome ? ` (${row.soprannome})` : "")}`,
-          sortable: true,
-        },
-        {
-          name: "Dati Biografici",
-          cell: row => <span className={row.data_certa ? "" : "red-text"}>
-                {row.provenienza || "ND"} ({row.anno_di_nascita || "ND"} — {row.anno_di_morte || "ND"}) {row.dies_natalis ? ` - ${row.dies_natalis}` : ''}
-              </span>,
-          sortable: true,
-        },
-        {
-          name: "Qualifica",
-          selector: row => `${row.qualifica || "ND"}${row.qualifica_specifica ? ` (${row.qualifica_specifica})` : ""}`,
-          sortable: true,
-        },
-        {
-          name: "Confessione",
-          selector: row => row.confessione || "ND",
-          sortable: true,
-        }
-      ]}
-    />
+<DataTb
+  source={{
+    dTable: "persona",
+    // Aggiungiamo 'fields' per includere anche la relazione con 'fonti'
+    dQueryString: "limit=-1&offset=0&fields=*,fonti.fonte_id.titolo_completo",
+  }}
+  striped={true}
+  className="data-table shadow"
+  columns={[
+    {
+      name: "Personaggio",
+      selector: item => (
+        <a href={`../record/?tb=persona&id=${item.id}`}>
+          {`${item.nome_e_cognome || "ND"}${(item.soprannome ? ` (${item.soprannome})` : "")}`}
+        </a>
+      ),
+      sortable: true,
+    },
+    {
+      name: "Dati Biografici",
+      cell: row => <span className={row.data_certa ? "" : "red-text"}>
+        {row.provenienza || "ND"} ({row.anno_di_nascita || "ND"} — {row.anno_di_morte || "ND"}) {row.dies_natalis ? ` - ${row.dies_natalis}` : ''}
+      </span>,
+      sortable: true,
+    },
+    {
+      name: "Qualifica",
+      selector: row => `${row.qualifica || "ND"}${row.qualifica_specifica ? ` (${row.qualifica_specifica})` : ""}`,
+      sortable: true,
+    },
+    {
+      name: "Confessione",
+      selector: row => row.confessione || "ND",
+      sortable: true,
+    }
+  ]}
+/>
