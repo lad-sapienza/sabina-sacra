@@ -28,7 +28,7 @@ const MapLibre = ({
   navigationControl,
   scaleControl,
   baseLayers,
-  sprite
+  sprite,
 }) => {
   const [lng, lat, zoom] = center.split(",").map(Number)
   if (mapStyle) {
@@ -59,7 +59,7 @@ const MapLibre = ({
     // test custom control
     const customControl = new SimpleControl()
     mapInstance.addControl(customControl, "top-right")
-  }, [])
+  }, [sprite])
 
   const onClick = useCallback(
     event => {
