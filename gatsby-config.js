@@ -17,7 +17,7 @@ module.exports = {
     title: `Sabina Sacra`,
     description: `Panorami di diversità: ebrei, cristiani e spazio sacro in Sabina e nella Valle dell’Aniene, tra Tarda Antichità, Età Moderna ed Età Contemporanea`,
     author: `Julian Bogdani <julian.bogdani@uniroma1.it>`,
-    siteUrl: `https://github.com/lad-sapienza/sabina-sacra/`,
+    siteUrl: `https://sabinasacra.lad-sapienza.it`,
   },
   plugins: [
     `gatsby-plugin-image`,
