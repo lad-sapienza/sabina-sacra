@@ -79,7 +79,8 @@ const ControlPanel = ({ mapInstance }) => {
       layer &&
       (layer.type === "fill" ||
         layer.type === "line" ||
-        layer.type === "circle")
+        layer.type === "circle" ||
+        layer.type === "symbol")
     )
   }
 
