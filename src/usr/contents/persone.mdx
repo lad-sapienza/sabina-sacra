@@ -7,6 +7,7 @@ menu_position: 4
 ---
 
 import { DataTb } from "../../modules/scms";
+import { Link } from "gatsby";
 
 # Persone
 
@@ -23,9 +24,9 @@ import { DataTb } from "../../modules/scms";
     {
       name: "Personaggio",
       selector: item => (
-        <a href={`../personaggio/?tb=persona&id=${item.id}`}>
+        <Link to={`/personaggio/?tb=persona&id=${item.id}`}>
           {`${item.nome_e_cognome || "ND"}${(item.soprannome ? ` (${item.soprannome})` : "")}`}
-        </a>
+        </Link>
       ),
       sortable: true,
     },
