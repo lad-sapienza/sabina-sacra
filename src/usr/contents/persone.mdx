@@ -1,7 +1,7 @@
 ---
-title: "Persone"
+title: "Personaggi del sacro"
 date: "2023-10-01"
-slug: "persone"
+slug: "personaggi"
 description: ""
 menu_position: 4
 ---
@@ -23,7 +23,7 @@ import { DataTb } from "../../modules/scms";
     {
       name: "Personaggio",
       selector: item => (
-        <a href={`../record/?tb=persona&id=${item.id}`}>
+        <a href={`../personaggio/?tb=persona&id=${item.id}`}>
           {`${item.nome_e_cognome || "ND"}${(item.soprannome ? ` (${item.soprannome})` : "")}`}
         </a>
       ),

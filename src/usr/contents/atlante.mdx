@@ -9,7 +9,7 @@ menu_position: 4
 import { MapLeaflet, VectorLayer, MapLibre, VectorLayerLibre } from "../../modules/scms.js";
 import L from "leaflet";
 
-### Mappa dei luoghi di interesse
+### Atlante dei monumenti della Sabina
 
 
 
@@ -20,11 +20,11 @@ import L from "leaflet";
       >
 
       <VectorLayerLibre
-        name="Luoghi di interesse"
+        name="Monumenti"
         source={{
           dTable: "luogo_di_interesse",
           geoField: "coordinate",
-          dQueryString: "fields=tipo_monumento,nome_luogo,coordinate&limit=-1"  ,
+          dQueryString: "filter[tipologia][_eq]=monumento&fields=id,tipo_monumento,nome_luogo,coordinate&limit=-1"  ,
           transType: "geojson",
         }}
         checked={true}
@@ -50,7 +50,7 @@ import L from "leaflet";
           },
           
         }}
-        popupTemplate="<p><strong>${nome_luogo}</strong><br />(${tipo_monumento})</p>"
+        popupTemplate="<p><strong>${nome_luogo}</strong><br />(${tipo_monumento})</p><hr /><a href='/monumento'>Dettagli</a>"
       />
 
     </MapLibre>

@@ -1,25 +1,24 @@
 ---
 title: "Record example"
 date: "2023-10-01"
-slug: "record"
+slug: "personaggio"
 description: ""
 ---
 
 import { Record, Field } from "../../modules/scms.js";
 import "../layout/style.css";
 
-export default function RecordPage({ data }) {
-  // Log per verificare i dati
-  console.log("Dati del record:", data);
+export default function RecordPage() {
 
   return (
-    <div className="record-container">
-      <div className="text-container" style={{ width: "75%", display: "flex", flexDirection: "column" }}>
+    <div className="row">
+      <div className="col-8">
         <Record>
+          <h1><Field name={["nome_e_cognome"]} /></h1>
           {/* Sezione 1 - RIGA 1: Nome, Soprannome, Provenienza, Anno di Nascita, Morte, Dies Natalis */}
-          <div className="record-row" style={{ backgroundColor: "#e0e0e0", padding: "10px", border: "1px solid #ccc" }}>
+          <div className="record-row bg-light border p-3">
             <div className="record-item">
-              <Field name={["nome_e_cognome"]} /> {","}
+              
               <Field name={["soprannome"]} /> {" ("}
               <Field name={["provenienza"]} /> {", "}
               <Field name={["anno_di_nascita"]} /> {" - "}
@@ -27,9 +26,14 @@ export default function RecordPage({ data }) {
               <Field name={["dies_natalis"]} />
             </div>
           </div>
+          
+          <h3>Fonti</h3>
+          <ul>
+          <Field name={["fonti"]} transformer={fonti =>  fonti.map(f => <li key={f.fonte_id.id}>{f.fonte_id.nome}</li> )} />
+          </ul>
 
           {/* Sezione 2 - RIGA 2: Qualifica e Confessioni */}
-          <div className="record-row" style={{ backgroundColor: "#f5f5f5", padding: "10px", border: "1px solid #ccc" }}>
+          <div className="record-row bg-light p-3">
             <div className="record-item">
               <Field name={["qualifica"]} /> {" ("}
               <Field name={["qualifica_specifica"]} /> {"), "}
@@ -54,11 +58,10 @@ export default function RecordPage({ data }) {
       </div>
 
       {/* Sezione Immagine - a destra, nel quarto dello schermo */}
-      <div style={{ width: "25%", paddingLeft: "20px" }}>
+      <div  className="col-4">
         <Record>
           <div className="image-wrapper">
             <div className="record-item">
-              <strong>Immagine:</strong>
               <div className="image-container">
                 <Field
                   name={["link_immagine"]}

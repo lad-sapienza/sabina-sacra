@@ -29,7 +29,7 @@ const HeaderSection = () => (
 );
 
 const Header = styled.header`
-  background-color: #4682b4; /* Blu acciaio */
+  background-color: #822433;
   color: #ffffff; /* Testo bianco per contrasto */
   margin-bottom: 5rem;
   padding: 20px 0;
