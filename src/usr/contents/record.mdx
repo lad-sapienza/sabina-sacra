@@ -4,97 +4,57 @@ date: "2023-10-01"
 slug: "record"
 description: ""
 ---
+
 import { Record, Field } from "../../modules/scms.js";
 import "../layout/style.css";
 
 export default function RecordPage({ data }) {
+  // Log per verificare i dati
+  console.log("Dati del record:", data);
+
   return (
     <div className="record-container">
-      <div className="text-container">
+      <div className="text-container" style={{ width: "75%", display: "flex", flexDirection: "column" }}>
         <Record>
-          <div className="record-item">
-            <strong>ID:</strong> <Field name={["id"]} />
-          </div>
-          <div className="record-item">
-            <strong>Nome Luogo:</strong> <Field name={["nome_luogo"]} />
-          </div>
-          <div className="record-item">
-            <strong>Tipologia:</strong> <Field name={["tipologia"]} />
-          </div>
-          <div className="record-item">
-            <strong>Periodo di Interesse:</strong> <Field name={["periodo_di_interesse"]} />
-          </div>
-          <div className="record-item">
-            <strong>Anno Inizio:</strong> <Field name={["anno_inizio"]} />
-          </div>
-          <div className="record-item">
-            <strong>Periodo Fine:</strong> <Field name={["periodo_fine"]} />
-          </div>
-          <div className="record-item">
-            <strong>Data Certa:</strong> <Field name={["data_certa"]} />
-          </div>
-
-{/* Fonti - collapsible */}
-<div className="record-item">
-  <strong>Fonti:</strong>
-  <div className="collapsible">
-    <input type="checkbox" id="expand-fonti" />
-    <label htmlFor="expand-fonti" className="collapsible-btn">Espandi</label>
-    <div className="content">
-     <Field name={["fonti"]} transformer={(fonti) => {
-  console.log("Fonti ricevute nella record page:", fonti);
-  return !fonti || fonti.length === 0
-    ? "Nessuna fonte disponibile"
-    : fonti.map(f => (
-        f?.fonte_id?.id
-          ? `<a href="/record/?tb=fonte&id=${f.fonte_id.id}" target="_blank">${f.fonte_id.nome}</a>`
-          : "Fonte sconosciuta"
-      )).join("<br/>");
-}} />
-    </div>
-  </div>
-</div>
-
-          {/* Monumenti Associati - collapsible */}
-          <div className="record-item">
-            <strong>Monumenti Associati:</strong>
-            <div className="collapsible">
-              <input type="checkbox" id="expand-monumenti" />
-              <label htmlFor="expand-monumenti" className="collapsible-btn">Espandi</label>
-              <div className="content">
-                <Field name={["monumenti_associati"]} transformer={(monumenti) => (
-                  !monumenti || monumenti.length === 0
-                    ? "Nessun monumento associato"
-                    : monumenti.map((monumento, index) => {
-                        const trimmedMonumento = monumento.trim();
-                        const link = `/record/?tb=luogo_di_interesse&id=${trimmedMonumento}`;
-                        return (
-                          <p key={index}>
-                            <a href={link} target="_blank" rel="noopener noreferrer">
-                              {trimmedMonumento || "Monumento sconosciuto"}
-                            </a>
-                          </p>
-                        );
-                      })
-                )} />
-              </div>
+          {/* Sezione 1 - RIGA 1: Nome, Soprannome, Provenienza, Anno di Nascita, Morte, Dies Natalis */}
+          <div className="record-row" style={{ backgroundColor: "#e0e0e0", padding: "10px", border: "1px solid #ccc" }}>
+            <div className="record-item">
+              <Field name={["nome_e_cognome"]} /> {","}
+              <Field name={["soprannome"]} /> {" ("}
+              <Field name={["provenienza"]} /> {", "}
+              <Field name={["anno_di_nascita"]} /> {" - "}
+              <Field name={["anno_di_morte"]} /> {", dies Natalis: "}
+              <Field name={["dies_natalis"]} />
             </div>
           </div>
 
-          {/* Note - collapsible */}
-          <div className="record-item">
-            <strong>Note:</strong>
-            <div className="collapsible">
-              <input type="checkbox" id="expand-notes" />
-              <label htmlFor="expand-notes" className="collapsible-btn">Espandi</label>
-              <div className="content">
-                <Field name={["note"]} transformer={(text) => text ? text : "Nessuna nota disponibile"} />
+          {/* Sezione 2 - RIGA 2: Qualifica e Confessioni */}
+          <div className="record-row" style={{ backgroundColor: "#f5f5f5", padding: "10px", border: "1px solid #ccc" }}>
+            <div className="record-item">
+              <Field name={["qualifica"]} /> {" ("}
+              <Field name={["qualifica_specifica"]} /> {"), "}
+              <strong>Confessione:</strong> <Field name={["confessione"]} transformer={(value) => value ? value : "ND"} />
+            </div>
+          </div>
+
+          {/* Sezione 3 - RIGA 3: Note */}
+          <div className="record-row" style={{ backgroundColor: "#f0f0f0", padding: "10px", border: "1px solid #ccc", display: "flex" }}>
+            <div className="record-item" style={{ flex: 1, marginRight: "20px" }}>
+              <strong>Note:</strong>
+              <div className="collapsible">
+                <input type="checkbox" id="expand-notes" />
+                <label htmlFor="expand-notes" className="collapsible-btn">Espandi</label>
+                <div className="content">
+                  <Field name={["note"]} transformer={(text) => text ? text : "Nessuna nota disponibile"} />
+                </div>
               </div>
             </div>
           </div>
         </Record>
+      </div>
 
-        {/* Sezione Immagine */}
+      {/* Sezione Immagine - a destra, nel quarto dello schermo */}
+      <div style={{ width: "25%", paddingLeft: "20px" }}>
         <Record>
           <div className="image-wrapper">
             <div className="record-item">
