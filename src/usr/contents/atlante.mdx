@@ -11,88 +11,10 @@ import L from "leaflet";
 
 ### Mappa dei luoghi di interesse
 
-<div className="row mt-3 mb-5 border-top border-bottom py-3">
-  <div className="col-sm-10">
 
-    <MapLeaflet
-      height="400px"
-      baseLayers={["OSM"]}
-      searchable={true}
-      onLoad={(map) => {
-        console.log("Map created! Doing optional stuff with map:", map);
-      }}
-    >
-      
-      <VectorLayer
-        name="Siti"
-        source= {{
-          dTable: "luogo_di_interesse",
-          dQueryString: "fields=tipo_monumento,nome_luogo,coordinate&limit=-1",
-          geoField: "coordinate",
-          transType: "geojson",
-        }}
-        fitToContent={true}
-        checked={true}
-        pointToLayer={(feature, latlng) => {
-          let iconUrl = 'https://www.svgrepo.com/show/127575/location-sign.svg';
-          switch (feature.properties.tipo_monumento) {
-            case 'area a destinazione funeraria':
-              iconUrl = 'https://www.svgrepo.com/show/359745/cemetery.svg';
-              break;
-            case 'edificio di culto':
-              iconUrl = 'https://www.svgrepo.com/show/94475/church.svg';
-              break;
-            case 'edificio civile':
-              iconUrl = 'https://www.svgrepo.com/show/172531/old-library-building.svg';
-              break;
-          }
-
-          return L.marker(latlng, {
-            icon: L.icon({
-              iconUrl,
-              iconSize: [25, 25],
-              iconAnchor: [12.5, 25],
-              popupAnchor: [0, -25],
-            }),
-          });
-        }}
-        popupTemplate="<p><strong>${nome_luogo}</strong></p>"
-      />
-
-      {/*
-        Layer che carica un file .geojson locale
-      */}
-      <VectorLayer
-        name="Itinerari (locale)"
-        source={{ path2data: "/data/new_itinerario.geojson" }}
-        fitToContent={true}
-        checked={true}
-        pointToLayer={(feature, latlng) => {
-          return L.marker(latlng, {
-            icon: L.divIcon({ className: "invisible-marker" }),
-          });
-        }}
-        onEachFeature={(feature, layer) => {
-          layer.bindPopup(`<strong>${feature.properties.nome_itinerario}</strong>`);
-        }}
-      />
-    </MapLeaflet>
-
-  </div>
-  <div className="col-sm-2 legend">
-    ##### Legenda
-    - ![Cimitero](https://www.svgrepo.com/show/359745/cemetery.svg) Area a destinazione funeraria
-    - ![Edificio di culto](https://www.svgrepo.com/show/94475/church.svg) Edificio di culto
-    - ![Edificio civile](https://www.svgrepo.com/show/172531/old-library-building.svg) Edificio civile
-    - ![Edificio militare](https://svgsilh.com/svg_v2/40845.svg) Edificio militare
-    - ![Luogo dedicato alla memoria](https://www.svgrepo.com/show/322763/martyr-memorial.svg) Luogo dedicato alla memoria
-    - ![Altro](https://cdn0.iconfinder.com/data/icons/maps-and-navigation-2-1/52/97-512.png) Altro
-    
-  </div>
-</div>
 
   <MapLibre
-      height="400px"
+      height="800px"
       baseLayers={["EsriStreets"]}
       sprite='https://demotiles.maplibre.org/styles/osm-bright-gl-style/sprite'
       >
@@ -119,10 +41,10 @@ import L from "leaflet";
             'icon-image': [
               'match',
               ['get', 'tipo_monumento'],
-              'area a destinazione funeraria', 'airfield_11',
-              'edificio di culto', 'bank_11',
-              'edificio civile', 'bicycle_11',
-              'aquarium_11'
+              'area a destinazione funeraria', 'cemetery_11',
+              'edificio di culto', 'place_of_worship_11',
+              'edificio civile', 'museum_11',
+              'triangle_11'
             ],
             'icon-size': 2
           },
