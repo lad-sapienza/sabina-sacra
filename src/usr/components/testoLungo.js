@@ -1,24 +1,25 @@
-const TestoLungo = inputText => {
-  const [text, setText] = useState(inputText)
-  const [truncated, setTruncated] = useState(false)
+import React, { useState } from "react";
 
-  const showAll = () => {
-    setText(inputText)
-    setTruncated(false)
-  }
+const TestoLungo = ({ inputText, previewLength = 300, jsxContent = null }) => {
+  const [expanded, setExpanded] = useState(false);
 
-  if (inputText.length > 1000) {
-    setText(inputText.substring(0, 200) + "...")
-    setTruncated(true)
-  }
+  const toggleText = () => {
+    setExpanded(!expanded);
+  };
 
-  return `${text}${
-    truncated ? (
-      <button className="btn btn-link" onClick={() => showAll()}>
-        tutto
+  return (
+    <div>
+      {/* Mostra solo il testo HTML, senza componenti React */}
+      <div dangerouslySetInnerHTML={{ __html: expanded ? inputText : inputText.substring(0, previewLength) + "..." }} />
+
+      {/* Qui vengono renderizzati eventuali componenti JSX come <DownloadPdf> */}
+      {jsxContent}
+
+      <button className="btn btn-link mt-2" onClick={toggleText}>
+        {expanded ? "Mostra meno" : "Leggi tutto"}
       </button>
-    ) : null
-  }`
-}
+    </div>
+  );
+};
 
-export default TestoLungo
+export default TestoLungo;
