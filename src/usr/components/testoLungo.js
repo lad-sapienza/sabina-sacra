@@ -1,23 +1,31 @@
 import React, { useState } from "react";
 
-const TestoLungo = ({ inputText, previewLength = 300, jsxContent = null }) => {
+const TestoLungo = ({ inputText, previewLength = 300, isHtml = false }) => {
   const [expanded, setExpanded] = useState(false);
 
-  const toggleText = () => {
-    setExpanded(!expanded);
-  };
+  // Se il testo è inferiore al limite, mostriamo tutto senza pulsante
+  const shouldCollapse = inputText.length > previewLength;
+  const displayText = expanded || !shouldCollapse 
+    ? inputText 
+    : inputText.substring(0, previewLength) + "...";
 
   return (
     <div>
-      {/* Mostra solo il testo HTML, senza componenti React */}
-      <div dangerouslySetInnerHTML={{ __html: expanded ? inputText : inputText.substring(0, previewLength) + "..." }} />
-
-      {/* Qui vengono renderizzati eventuali componenti JSX come <DownloadPdf> */}
-      {jsxContent}
-
-      <button className="btn btn-link mt-2" onClick={toggleText}>
-        {expanded ? "Mostra meno" : "Leggi tutto"}
-      </button>
+      {isHtml ? (
+        <div dangerouslySetInnerHTML={{ __html: displayText }} />
+      ) : (
+        <p>{displayText}</p>
+      )}
+      
+      {/* Mostra "Leggi tutto" solo se il testo supera il limite */}
+      {shouldCollapse && (
+        <button 
+          onClick={() => setExpanded(!expanded)} 
+          className="btn btn-link p-0"
+        >
+          {expanded ? "Nascondi" : "Leggi tutto"}
+        </button>
+      )}
     </div>
   );
 };
