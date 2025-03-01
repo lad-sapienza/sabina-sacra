@@ -1,29 +1,25 @@
 import React, { useState } from "react";
 
-const TestoLungo = ({ inputText, previewLength = 300, isHtml = false }) => {
+const TestoLungo = ({ inputText = "ND", previewLength = 300, jsxContent = null }) => {
   const [expanded, setExpanded] = useState(false);
 
-  // Se il testo è inferiore al limite, mostriamo tutto senza pulsante
-  const shouldCollapse = inputText.length > previewLength;
-  const displayText = expanded || !shouldCollapse 
-    ? inputText 
-    : inputText.substring(0, previewLength) + "...";
+  const shouldCollapse = inputText.length > previewLength; // Verifica se il testo è più lungo del limite
+  const displayText = expanded || !shouldCollapse
+    ? inputText
+    : inputText.substring(0, previewLength) + "..."; // Tronca il testo solo se necessario
 
   return (
     <div>
-      {isHtml ? (
-        <div dangerouslySetInnerHTML={{ __html: displayText }} />
-      ) : (
-        <p>{displayText}</p>
-      )}
-      
-      {/* Mostra "Leggi tutto" solo se il testo supera il limite */}
+      {/* Renderizza il testo come HTML, evitando di spezzare i tag */}
+      <div dangerouslySetInnerHTML={{ __html: displayText }} />
+
+      {/* Renderizza eventuali componenti JSX aggiuntivi, come <DownloadPdf> */}
+      {jsxContent}
+
+      {/* Mostra il pulsante solo se il testo supera la lunghezza del preview */}
       {shouldCollapse && (
-        <button 
-          onClick={() => setExpanded(!expanded)} 
-          className="btn btn-link p-0"
-        >
-          {expanded ? "Nascondi" : "Leggi tutto"}
+        <button className="btn btn-link mt-2" onClick={() => setExpanded(!expanded)}>
+          {expanded ? "Mostra meno" : "Leggi tutto"}
         </button>
       )}
     </div>
