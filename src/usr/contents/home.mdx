@@ -10,6 +10,10 @@ import "../layout/homepage.css";
 import TestoLungo from "../components/testoLungo";
 import DownloadPdf from "../components/downloadPdf";
 
+<p className="lead text-muted">
+  <img src="/images/logo_changes.png" alt="Logo CHANGES" style={{ width: '100%', height: 'auto', marginBottom: '20px' }} />
+</p>
+
 <div className="container text-center py-4">
   <div className="intro-section bg-light p-4 rounded shadow-sm" style={{ fontFamily: 'serif' }}>
     <h1 className="mb-3 text-uppercase" style={{ fontVariant: 'small-caps' }}>Il progetto</h1>
@@ -125,8 +129,8 @@ import DownloadPdf from "../components/downloadPdf";
       previewLength={305} 
     />
   </div>
-  <div className="col settore-box settore-fonti">
-    <Link to="https://sabinasacra.lad-sapienza.it/credits/" className="settore-link">
+  <div className="col settore-box settore-personaggi">
+    <Link to="https://sabinasacra.lad-sapienza.it/personaggi/" className="settore-link">
       <div className="settore-content">I personaggi della Sabina</div>
     </Link>
   </div>
@@ -174,6 +178,7 @@ import DownloadPdf from "../components/downloadPdf";
       `} 
       previewLength={64} 
     />
+    
 
         {/* Sezione per il download delle risorse */}
     <div style={{ marginBottom: "15px", padding: "10px", border: "1px solid #ddd", borderRadius: "8px", backgroundColor: "#f8f9fa" }}>

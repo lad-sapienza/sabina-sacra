@@ -64,7 +64,7 @@
 
 /* Sfondo per i pulsanti */
 .settore-luoghi::before, 
-.settore-fonti::before, 
+.settore-personaggi::before, 
 .settore-risorse::before {
   content: '';
   position: absolute;
@@ -84,7 +84,7 @@
   background-image: url('https://www.ideararemaps.com/wp-content/uploads/2017/08/sabina-giubilo-maggi.jpeg');
 }
 
-.settore-fonti::before {
+.settore-personaggi::before {
   background-image: url('https://upload.wikimedia.org/wikipedia/commons/b/b6/Lawrence_Alma-Tadema_%281836-1912%29_-_Sunday_Morning_-_N03527_-_National_Gallery.jpg');
 }
 
