@@ -50,11 +50,9 @@ import { MapLibre, VectorLayerLibre } from "../../modules/scms.js";
           "icon-size": 2,
         },
       }}
-      popupTemplate="<div>
-        <h4>${nome_luogo}</h4>
+      popupTemplate="<h4>${nome_luogo}</h4>
         <p>${tipo_monumento}</p>
-        <a href='/monumento/?tb=luogo_di_interesse&id=${item.id}'>Dettagli</a>
-      </div>"
+        <a href='/monumento/?tb=luogo_di_interesse&id=${id}'>Dettagli</a>"
     />
   </MapLibre>
 
