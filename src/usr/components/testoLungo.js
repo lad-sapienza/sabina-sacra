@@ -1,12 +1,26 @@
 import React, { useState } from "react";
+import ReactDOMServer from 'react-dom/server';
 
-const TestoLungo = ({ inputText = "ND", previewLength = 300, jsxContent = null }) => {
+const TestoLungo = ({ previewLength = 300, jsxContent = null, children }) => {
   const [expanded, setExpanded] = useState(false);
 
-  const shouldCollapse = inputText.length > previewLength; // Verifica se il testo è più lungo del limite
+  const childrenString = React.Children.toArray(children).map(child => 
+    typeof child === 'string' ? child : ReactDOMServer.renderToStaticMarkup(child)
+  ).join('');
+
+
+  const shouldCollapse = childrenString.length > previewLength; // Verifica se il testo è più lungo del limite
+
+  const getTrimmedText = (text, length) => {
+    if (text.length <= length) return text;
+    const trimmedText = text.substring(0, length);
+    const lastSpaceIndex = trimmedText.lastIndexOf(' ');
+    return lastSpaceIndex === -1 ? trimmedText : trimmedText.substring(0, lastSpaceIndex) + "...";
+  };
+
   const displayText = expanded || !shouldCollapse
-    ? inputText
-    : inputText.substring(0, previewLength) + "..."; // Tronca il testo solo se necessario
+    ? childrenString
+    : getTrimmedText(childrenString, previewLength); // Tronca il testo solo se necessario
 
   return (
     <div>
