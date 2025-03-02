@@ -1,18 +1,245 @@
 ---
 title: "Crediti"
 date: "2023-10-01"
-slug: "credits"
-description: "Learn the basics of Gatsby and its features."
+slug: "Crediti"
+description: "About us"
 menu_position: 5
 ---
 
-s:CMS is a project of [LAD: Laboratorio di Archeologia Digitale alla Sapienza](https://purl.org/lad) aimed at providing an easy to use managemet system for rich and multimedial contents, with a particular attention to the pubblicaiton online of research data and geodata hosted in external databases.
+import SchedaPersona from "../components/schedaPersona"
 
-It is built with [Gatsby](https://www.gatsbyjs.com/), a [React](https://react.dev/)-based framework for the creation of [static sites](https://en.wikipedia.org/wiki/Static_web_page), completed with custom plugins for a smooth yet rich user experience. We use [Bootstrap](https://getbootstrap.com/), the famous frontend toolkit to built the layout.
+<p className="lead text-muted">
+  <img src="/images/logo_changes.png" alt="Logo CHANGES" style={{ width: '100%', height: 'auto', marginBottom: '20px' }} />
+</p>
 
-## Main features
+<div className="container text-center py-4 mb-5">
+  <div className="intro-section bg-light p-4 rounded shadow-sm" style={{ fontFamily: 'serif' }}>
+    <h1 className="mb-3 text-uppercase" style={{ fontVariant: 'small-caps' }}>Il progetto</h1>
 
-- s:CMS is **secure**: once the site is build, all you publish online are static web pages, old plain HTML, JS and CSS. No programming languages, no databases, no security updates to apply, no security holes ...
-- s:CMS is **fast**:
-- s:CMS is **serverless**:
-- s:CMS is **feature-rich**:
+    <p className="lead text-muted">
+      «Cultural Heritage Active Innovation for Sustainable Society», Codice Progetto: PE0000020 – CUP: B53C22003780006; Fondazione Changes, presso Sapienza Università di Roma
+    </p>
+
+    <ul style={{ listStyleType: 'none', paddingLeft: '0', fontSize: '1.1rem', textAlign: 'left' }}>
+      <li style={{ marginBottom: '10px' }}>
+        <span style={{ marginRight: '10px', fontSize: '1.5rem' }}>→</span>
+        Presidente: prof. Marco Mancini
+      </li>
+      <li style={{ marginBottom: '10px' }}>
+        <span style={{ marginRight: '10px', fontSize: '1.5rem' }}>→</span>
+        Spoke leader: Università di Bari “Aldo Moro”
+      </li>
+      <li style={{ marginBottom: '10px' }}>
+        <span style={{ marginRight: '10px', fontSize: '1.5rem' }}>→</span>
+        Coordinatore scientifico: prof. Giuliano Volpe
+      </li>
+    </ul>
+
+    <hr style={{ border: '1px solid #ccc', marginBottom: '20px' }} />
+
+    <p className="small text-muted">
+      WorkPackage 5 “Itinerari del Sacro lungo l’Aniene”, PI: prof. Orazio Carpenzano; Linea tematica 3 (SARAS; co-PI: prof.ssa Paola Buzi): “Panorami di diversità: Ebrei, cristiani e spazio sacro tra Sabina e Valle dell’Aniene dalla Tarda Antichità all’Età Contemporanea”.
+    </p>
+
+    <p>
+      Il progetto è stato sviluppato nell’ambito delle attività della Fondazione CHANGES
+      (<a href="https://www.fondazionechanges.org/en/" className="text-primary">Cultural Heritage Active Innovation for Sustainable Society</a>),
+      e rientra nel Piano Nazionale di Ripresa e Resilienza (PNRR), <strong>ITALIA DOMANI</strong>.
+    </p>
+  </div>
+</div>
+
+<div style={{ display: "flex", gap: "30px"}}>
+  {/* Massa Critica */}
+<div className="section-wrapper" style={{ backgroundColor: "rgba(249, 249, 165, 0.5)", width: "33%", padding: "20px", display: "flex", flexDirection: "column", justifyContent: "flex-start", border: "none", borderRadius: "10px"}}>
+    <div className="title-wrapper" style={{ 
+      position: "relative", 
+      backgroundColor: "white", 
+      width: "100%", 
+      zIndex: "1", 
+      padding: "5px 20px", 
+      fontSize: "2rem", 
+      fontWeight: "bold", 
+      color: "#2a64af", 
+      textAlign: "center", 
+      marginBottom: "20px", 
+      marginTop: "-10px",
+      borderTopLeftRadius: "15px", 
+      borderTopRightRadius: "15px", 
+      border: "1px solid black"
+    }}>
+      Massa critica
+    </div>
+
+    <div className="cards-container" style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
+      {/* Schede Massa Critica */}
+      <SchedaPersona 
+        colore="rgba(252, 252, 240, 0.5)"  
+        image="https://www.ansa.it/webimages/img_700/2016/5/4/28fcbbbde6a088e2a870124ad8790eb7.jpg"
+        nome="Paola Buzi"
+        linkAcademia="https://uniroma1.academia.edu/PaolaBuzi"
+      />
+      <SchedaPersona 
+        colore="rgba(252, 252, 240, 0.5)"   
+        image="https://religioninsociety.com/assets/img/headshots/_200x200_crop_center-center_100/Alberto-Camplani.png"
+        nome="Alberto Camplani"
+        linkAcademia="https://uniroma1.academia.edu/AlbertoCamplani"
+      />
+      <SchedaPersona 
+        colore="rgba(252, 252, 240, 0.5)"  
+        image="https://phd.uniroma1.it/dottorati/cartellaProfili/cf2aa71c-a79f-4d77-b427-6617566fe89d.jpg"
+        nome="Umberto Gentiloni"
+        linkAcademia="https://uniroma1.academia.edu/UmbertoGentiloni"
+      />
+    </div>
+  </div>
+
+ {/* Collaboratori */}
+<div className="section-wrapper" style={{ backgroundColor: "#C0C0C0", width: "66%", padding: "20px", display: "flex", flexDirection: "column", justifyContent: "flex-start", border: "none", borderRadius: "10px" }}>
+ <div className="title-wrapper" style={{ 
+      position: "relative", 
+      backgroundColor: "white", 
+      width: "100%", 
+      zIndex: "1", 
+      padding: "5px 20px", 
+      fontSize: "2rem", 
+      fontWeight: "bold", 
+      color: "#2a64af", 
+      textAlign: "center", 
+      marginBottom: "20px", 
+      marginTop: "-10px",
+      borderTopLeftRadius: "15px", 
+      borderTopRightRadius: "15px", 
+      border: "1px solid black"
+    }}>
+      Collaboratori
+    </div>
+
+  <div className="cards-container" style={{ display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+    {/* Wrapper 1: Addessi, Bianchini, Emiliani */}
+    <div style={{ display: "flex", justifyContent: "space-between", gap: "10px" }}>
+      <SchedaPersona 
+        colore="#d3d3d3"
+        image="https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg"
+        nome="Addessi"
+        linkAcademia="https://www.academia.edu/"
+      />
+      <SchedaPersona 
+        colore="#d3d3d3"
+        image="https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg"
+        nome="Alexa Bianchini"
+        linkAcademia="https://www.academia.edu/"
+      />
+      <SchedaPersona 
+        colore="#d3d3d3"
+        image="https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg"
+        nome="Valentina Emiliani"
+        linkAcademia="https://www.academia.edu/"
+      />
+    </div>
+
+      {/* Wrapper 2: Giangolini, de Reichenfeld, Leo */}
+      <div style={{ display: "flex", justifyContent: "space-between", gap: "15px" }}>
+        <SchedaPersona 
+          colore="#d3d3d3"
+          image="https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg"
+          nome="Luca Giangolini"
+          linkAcademia="https://www.academia.edu/"
+        />
+        <SchedaPersona 
+          colore="#d3d3d3"
+          image="https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg"
+          nome="Giovanni Hermanin de Reichenfeld"
+          linkAcademia="https://www.academia.edu/"
+        />
+        <SchedaPersona 
+          colore="#d3d3d3"
+          image="https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg"
+          nome="Letizia Leo"
+          linkAcademia="https://www.academia.edu/"
+        />
+      </div>
+
+      {/* Wrapper 3: Mursia, Villani */}
+      <div style={{ display: "flex", justifyContent: "space-between", gap: "15px" }}>
+        <SchedaPersona 
+          colore="#d3d3d3"
+          image="https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg"
+          nome="Antonio Mursia"
+          linkAcademia="https://www.academia.edu/"
+        />
+        <SchedaPersona 
+          colore="#d3d3d3"
+          image="https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg"
+          nome="Luciano Villani"
+          linkAcademia="https://www.academia.edu/"
+        />
+      </div>
+      </div>
+
+    </div>
+  </div>
+{/* Supervisori */}
+<div className="d-flex justify-content-between gap-3 p-3" style={{ 
+  backgroundColor: "#822433", 
+  borderRadius: "10px", 
+  border: "none", 
+  flexDirection: "column", 
+  alignItems: "center", 
+  paddingTop: "30px", 
+  marginTop: "30px", 
+  paddingBottom: "20px", 
+  width: "100%", 
+  boxSizing: "border-box", 
+  marginLeft: "auto", 
+  marginRight: "auto" 
+}}>
+  {/* Titolo all'interno del box rosso, centrato */}
+  <div className="bg-white px-5 py-4 rounded-3 border border-3 border-primary d-inline-block" 
+    style={{ 
+      width: "fit-content", 
+      marginBottom: "20px", 
+      textAlign: "center", 
+      backgroundColor: "#822433", 
+      color: "white", 
+      padding: "15px 30px", // Aumentato padding per il titolo
+      fontSize: "2rem" // Aumenta la dimensione del titolo
+  }}>
+    <h2 className="text-primary" style={{ marginBottom: "10px" }}>Supervisori</h2>
+  </div>
+
+  {/* Schede delle persone */}
+  <div className="d-flex justify-content-center gap-5">
+    <SchedaPersona 
+      colore="rgba(200, 142, 151, 0.5)"  
+      image="https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg"
+      nome="Julian Bogdani"
+      linkAcademia="https://www.academia.edu/"
+    />
+    <SchedaPersona 
+      colore="rgba(200, 142, 151, 0.5)"  
+      image="https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg"
+      nome="Bruno Bonomo"
+      linkAcademia="https://www.academia.edu/"
+    />
+    <SchedaPersona 
+      colore="rgba(200, 142, 151, 0.5)"  
+      image="https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg"
+      nome="Tessa Canella"
+      linkAcademia="https://www.academia.edu/"
+    />
+    <SchedaPersona 
+      colore="rgba(200, 142, 151, 0.5)"  
+      image="https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg"
+      nome="Serena Di Nepi"
+      linkAcademia="https://www.academia.edu/"
+    />
+    <SchedaPersona 
+      colore="rgba(200, 142, 151, 0.5)"  
+      image="https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg"
+      nome="Umberto Longo"
+      linkAcademia="https://www.academia.edu/"
+    />
+  </div>
+</div>
+
