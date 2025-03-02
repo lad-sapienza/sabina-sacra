@@ -10,186 +10,145 @@ import "../layout/homepage.css";
 import TestoLungo from "../components/testoLungo";
 import DownloadPdf from "../components/downloadPdf";
 
-<p className="lead text-muted">
-  <img src="/images/logo_changes.png" alt="Logo CHANGES" style={{ width: '100%', height: 'auto', marginBottom: '20px' }} />
+import {Row, Col} from "react-bootstrap";
+
+<img src="/images/logo_changes.png" alt="Logo CHANGES" className="img-fluid"  />
+
+<p className="lead text-center my-5">
+  Panorami di diversità: ebrei, cristiani e spazio sacro in Sabina e nella Valle dell’Aniene tra Tarda Antichità ed Età Contemporanea scaturisce dalla corale esperienza di ricerca di parte del Dipartimento di Storia Antropologia Religioni Arte Spettacolo (SARAS) della Sapienza Università di Roma.
 </p>
 
-<div className="container text-center py-4">
-  <div className="intro-section bg-light p-4 rounded shadow-sm" style={{ fontFamily: 'serif' }}>
-    <h1 className="mb-3 text-uppercase" style={{ fontVariant: 'small-caps' }}>Il progetto</h1>
-    <p className="lead text-muted">
-      <strong>Panorami di diversità: ebrei, cristiani e spazio sacro in Sabina e nella Valle dell’Aniene</strong>,
-      tra Tarda Antichità ed Età Contemporanea scaturisce dalla corale esperienza di ricerca di parte del 
-      Dipartimento di Storia Antropologia Religioni Arte Spettacolo (SARAS) della Sapienza Università di Roma.
-    </p>
-    <p>
-      Il progetto è stato sviluppato nell’ambito delle attività della Fondazione CHANGES
-      (<a href="https://www.fondazionechanges.org" className="text-primary">Cultural Heritage Active Innovation for Sustainable Society</a>),
-      e rientra nel Piano Nazionale di Ripresa e Resilienza (PNRR), <strong>ITALIA DOMANI</strong>.
-    </p>
-    <hr className="my-3" />
-    <p className="text-justify">
-      Le azioni del Dipartimento SARAS si inseriscono prevalentemente nello <strong>Spoke 1</strong> - Historical landscapes, traditions and cultural identities,
-      e in particolare nel <strong>Work Package (WP) 5</strong> (“Archeologia del sacro lungo l’Aniene”), linea tematica 3:
-      “Panorami di diversità: Ebrei, cristiani e spazio sacro tra Sabina e Valle dell’Aniene dalla Tarda Antichità all’Età Contemporanea”.
-      La ricerca si concentra sulla <strong>mappatura e lo studio delle presenze del sacro</strong> nella regione compresa tra la Valle dell’Aniene e la Sabina,
-      tra la Tarda Antichità e l’Età contemporanea. Queste due aree, pur tangenti, si distinguono per storia, tipologia di monumenti e presenze religiose.
-    </p>
-    <p className="font-italic">
-      Il fine primario del progetto è la valorizzazione di questi territori,
-      promuovendone la conoscenza e contribuendo alla mitigazione del fenomeno dell’<strong>iperturismo</strong>,
-      attraverso un’originale ricerca storica e culturale.
-    </p>
-    <hr className="my-3" />
-    <p className="small text-muted">
-      <em>Nota:</em> Oltre al Dipartimento SARAS, il WP5 ha visto la partecipazione dei Dipartimenti di Architettura
-      e Progetto (DIAP), di Storia Disegno e Restauro dell’Architettura (DSRA) e Scienze dell’Antichità (SA). 
-      Il PI del WP5 è Orazio Carpenzano (DIAP), mentre i co-PI dei singoli Dipartimenti sono Alessandra Capuano (DIAP), 
-      Daniela Esposito (DSRA), Andrea Cucchiarelli (SA) e Paola Buzi (SARAS).
-    </p>
-  </div>
-</div>
+Il progetto è stato sviluppato nell’ambito delle attività della Fondazione CHANGES
+[Cultural Heritage Active Innovation for Sustainable Society](https://www.fondazionechanges.org)), e rientra nel Piano Nazionale di Ripresa e Resilienza (PNRR), **ITALIA DOMANI**.
 
-<div className="row-settore-home">
-  <div className="col settore-box settore-luoghi">
-    <Link to="https://sabinasacra.lad-sapienza.it/atlante/" className="settore-link">
-      <div className="settore-content">L'Atlante della Sabina</div>
+
+Le azioni del Dipartimento SARAS si inseriscono prevalentemente nello **Spoke 1** - Historical landscapes, traditions and cultural identities, e in particolare nel **Work Package (WP) 5** (“Archeologia del sacro lungo l’Aniene”), linea tematica 3: “Panorami di diversità: Ebrei, cristiani e spazio sacro tra Sabina e Valle dell’Aniene dalla Tarda Antichità all’Età Contemporanea”.
+
+La ricerca si concentra sulla **mappatura e lo studio delle presenze del sacro** nella regione compresa tra la Valle dell’Aniene e la Sabina, tra la Tarda Antichità e l’Età contemporanea. Queste due aree, pur tangenti, si distinguono per storia, tipologia di monumenti e presenze religiose.
+
+Il fine primario del progetto è la valorizzazione di questi territori, promuovendone la conoscenza e contribuendo alla mitigazione del fenomeno dell’**iperturismo**, attraverso un’originale ricerca storica e culturale.
+
+---
+
+_Nota:_ Oltre al Dipartimento SARAS, il WP5 ha visto la partecipazione dei Dipartimenti di Architettura e Progetto (DIAP), di Storia Disegno e Restauro dell’Architettura (DSRA) e Scienze dell’Antichità (SA). 
+
+Il PI del WP5 è Orazio Carpenzano (DIAP), mentre i co-PI dei singoli Dipartimenti sono Alessandra Capuano (DIAP), Daniela Esposito (DSRA), Andrea Cucchiarelli (SA) e Paola Buzi (SARAS).
+
+<Row className="row-settore-home">
+  <Col className="settore-box settore-luoghi">
+    <Link to="/atlante/" className="settore-link">
+      ### L'Atlante della Sabina
     </Link>
-  </div>
-  <div className="col settore-text">
-    <h3>Il Database GIS</h3>
-    <TestoLungo 
-      inputText={`
-        <p>Il principale prodotto scientifico del progetto è costituito da un <strong>Geographic Information System (GIS)</strong> 
-        database ad accesso aperto che mira a restituire visivamente un ‘Atlante delle diversità’. Il database si compone di 
-        quattro sezioni principali tra loro interconnesse, facilmente raggiungibili a partire dalla home page.</p>
+  </Col>
+  <Col className="settore-text">
+    ### Il Database GIS
+    <TestoLungo>
+      Il principale prodotto scientifico del progetto è costituito da un **Geographic Information System (GIS)** database ad accesso aperto che mira a restituire visivamente un ‘Atlante delle diversità’. Il database si compone di quattro sezioni principali tra loro interconnesse, facilmente raggiungibili a partire dalla home page.
 
-        <h4>Luoghi di Interesse</h4>
-        <p>Questa sezione contiene informazioni su località e monumenti legati alla presenza di comunità religiose nella Sabina e nella Valle dell’Aniene. 
-        Il database permette di visualizzare un elenco di tutte le schede, con anteprima contenente:</p>
-        <ul>
-          <li><strong>Nome luogo</strong></li>
-          <li><strong>Tipologia</strong> (luogo o monumento)</li>
-          <li><strong>Tipo di monumento</strong> (area a destinazione funeraria, edificio civile, edificio militare, ecc.)</li>
-        </ul>
+      #### Luoghi di Interesse
+      Questa sezione contiene informazioni su località e monumenti legati alla presenza di comunità religiose nella Sabina e nella Valle dell’Aniene. 
+      
+      Il database permette di visualizzare un elenco di tutte le schede, con anteprima contenente:
 
-        <h4>Struttura delle Schede</h4>
-        <p>Ogni scheda è suddivisa in sottosezioni:</p>
-        <ul>
-          <li><strong>Informazioni locus</strong>: <em>Toponimo, Località, Monumenti associati</em></li>
-          <li><strong>Dettagli del monumento</strong>: <em>Tipo di monumento, Caratteristiche specifiche, Anno di inizio, Periodo di fine</em></li>
-          <li><strong>Fonti</strong>: Bibliografia antica e moderna</li>
-          <li><strong>Persone associate al luogo</strong></li>
-          <li><strong>Itinerari associati</strong></li>
-          <li><strong>Note</strong>: Descrizione storico-archeologica</li>
-          <li><strong>Immagini</strong> e <strong>Coordinate</strong> (OpenStreetMap)</li>
-        </ul>
-      `} 
-      previewLength={365} 
-    />
-  </div>
-</div>
+      - **Nome luogo**
+      - **Tipologia** (luogo o monumento)
+      - **Tipo di monumento** (area a destinazione funeraria, edificio civile, edificio militare, ecc.)
 
-<div className="row-settore-home">
-  <div className="col settore-text">
-    <h3>Personaggi Storici e Sacri</h3>
-    <TestoLungo 
-      inputText={`
-        <p>La seconda sezione principale del database è dedicata alle <strong>Persone</strong> e raccoglie informazioni 
-        su individui connessi ai luoghi e monumenti dell’Atlante. Il database permette di visualizzare un elenco 
-        con anteprima di tutte le schede o di effettuare ricerche mirate.</p>
+      #### Struttura delle Schede
+      Ogni scheda è suddivisa in sottosezioni:
+      - **Informazioni locus**: *Toponimo, Località, Monumenti associati*
+      - **Dettagli del monumento**: *Tipo di monumento, Caratteristiche specifiche, Anno di inizio, Periodo di fine*
+      - **Fonti**: Bibliografia antica e moderna
+      - **Persone associate al luogo**
+      - **Itinerari associati**
+      - **Note**: Descrizione storico-archeologica
+      - **Immagini** e **Coordinate** (OpenStreetMap)
+      </TestoLungo>
+  </Col>
+</Row>
+
+
+<Row className="row-settore-home">
+  <Col className="settore-text">
+    ### Personaggi Storici e Sacri
+
+    <TestoLungo>
+      La seconda sezione principale del database è dedicata alle **Persone** e raccoglie informazioni  su individui connessi ai luoghi e monumenti dell’Atlante. Il database permette di visualizzare un elenco con anteprima di tutte le schede o di effettuare ricerche mirate
         
-        <h4>➤ Struttura delle Schede</h4>
-        <p>Ogni scheda include una serie di informazioni strutturate nei seguenti campi:</p>
+        #### ➤ Struttura delle Schede
+        Ogni scheda include una serie di informazioni strutturate nei seguenti campi:
         
-        <h5>➤ Dati Anagrafici</h5>
-        <ul>
-          <li><strong>Nome e cognome</strong></li>
-          <li><strong>Soprannome</strong></li>
-          <li><strong>Provenienza</strong></li>
-          <li><strong>Anno di nascita</strong></li>
-          <li><strong>Anno di morte</strong></li>
-          <li><strong>Dies natalis</strong> (giorno della morte del santo, considerato il vero giorno natale)</li>
-        </ul>
+        ##### ➤ Dati Anagrafici
+        - **Nome e cognome**
+        - **Soprannome**
+        - **Provenienza**
+        - **Anno di nascita**
+        - **Anno di morte**
+        - **_Dies natalis_** (giorno della morte del santo, considerato il vero giorno natale)
         
-        <h5>➤ Classificazione</h5>
-        <ul>
-          <li><strong>Qualifica</strong>: artista, figura civile, figura militare, personaggio religioso, ecc.</li>
-          <li><strong>Qualifica specifica</strong>: santo, beato, martire, comandante, partigiano, ecc.</li>
-          <li><strong>Confessione</strong>: cattolica, ebraica, islamica, pagana, ecc.</li>
-        </ul>
-        
-        <h5>➤ Informazioni Aggiuntive</h5>
-        <ul>
-          <li><strong>Fonti</strong>: bibliografia essenziale per approfondire la figura</li>
-          <li><strong>Luoghi associati alla persona</strong></li>
-          <li><strong>Note</strong>: breve profilo storico della persona</li>
-        </ul>
-      `} 
-      previewLength={305} 
-    />
-  </div>
-  <div className="col settore-box settore-personaggi">
-    <Link to="https://sabinasacra.lad-sapienza.it/personaggi/" className="settore-link">
-      <div className="settore-content">I personaggi della Sabina</div>
+        ##### ➤ Classificazione
+        - **Qualifica**: artista, figura civile, figura militare, personaggio religioso, ecc.
+        - **Qualifica specifica**: santo, beato, martire, comandante, partigiano, ecc.
+        - **Confessione**: cattolica, ebraica, islamica, pagana, ecc.
+
+        ##### ➤ Informazioni Aggiuntive
+        - **Fonti**: bibliografia essenziale per approfondire la figura
+        - **Luoghi associati alla persona**
+        - **Note**: breve profilo storico della persona
+    </TestoLungo>
+  </Col>
+  <Col className="settore-box settore-personaggi">
+    <Link to="/personaggi/" className="settore-link">
+      ### I personaggi della Sabina
     </Link>
-  </div>
-</div>
+  </Col>
+</Row>
 
 
-<div className="row-settore-home">
-  <div className="col settore-box settore-pubblicazioni"></div>
-  <div className="col settore-text">
-    <h3>Pubblicazioni</h3>
+<Row className="row-settore-home">
+  <Col className="settore-box settore-pubblicazioni">
+    <Link to="/pubblicazioni/" className="settore-link">
+      ### Pubblicazioni
+    </Link>
+  </Col>
+  <Col className="settore-text">
+    ### Pubblicazioni
 
-    <TestoLungo 
-      inputText={`
-        <p><strong>Pubblicazioni inerenti al progetto:</strong></p>
-        
-        <h4>1) Sezione monografica di Studi e Materiali di Storia delle Religioni 91 (1/2025), pp. 7-95</h4>
+    <TestoLungo>
+      **Pubblicazioni inerenti al progetto:**
 
-        <p><em>Sabina sacra. Ebrei, cristiani e spazio sacro tra Sabina e Valle dell’Aniene (IV-XX secolo)</em></p>
+      #### 1) Sezione monografica di Studi e Materiali di Storia delle Religioni 91 (1/2025), pp. 7-95
 
-        <ul>
-          <li><strong>Paola Buzi,Serena di nepi</strong> - Introduzione </li>
-          <li><strong>Antonio Mursia</strong> - Un itinerario cultuale. I santuari di San Michele Arcangelo lungo la via Salaria</li>
-          <li><strong>Giovanni Hermanin de Reichenfeld</strong> - Dalla imitatio Romae alla societas monachorum. Continuità e discontinuità viaria, culturale e religiosa tra Subiaco, Tivoli e Roma prima e dopo l'arrivo di San Benedetto</li>
-          <li><strong>Francesco D'Angelo</strong> - Devozione e controllo del territorio. Il culto di san Martino di Tours a Farfa nell’XI secolo</li>
-          <li><strong>Alexa Bianchini</strong> - Pellegrinaggi e devozione a Farfa tra XI e XV secolo</li>
-          <li><strong>Andrea Zappia</strong> - «Que antiquitis vocabatur dell'hebrei». Storia e topografia della presenza ebraica alla fiera di Farfa (secoli XVI-XVII)</li>
-          <li><strong>Valentina Emiliani, Luca Giangolini</strong> - Uno sguardo sulla vita religiosa della Sabina in età moderna tra governo del territorio e produzione culturale (XVI-XVIII sec.)</li>
-          <li><strong>Luciano Villani</strong> - Le stragi naziste nella Valle dell’Aniene: memoria pubblica e pratiche sociali del ricordo dal secondo dopoguerra a oggi</li>
-        </ul>
+      *Sabina sacra. Ebrei, cristiani e spazio sacro tra Sabina e Valle dell’Aniene (IV-XX secolo)*
 
-        <h4>2) Serena Di Nepi, Andrea Zappia: <em>Jews in Rome</em></h4>
-        <p>in: Oxford, Bibliographies on Renaissance and Reformation, Oxford 2025 <a href="https://dx.doi.org/10.1093/obo/9780195399301-0542">(DOI link)</a></p>
+      - **Paola Buzi, Serena di Nepi** - Introduzione
+      - **Antonio Mursia** - Un itinerario cultuale. I santuari di San Michele Arcangelo lungo la via Salaria
+      - **Giovanni Hermanin de Reichenfeld** - Dalla imitatio Romae alla societas monachorum. Continuità e discontinuità viaria, culturale e religiosa tra Subiaco, Tivoli e Roma prima e dopo l'arrivo di San Benedetto
+      - **Francesco D'Angelo** - Devozione e controllo del territorio. Il culto di san Martino di Tours a Farfa nell’XI secolo
+      - **Alexa Bianchini** - Pellegrinaggi e devozione a Farfa tra XI e XV secolo
+      - **Andrea Zappia** - «Que antiquitis vocabatur dell'hebrei». Storia e topografia della presenza ebraica alla fiera di Farfa (secoli XVI-XVII)
+      - **Valentina Emiliani, Luca Giangolini** - Uno sguardo sulla vita religiosa della Sabina in età moderna tra governo del territorio e produzione culturale (XVI-XVIII sec.)
+      - **Luciano Villani** - Le stragi naziste nella Valle dell’Aniene: memoria pubblica e pratiche sociali del ricordo dal secondo dopoguerra a oggi
 
-        <h4>3) Andrea Zappia: <em>Abramo ebreo da molti giorni in qua pernotta qui, e negotia</em></h4>
-        <p>Mercanti ebrei e comunità locali nello Stato della Chiesa (XVII-XVIII secolo), in: Riforma e Movimenti Religiosi (in corso di pubblicazione)</p>
+      #### 2) Serena Di Nepi, Andrea Zappia: *Jews in Rome*
 
-        <h4>4) Sezione monografica di Storia urbana 2025</h4>
-        <p><em>Controllo del culto, controllo del territorio nelle aree interne (centro Italia, XV-XVIII secolo)</em> (in corso di pubblicazione)</p>
-        <ul>
-          <li><strong>Alexa Bianchini</strong> - Controllo del territorio e gestione del patrimonio nel Lazio: alcuni casi di studio tra la Sabina e la Valle dell’Aniene alla fine del medioevo</li>
-          <li><strong>Valentina Emiliani</strong> - Governo ed influenza spirituale nel Lazio orientale del Seicento. Francesco Barberini abate commendatario di S. Maria di Farfa e di S. Salvatore Maggiore</li>
-          <li><strong>Luca Giangolini</strong> - «Sono con Dio da sola a solo»: la direzione spirituale e le esperienze religiose di un gruppo quietista in Sabina alla fine del Seicento</li>
-          <li><strong>Andrea Zappia</strong> - Evadere dal ghetto. Pratiche e strategie dei mercanti ebrei nei circuiti fieristici dello Stato della Chiesa (XVII-XVIII sec.)</li>
-        </ul>
-      `} 
-      previewLength={64} 
-    />
-    
+      in: Oxford, Bibliographies on Renaissance and Reformation, Oxford 2025 [DOI link](https://dx.doi.org/10.1093/obo/9780195399301-0542)
 
-        {/* Sezione per il download delle risorse */}
-    <div style={{ marginBottom: "15px", padding: "10px", border: "1px solid #ddd", borderRadius: "8px", backgroundColor: "#f8f9fa" }}>
-      <h4>📂 Download risorse open source</h4>
-      <DownloadPdf filePath="/data/Document1.pdf" fileName="Document1.pdf">
-        <strong>📥 Scarica Introduzione</strong>
-      </DownloadPdf>
-    </div>
+      #### 3) Andrea Zappia: *Abramo ebreo da molti giorni in qua pernotta qui, e negotia*
 
-  </div>
-</div>
+      Mercanti ebrei e comunità locali nello Stato della Chiesa (XVII-XVIII secolo), in: Riforma e Movimenti Religiosi (in corso di pubblicazione)
+
+      #### 4) Sezione monografica di Storia urbana 2025
+
+      *Controllo del culto, controllo del territorio nelle aree interne (centro Italia, XV-XVIII secolo)* (in corso di pubblicazione)
+
+      - **Alexa Bianchini** - Controllo del territorio e gestione del patrimonio nel Lazio: alcuni casi di studio tra la Sabina e la Valle dell’Aniene alla fine del medioevo
+      - **Valentina Emiliani** - Governo ed influenza spirituale nel Lazio orientale del Seicento. Francesco Barberini abate commendatario di S. Maria di Farfa e di S. Salvatore Maggiore
+      - **Luca Giangolini** - «Sono con Dio da sola a solo»: la direzione spirituale e le esperienze religiose di un gruppo quietista in Sabina alla fine del Seicento
+      - **Andrea Zappia** - Evadere dal ghetto. Pratiche e strategie dei mercanti ebrei nei circuiti fieristici dello Stato della Chiesa (XVII-XVIII sec.)
+    </TestoLungo>
+  </Col>
+</Row>
 
 
 
