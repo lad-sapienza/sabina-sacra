@@ -6,51 +6,93 @@ description: "Atlante della Sabina"
 menu_position: 4
 ---
 
-import { MapLeaflet, VectorLayer, MapLibre, VectorLayerLibre } from "../../modules/scms.js";
-import L from "leaflet";
+import { MapLibre, VectorLayerLibre } from "../../modules/scms.js";
 
 ### Atlante dei monumenti della Sabina
 
-
-
+<div className="position-relative">
+  {/* Mappa */}
   <MapLibre
-      height="800px"
-      baseLayers={["EsriStreets"]}
-      sprite='https://demotiles.maplibre.org/styles/osm-bright-gl-style/sprite'
-      >
+    height="800px"
+    baseLayers={["EsriStreets"]}
+    sprite="https://openmaptiles.github.io/osm-bright-gl-style/sprite"
+  >
+    <VectorLayerLibre
+      name="Monumenti"
+      source={{
+        dTable: "luogo_di_interesse",
+        geoField: "coordinate",
+        dQueryString: "filter[tipologia][_eq]=monumento&fields=id,tipo_monumento,nome_luogo,coordinate&limit=-1",
+        transType: "geojson",
+      }}
+      checked={true}
+      fitToContent={true}
+      type="geojson"
+      searchInFields={{
+        "nome_luogo": "Toponimo",
+        "tipo_monumento": {
+          "label": "Tipo di monumento",
+          "values": ["area a destinazione funeraria", "luogo dedicato alla memoria", "edificio di culto"],
+        },
+      }}
+      style={{
+        id: "luogo_di_interesse",
+        type: "symbol",
+        layout: {
+          "icon-image": [
+            "match",
+            ["get", "tipo_monumento"],
+            "area a destinazione funeraria", "cemetery_11",
+            "luogo dedicato alla memoria", "monument_11",
+            "edificio di culto", "town_hall_11",
+            "marker_11" // Default (Altro)
+          ],
+          "icon-size": 2,
+        },
+      }}
+      popupTemplate="<div>
+        <h4>${nome_luogo}</h4>
+        <p>${tipo_monumento}</p>
+        <a href='/monumento/?tb=luogo_di_interesse&id=${item.id}'>Dettagli</a>
+      </div>"
+    />
+  </MapLibre>
 
-      <VectorLayerLibre
-        name="Monumenti"
-        source={{
-          dTable: "luogo_di_interesse",
-          geoField: "coordinate",
-          dQueryString: "filter[tipologia][_eq]=monumento&fields=id,tipo_monumento,nome_luogo,coordinate&limit=-1"  ,
-          transType: "geojson",
-        }}
-        checked={true}
-        fitToContent={true}
-        type="geojson"
-        searchInFields={{
-          "nome_luogo": "Toponimo",
-          "tipo_monumento": {"label": "Tipo di monumento", "values": ["area a destinazione funeraria", "edificio di culto", "edificio civile"]},
-        }}
-        style={{
-          id: "luogo_di_interesse",
-          type: "symbol",
-          layout: {
-            'icon-image': [
-              'match',
-              ['get', 'tipo_monumento'],
-              'area a destinazione funeraria', 'cemetery_11',
-              'edificio di culto', 'place_of_worship_11',
-              'edificio civile', 'museum_11',
-              'triangle_11'
-            ],
-            'icon-size': 2
-          },
-          
-        }}
-        popupTemplate="<p><strong>${nome_luogo}</strong><br />(${tipo_monumento})</p><hr /><a href='/monumento'>Dettagli</a>"
-      />
+  {/* Legenda collassabile con adattamento dinamico */}
+  <div className="position-absolute bottom-0 start-0 m-3" style={{ zIndex: 1000, minWidth: "220px", maxWidth: "280px" }}>
+    {/* Bottone per aprire/chiudere la legenda */}
+    <button
+      className="btn w-100 text-white py-1"
+      style={{ backgroundColor: "#990033" }} 
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#legendCollapse"
+      aria-expanded="false"
+      aria-controls="legendCollapse"
+    >
+      Legenda ▼
+    </button>
 
-    </MapLibre>
+    {/* Contenuto della legenda collassabile */}
+    <div className="collapse show bg-white bg-opacity-75 rounded shadow-sm p-2" id="legendCollapse">
+      <div className="d-flex flex-wrap gap-2">
+        <div className="d-flex align-items-center w-100">
+          <img src="/images/marker_11.svg" width="30" height="30" className="me-2"/>
+          <span className="text-wrap">Altro</span>
+        </div>
+        <div className="d-flex align-items-center w-100">
+          <img src="/images/monument_11.svg" width="30" height="30" className="me-2"/>
+          <span className="text-wrap">Luogo dedicato alla memoria</span>
+        </div>
+        <div className="d-flex align-items-center w-100">
+          <img src="/images/town_hall_11.svg" width="30" height="30" className="me-2"/>
+          <span className="text-wrap">Edificio di culto</span>
+        </div>
+        <div className="d-flex align-items-center w-100">
+          <img src="/images/cemetery_11.svg" width="30" height="30" className="me-2"/>
+          <span className="text-wrap">Area a destinazione funeraria</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
