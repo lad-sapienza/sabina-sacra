@@ -7,58 +7,124 @@ description: ""
 
 import { Record, Field } from "../../modules/scms.js";
 import "../layout/style.css";
+import TestoLungo from "../components/testoLungo.js";
 
 export default function RecordPage() {
-
   return (
     <div className="row">
-      <div className="col-8">
+      {/* Colonna principale (Dati e Testo) */}
+      <div className="col-md-8">
         <Record>
-          <h1><Field name={["nome_e_cognome"]} /></h1>
-          {/* Sezione 1 - RIGA 1: Nome, Soprannome, Provenienza, Anno di Nascita, Morte, Dies Natalis */}
-          <div className="record-row bg-light border p-3">
-            <div className="record-item">
-              
-              <Field name={["soprannome"]} /> {" ("}
-              <Field name={["provenienza"]} /> {", "}
-              <Field name={["anno_di_nascita"]} /> {" - "}
-              <Field name={["anno_di_morte"]} /> {", dies Natalis: "}
-              <Field name={["dies_natalis"]} />
-            </div>
-          </div>
-          
-          <h3>Fonti</h3>
-          <ul>
-          <Field name={["fonti"]} transformer={fonti =>  fonti.map(f => <li key={f.fonte_id.id}>{f.fonte_id.nome}</li> )} />
-          </ul>
-
-          {/* Sezione 2 - RIGA 2: Qualifica e Confessioni */}
-          <div className="record-row bg-light p-3">
-            <div className="record-item">
-              <Field name={["qualifica"]} /> {" ("}
-              <Field name={["qualifica_specifica"]} /> {"), "}
-              <strong>Confessione:</strong> <Field name={["confessione"]} transformer={(value) => value ? value : "ND"} />
+          {/* Header - Nome e Dati Principali */}
+          <div className="p-3 text-white" style={{ background: "linear-gradient(to bottom, #822433, #a03b4e)", borderRadius: "8px" }}>
+            <h2 className="text-uppercase" style={{ fontSize: "1.5rem" }}>
+              <Field name={["nome_e_cognome"]} />
+            </h2>
+            <div className="mt-2" style={{ fontSize: "1rem" }}>
+              <Field name={["soprannome"]} transformer={(value) => value || "Non disponibile"} /> {" ( "}
+              <Field name={["provenienza"]} transformer={(value) => value || "Non disponibile"} /> {", "}
+              <Field name={["anno_di_nascita"]} transformer={(value) => value || "Non disponibile"} /> {" - "}
+              <Field name={["anno_di_morte"]} transformer={(value) => value || "Non disponibile"} /> {"), dies Natalis: "}
+              <Field name={["dies_natalis"]} transformer={(value) => value || "Non disponibile"} />
             </div>
           </div>
 
-          {/* Sezione 3 - RIGA 3: Note */}
-          <div className="record-row" style={{ backgroundColor: "#f0f0f0", padding: "10px", border: "1px solid #ccc", display: "flex" }}>
-            <div className="record-item" style={{ flex: 1, marginRight: "20px" }}>
-              <strong>Note:</strong>
-              <div className="collapsible">
-                <input type="checkbox" id="expand-notes" />
-                <label htmlFor="expand-notes" className="collapsible-btn">Espandi</label>
-                <div className="content">
-                  <Field name={["note"]} transformer={(text) => text ? text : "Nessuna nota disponibile"} />
-                </div>
+          {/* Qualifica e Confessione */}
+          <div className="record-row bg-light border rounded p-3 my-3">
+            <strong>Qualifica:</strong> <Field name={["qualifica"]} transformer={(value) => value || "Non disponibile"} /> {" ("}
+            <Field name={["qualifica_specifica"]} transformer={(value) => value || "Non disponibile"} /> {"), "}
+            <strong>Confessione:</strong> <Field name={["confessione"]} transformer={(value) => value || "Non disponibile"} />
+          </div>
+
+          {/* Dettagli Biografici */}
+          <div className="record-row bg-light p-3 border rounded">
+            <strong>Dettagli Biografici:</strong>
+            <Field 
+              name={["note"]} 
+              transformer={(text) => (
+                <TestoLungo 
+                  inputText={text || "Non disponibile"} 
+                  previewLength={500}
+                />
+              )} 
+            />
+          </div>
+
+          {/* Sezione Monumenti e Fonti */}
+          <div className="row mt-4">
+{/* Monumenti Associati */}
+<div className="col-md-6">
+  <h3 className="text-uppercase text-muted">Monumenti Associati</h3>
+  <div className="bg-light border rounded p-3">
+    <Field 
+      name={["luoghi_associati_alla_persona"]}
+      transformer={(luoghi) => {
+        if (!luoghi || luoghi.length === 0) return "Non disponibile";
+
+        // Raggruppa i monumenti per caratteristica_di_dettaglio
+        const monumentiRaggruppati = luoghi.reduce((acc, luogo) => {
+          const categoria = luogo.luogo_di_interesse_id.caratteristica_di_dettaglio || "Altro";
+          if (!acc[categoria]) acc[categoria] = [];
+          acc[categoria].push(luogo.luogo_di_interesse_id);
+          return acc;
+        }, {});
+
+        // Genera il testo da passare a TestoLungo con il link "Scopri di più"
+        const contenuto = Object.entries(monumentiRaggruppati).map(([categoria, monumenti]) => (
+          `<div class="mb-3 p-2 border rounded">
+            <h5 class="fw-bold text-primary">${categoria}</h5>
+            <ul class="list-unstyled">
+              ${monumenti.map((monumento) => 
+                `<li>• ${monumento.nome_luogo} 
+                  <a href="/monumento/?tb=luogo_di_interesse&id=${monumento.id}" target="_blank" class="text-decoration-none text-primary fw-bold ms-2">
+                    🔗 Scopri di più
+                  </a>
+                </li>`
+              ).join("")}
+            </ul>
+          </div>`
+        )).join("");
+
+        return <TestoLungo inputText={contenuto} previewLength={500} isHtml={true} />;
+      }}
+    />
+  </div>
+</div>
+            {/* Fonti */}
+            <div className="col-md-6">
+              <h3 className="text-uppercase text-muted">Fonti</h3>
+              <div className="bg-light border rounded p-3">
+                <Field 
+                  name={["fonti"]}
+                  transformer={(fonti) => {
+                    if (!fonti || fonti.length === 0) return "Non disponibile";
+
+                    // Raggruppa le fonti per tipologia_specifica
+                    const fontiRaggruppate = fonti.reduce((acc, fonte) => {
+                      const categoria = fonte.fonte_id.tipologia_specifica || "Altro";
+                      if (!acc[categoria]) acc[categoria] = [];
+                      acc[categoria].push(fonte.fonte_id);
+                      return acc;
+                    }, {});
+
+                    // Genera il testo da passare a TestoLungo
+                    const contenuto = Object.entries(fontiRaggruppate).map(([categoria, fonti]) => (
+                      `<div class="mb-3 p-2 border rounded"><h5 class="fw-bold text-primary">${categoria}</h5><ul class="list-unstyled">` +
+                      fonti.map((fonte) => `<li>• ${fonte.nome}</li>`).join("") +
+                      `</ul></div>`
+                    )).join("");
+
+                    return <TestoLungo inputText={contenuto} previewLength={500} isHtml={true} />;
+                  }}
+                />
               </div>
             </div>
           </div>
         </Record>
       </div>
 
-      {/* Sezione Immagine - a destra, nel quarto dello schermo */}
-      <div  className="col-4">
+      {/* Colonna Laterale - Immagine */}
+      <div className="col-md-4">
         <Record>
           <div className="image-wrapper">
             <div className="record-item">
@@ -66,9 +132,11 @@ export default function RecordPage() {
                 <Field
                   name={["link_immagine"]}
                   transformer={(url) =>
-                    url
-                      ? <img src={url} alt="Anteprima immagine" className="centered-image" />
-                      : "Nessuna immagine disponibile"
+                    url ? (
+                      <img src={url} alt="Anteprima immagine" className="centered-image" />
+                    ) : (
+                      <img src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg" alt="Nessuna immagine disponibile" className="centered-image" />
+                    )
                   }
                 />
               </div>

@@ -1,0 +1,129 @@
+---
+title: "Record Monumento"
+date: "2023-10-01"
+slug: "monumento"
+description: ""
+---
+import { Record, Field } from "../../modules/scms.js";
+import "../layout/style.css";
+import TestoLungo from "../components/testoLungo.js";
+
+export default function RecordPage({ data }) {
+  return (
+    <div className="row">
+      {/* Colonna principale (Dati e Testo) */}
+      <div className="col-md-8">
+        <Record>
+          {/* Header - Nome e Dati Principali */}
+<div className="p-3 text-white" style={{ background: "linear-gradient(to bottom, #822433, #a03b4e)", borderRadius: "8px" }}>
+  <h2 className="text-uppercase" style={{ fontSize: "1.5rem" }}>
+    <Field name={["nome_luogo"]} />
+  </h2>
+  <div className="mt-2" style={{ fontSize: "1rem" }}>
+    <Field name={["caratteristica_di_dettaglio"]} transformer={(value) => value || "Non disponibile"} /> {"( "}
+    <Field name={["anno_inizio"]} transformer={(value) => value || "Non disponibile"} /> {" - "}
+    <Field name={["periodo_fine"]} transformer={(value) => value ? (value > 2023 ? "attuale" : value) : "attuale"} /> {") "}
+  </div>
+</div>
+          {/* Dettagli sul luogo */}
+          <div className="record-row bg-light p-3 border rounded">
+            <strong>Dettagli:</strong>
+            <Field 
+              name={["note"]} 
+              transformer={(text) => (
+                <TestoLungo 
+                  inputText={text || "Non disponibile"} 
+                  previewLength={500}
+                />
+              )} 
+            />
+          </div>
+
+          {/* Sezione Personaggi Associati e Fonti affiancati */}
+<div className="row mt-4">
+  {/* Personaggi Associati */}
+  <div className="col-md-6">
+    <h3 className="text-uppercase text-muted" style={{ fontSize: "1.2rem" }}>Personaggi Associati</h3>
+    <div className="bg-light border rounded p-3">
+      <Field 
+        name={["persone_associate_al_luogo"]}
+        transformer={(personaggi) => {
+          if (!personaggi || personaggi.length === 0) return "Non disponibile";
+
+          // Recuperiamo i dati relativi ai personaggi associati e accediamo al campo nome_e_cognome
+          const personaggiAssociati = personaggi.map((assoc) => assoc.persona_id);
+          return personaggiAssociati.length > 0 ? (
+            <ul className="list-unstyled">
+              {personaggiAssociati.map((personaggio, index) => (
+                <li key={index}>
+                  • <a href={`/personaggio/?tb=persona&id=${personaggio.id}`} target="_blank" className="text-decoration-none text-primary">
+                    {personaggio.nome_e_cognome}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            "Nessun personaggio associato"
+          );
+        }}
+      />
+    </div>
+  </div>
+
+  {/* Fonti */}
+  <div className="col-md-6">
+    <h3 className="text-uppercase text-muted" style={{ fontSize: "1.2rem" }}>Fonti</h3>
+    <div className="bg-light border rounded p-3">
+      <Field 
+        name={["fonti"]}
+        transformer={(fonti) => {
+          if (!fonti || fonti.length === 0) return "Non disponibile";
+
+          // Raggruppa le fonti per tipologia
+          const fontiRaggruppate = fonti.reduce((acc, fonte) => {
+            const categoria = fonte.fonte_id.tipologia_specifica || "Altro";
+            if (!acc[categoria]) acc[categoria] = [];
+            acc[categoria].push(fonte.fonte_id);
+            return acc;
+          }, {});
+
+          // Genera il testo da passare a TestoLungo
+          const contenuto = Object.entries(fontiRaggruppate).map(([categoria, fonti]) => (
+            `<div class="mb-3 p-2 border rounded"><h5 class="fw-bold text-primary">${categoria}</h5><ul class="list-unstyled">` +
+            fonti.map((fonte) => `<li>• ${fonte.nome}</li>`).join("") +
+            `</ul></div>`
+          )).join("");
+
+          return <TestoLungo inputText={contenuto} previewLength={500} isHtml={true} />;
+        }}
+      />
+    </div>
+  </div>
+</div>
+        </Record>
+      </div>
+
+      {/* Colonna Laterale - Immagine */}
+      <div className="col-md-4">
+        <Record>
+          <div className="image-wrapper">
+            <div className="record-item">
+              <div className="image-container">
+                <Field
+                  name={["link_immagine"]}
+                  transformer={(url) =>
+                    url ? (
+                      <img src={url} alt="Anteprima immagine" className="centered-image" />
+                    ) : (
+                      <img src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg" alt="Nessuna immagine disponibile" className="centered-image" />
+                    )
+                  }
+                />
+              </div>
+            </div>
+          </div>
+        </Record>
+      </div>
+    </div>
+  );
+}
