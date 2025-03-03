@@ -14,14 +14,15 @@ import {Row, Col} from "react-bootstrap";
 
     ## <Field name={["nome_luogo"]} />
 
-    <div className="mt-2" style={{ fontSize: "1rem" }}>
-      <Field name={["caratteristica_di_dettaglio"]} transformer={(value) => value || "Non disponibile"} /> {"( "}
-      <Field name={["anno_inizio"]} transformer={(value) => value || "Non disponibile"} /> {" - "}
-      <Field name={["periodo_fine"]} transformer={(value) => value ? (value > 2023 ? "attuale" : value) : "attuale"} /> {") "}
-    </div>
+    <Field name={["caratteristica_di_dettaglio"]} />
+
+    <br />
+
+    <Field name={["anno_inizio"]} transformer={(value) => value || "?"} />{" — "}<Field name={["periodo_fine"]} transformer={(value) => value ? (value > 2023 ? "attualmente in funzione" : value) : "attualmente in funzione"} />
   </div>
 
   <Row className="my-5">
+  
     <Col sm={8}>
       
       ### Dettagli
