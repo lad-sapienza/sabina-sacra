@@ -126,21 +126,18 @@ export default function RecordPage() {
       {/* Colonna Laterale - Immagine */}
       <div className="col-md-4">
         <Record>
-          <div className="image-wrapper">
-            <div className="record-item">
-              <div className="image-container">
-                <Field
-                  name={["link_immagine"]}
-                  transformer={(url) =>
-                    url ? (
-                      <img src={url} alt="Anteprima immagine" className="centered-image" />
-                    ) : (
-                      <img src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg" alt="Nessuna immagine disponibile" className="centered-image" />
-                    )
+          <div className="p-2 text-center">
+            <div className="image-container">
+              <Field
+                name={["link_immagine"]}
+                transformer={(url) => url ? 
+                  <img src={url} alt="Anteprima immagine" className="centered-image" />
+                  :
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg" alt="Nessuna immagine disponibile" className="centered-image" />
+                  
                   }
                 />
               </div>
-            </div>
           </div>
         </Record>
       </div>
