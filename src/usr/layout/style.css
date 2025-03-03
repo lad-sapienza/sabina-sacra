@@ -14,9 +14,6 @@
     min-width: 200px;
   }
   
-  .image-wrapper {
-    padding: 1rem; /* Aggiungi padding per evitare la sovrapposizione */
-  }
   
   .collapsible {
     background-color: #f1f1f1;
@@ -63,10 +60,5 @@
     margin-top: 1rem; /* Spazio sopra l'immagine */
 }
 
-.centered-image {
-    max-width: 80%; /* Aumenta la dimensione massima dell'immagine */
-    max-height: 400px; /* Imposta un'altezza massima per l'immagine */
-    border-radius: 4px; /* Mantiene il bordo arrotondato */
-}
 
   
