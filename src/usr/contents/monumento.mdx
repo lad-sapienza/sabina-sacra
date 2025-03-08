@@ -24,44 +24,17 @@ import {Row, Col} from "react-bootstrap";
   <Row className="my-5">
   
     <Col sm={8}>
-      
-      ### Dettagli
+     <div className="p-3 text-black" style={{ border: '2px solid black' }}>
+     Scopri di più
+    </div>
 
+      
       <div className="bg-light p-3 border rounded">
         <Field name={["note"]}  />
       </div>
-
-      ---
-
-      #### Fonti
-
-      <Field 
-        name={["fonti"]}
-        transformer={(fonti) => {
-          if (!fonti || fonti.length === 0) return "Non disponibile";
-
-          // Raggruppa le fonti per tipologia
-          const fontiRaggruppate = fonti.reduce((acc, fonte) => {
-            const categoria = fonte.fonte_id.tipologia_specifica || "Altro";
-            if (!acc[categoria]) acc[categoria] = [];
-            acc[categoria].push(fonte.fonte_id);
-            return acc;
-          }, {});
-
-          const contenuto = Object.entries(fontiRaggruppate).map(([categoria, fonti]) => (
-            `<div class="mb-3 p-3 border rounded bg-light"><h5 class="fw-bold text-primary">${categoria}</h5><ul>` +
-            fonti.map((fonte) => `<li>${fonte.nome}</li>`).join("") +
-            `</ul></div>`
-          )).join("");
-
-          return <div dangerouslySetInnerHTML={{ __html: contenuto }} />;
-        }}
-      />
-
-      </Col>
-
-      <Col sm={4}>
-
+    </Col>
+      
+    <Col sm={4}>
         <Field
           name={["link_immagine"]}
           transformer={(url) =>
@@ -71,10 +44,7 @@ import {Row, Col} from "react-bootstrap";
               <img src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg" alt="Nessuna immagine disponibile" className="centered-image" />
             )
           }
-        />
-
-      #### Personaggi Associati
-
+      />
       <div className="bg-light border rounded p-3">
         <Field 
           name={["persone_associate_al_luogo"]}
@@ -99,7 +69,47 @@ import {Row, Col} from "react-bootstrap";
           }}
         />
       </div>
-
-    </Col>
+   </Col>
   </Row>
+      
+      ---
+
+     #### Fonti
+
+     <Row className="my-5">
+  <Col sm={12}>
+    <Field 
+      name={["fonti"]}
+      transformer={(fonti) => {
+        if (!fonti || fonti.length === 0) return "Non disponibile";
+
+        // Raggruppa le fonti per tipologia
+        const fontiRaggruppate = fonti.reduce((acc, fonte) => {
+          const categoria = fonte.fonte_id.tipologia_specifica || "Altro";
+          if (!acc[categoria]) acc[categoria] = [];
+          acc[categoria].push(fonte.fonte_id);
+          return acc;
+        }, {});
+
+        const contenuto = Object.entries(fontiRaggruppate).map(([categoria, fonti]) => (
+          `<div class="mb-3 p-3 border rounded bg-light">
+            <h5 class="fw-bold text-primary">${categoria}</h5>
+            <ul>` +
+            fonti.map((fonte) => 
+              `<li>
+                ${fonte.nome} 
+                <a href="/fonte/?tb=fonte&id=${fonte.id}" class="text-decoration-none text-primary ms-2">
+                  [Scopri di più]
+                </a>
+              </li>`
+            ).join("") +
+          `</ul>
+          </div>`
+        )).join("");
+
+        return <div dangerouslySetInnerHTML={{ __html: contenuto }} />;
+      }}
+    />
+  </Col>
+</Row>
 </Record>
