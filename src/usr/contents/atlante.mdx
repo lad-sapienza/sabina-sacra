@@ -7,10 +7,33 @@ menu_position: 4
 ---
 
 import { MapLibre, VectorLayerLibre } from "../../modules/scms.js";
+import { Row, Col } from "react-bootstrap";
 
-### Atlante dei monumenti della Sabina
+# Esplora l'atlante
 
-<div className="position-relative">
+<Row className="my-4">
+<Col md={12}>
+<div className="bg-light p-4 rounded shadow-sm text-center">
+Il principale prodotto scientifico del progetto è costituito da un Geographic Information System
+(GIS) database ad accesso aperto che mira a restituire visivamente un ‘Atlante delle diversità’. Il
+database si compone di quattro sezioni principali tra loro interconnesse, facilmente raggiungibili a
+partire dalla home page.
+
+---
+
+L'atlante contiene informazioni relative a località e monumenti connessi alla presenza di comunità religiose tra Sabina e Valle dell’Aniene nell’ampio
+arco cronologico considerato. 
+
+<a href="#dettagli" className="btn btn-primary mt-3">
+        Per saperne di più
+      </a>
+</div>
+</Col>
+</Row>
+
+<Row className="my-4">
+<Col md={10}>
+<div className="position-relative" >
   {/* Mappa */}
   <MapLibre
     height="800px"
@@ -94,3 +117,116 @@ import { MapLibre, VectorLayerLibre } from "../../modules/scms.js";
     </div>
   </div>
 </div>
+</Col>
+<Col md={2} className="mt-3">
+  <span>👈 Clicca sul selettore layer per filtrare i monumenti in base ai criteri stabiliti</span>
+</Col>
+</Row>
+
+<Row className="my-4" id="dettagli">
+<Col md={12}>
+  <div className="bg-light p-4 rounded shadow-sm">
+    <p className="text-center">
+      Cliccando su un qualsiasi elemento, è possibile ottenere informazioni di base come:
+      <strong> Nome luogo, Tipologia</strong> (luogo o monumento) e <strong>Tipo di monumento</strong> 
+      (area a destinazione funeraria, edificio civile, edificio militare, ecc.).
+    </p>
+    ---- 
+    <p className="text-center">
+      L'atlante consente inoltre di <strong>filtrare i risultati</strong>, inserendo un nome o 
+      restringendo l’arco cronologico di interesse.
+    </p>
+    ---- 
+    <p className="text-center">
+      🔍 <strong>Cliccando su "Dettagli"</strong>, si aprirà una scheda più approfondita con diverse informazioni.
+    </p>
+
+    {/* Accordion per dettagli del monumento */}
+    <div className="accordion" id="accordionDettagli">
+      
+      {/* Sezione: Struttura della scheda */}
+      <div className="accordion-item">
+        <h2 className="accordion-header">
+          <button className="accordion-button d-flex justify-content-between align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapseStruttura">
+            📜 Struttura della scheda
+            <i className="bi bi-chevron-down ms-auto"></i>
+          </button>
+        </h2>
+        <div id="collapseStruttura" className="accordion-collapse collapse show" data-bs-parent="#accordionDettagli">
+          <div className="accordion-body">
+            <ul className="list-unstyled">
+              <li><i className="bi bi-chevron-right me-2"></i><strong>Nome luogo</strong></li>
+              <li><i className="bi bi-chevron-right me-2"></i><strong>Tipologia</strong> (luogo o monumento)</li>
+              <li><i className="bi bi-chevron-right me-2"></i>Una sottosezione distingue le schede "luogo" dalle schede "monumento".</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      {/* Sezione: Informazioni Locus */}
+      <div className="accordion-item">
+        <h2 className="accordion-header">
+          <button className="accordion-button collapsed d-flex justify-content-between align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLocus">
+            🏛️ Informazioni Locus (per schede luogo)
+            <i className="bi bi-chevron-down ms-auto"></i>
+          </button>
+        </h2>
+        <div id="collapseLocus" className="accordion-collapse collapse" data-bs-parent="#accordionDettagli">
+          <div className="accordion-body">
+            <ul className="list-unstyled">
+              <li><i className="bi bi-chevron-right me-2"></i><strong>Toponimo</strong></li>
+              <li><i className="bi bi-chevron-right me-2"></i><strong>Località</strong></li>
+              <li><i className="bi bi-chevron-right me-2"></i><strong>Monumenti associati</strong>, con collegamenti ai monumenti presenti nella località</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      {/* Sezione: Dettagli del monumento */}
+      <div className="accordion-item">
+        <h2 className="accordion-header">
+          <button className="accordion-button collapsed d-flex justify-content-between align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMonumento">
+            🏗️ Dettagli del Monumento (per schede monumento)
+            <i className="bi bi-chevron-down ms-auto"></i>
+          </button>
+        </h2>
+        <div id="collapseMonumento" className="accordion-collapse collapse" data-bs-parent="#accordionDettagli">
+          <div className="accordion-body">
+            <ul className="list-unstyled">
+              <li><i className="bi bi-chevron-right me-2"></i><strong>Tipo di monumento</strong> (es. area di culto, edificio religioso, ecc.)</li>
+              <li><i className="bi bi-chevron-right me-2"></i><strong>Caratteristiche di dettaglio</strong> (es. abbazia, eremo, fonte, ecc.)</li>
+              <li><i className="bi bi-chevron-right me-2"></i><strong>Anno di inizio</strong> dell’utilizzo</li>
+              <li><i className="bi bi-chevron-right me-2"></i><strong>Periodo di fine</strong> dell’utilizzo (specificando se "data certa" o meno)</li>
+              <li><i className="bi bi-chevron-right me-2"></i>Collegamenti ai luoghi in cui il monumento è situato</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      {/* Sezione: Altri dettagli */}
+      <div className="accordion-item">
+        <h2 className="accordion-header">
+          <button className="accordion-button collapsed d-flex justify-content-between align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAltri">
+            🗂️ Altre informazioni disponibili
+            <i className="bi bi-chevron-down ms-auto"></i>
+          </button>
+        </h2>
+        <div id="collapseAltri" className="accordion-collapse collapse" data-bs-parent="#accordionDettagli">
+          <div className="accordion-body">
+            <ul className="list-unstyled">
+              <li><i className="bi bi-chevron-right me-2"></i><strong>Fonti</strong>: elenco delle fonti bibliografiche</li>
+              <li><i className="bi bi-chevron-right me-2"></i><strong>Persone associate</strong></li>
+              <li><i className="bi bi-chevron-right me-2"></i><strong>Itinerari associati</strong></li>
+              <li><i className="bi bi-chevron-right me-2"></i><strong>Note</strong>: breve descrizione storico-archeologica</li>
+              <li><i className="bi bi-chevron-right me-2"></i><strong>Immagini</strong></li>
+              <li><i className="bi bi-chevron-right me-2"></i><strong>Coordinate</strong>: visualizzate tramite OpenStreetMap</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</Col>
+</Row>
+
