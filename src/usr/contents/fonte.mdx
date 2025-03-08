@@ -1,0 +1,97 @@
+---
+title: "Record fonte"
+date: "2023-10-01"
+slug: "fonte"
+description: ""
+---
+
+import { Record, Field } from "../../modules/scms.js";
+import "../layout/style.css";
+import { Row, Col } from "react-bootstrap";
+
+<Record>
+  <div className="p-4 text-white bg-primary text-center">
+    <Field 
+  name={["titolo_completo"]}
+  transformer={(value) => {
+    if (!value || typeof value !== "string" || value.trim() === "") {
+      return null;
+    }
+       return <div className="fw-bold fs-5"
+       dangerouslySetInnerHTML={{ __html: value }} 
+      />
+    }}
+  />
+    <br />
+    <p>Fonte <Field name={["tipo_generale"]} /> - <Field name={["tipologia_specifica"]} /></p>
+  </div>
+
+  <Row className="my-5">
+    <Col sm={8}>
+    <h5 className="fw-bold">Luogni Menzionati</h5>
+    <div className="bg-light p-3 border rounded">
+      <Field 
+        name={["luoghi_menzionati"]}
+        transformer={(luoghi) => {
+          if (!luoghi || !Array.isArray(luoghi) || luoghi.length === 0) {
+            return "Nessun luogo menzionato";
+          }
+
+          // Raggruppiamo i luoghi per categoria
+          const luoghiRaggruppati = luoghi.reduce((acc, luogo) => {
+            const luogoData = luogo.luogo_di_interesse_id;
+            if (!luogoData) return acc;
+            
+            const categoria = luogoData.caratteristica_di_dettaglio || "Altro"; // Se null, assegna "Altro"
+            if (!acc[categoria]) acc[categoria] = [];
+            acc[categoria].push(luogoData);
+            return acc;
+          }, {});
+
+          // Creiamo il contenuto HTML
+          const contenuto = Object.entries(luoghiRaggruppati).map(([categoria, luoghi]) => (
+            `<div class="mb-3 p-3 border rounded bg-light">
+              <h5 class="fw-bold text-primary">${categoria}</h5>
+              <ul>` +
+            luoghi
+              .map(luogo => 
+                `<li><a href="/monumento/?tb=luogo_di_interesse&id=${luogo.id}" class="text-decoration-none text-primary">
+                  ${luogo.nome_luogo}
+                </a></li>`
+              )
+              .join("") +
+            `</ul>
+            </div>`
+          )).join("");
+
+          return <div dangerouslySetInnerHTML={{ __html: contenuto }} />;
+        }}
+      />
+    </div>
+    </Col>
+
+    <Col sm={4}>
+      <div className="p-3 text-black border rounded" style={{ border: '2px solid black' }}>
+        <h5 className="fw-bold">Dove trovarla</h5>
+        <p><strong>Collezione:</strong> <Field name={["collezione"]} transformer={(value) => value || "/"} /></p>
+        <p><strong>Segnatura:</strong> <Field name={["segnatura"]} transformer={(value) => value || "/"} /></p>
+        <p><strong>Inventario:</strong> <Field name={["inventario"]} transformer={(value) => value || "/"} /></p>
+      </div>
+    </Col>
+  </Row>
+
+  <p><strong>Link (se disponibile):</strong> <Field name={["link"]} transformer={(value) => value ? <a href={value} target="_blank" rel="noopener noreferrer">{value}</a> : "Non disponibile"} /></p>
+
+  ---
+
+### Ulteriori dettagli
+
+<Row className="my-5">
+  <Col sm={12}>
+     <div className="bg-light p-3 border rounded">
+        <Field name={["note"]} 
+         transformer={(value) => (value && value.trim() !== "" ? value : null)}/>
+      </div>
+  </Col>
+</Row>
+</Record>
