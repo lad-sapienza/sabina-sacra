@@ -1,17 +1,22 @@
 ---
-title: "Crediti"
+title: "crediti"
 date: "2023-10-01"
-slug: "Crediti"
+slug: "crediti"
 description: "About us"
-menu_position: 5
+menu_position: 4
 ---
 
 import SchedaPersona from "../components/schedaPersona"
+import { Card, Col, Row } from "react-bootstrap";
 
-<p className="lead text-muted">
-  <img src="/images/logo_changes.png" alt="Logo CHANGES" style={{ width: '100%', height: 'auto', marginBottom: '20px' }} />
-</p>
+<Row className="my-3">
+<Col md={12}>
+<img src="/images/logo_changes.png" alt="Logo CHANGES" className="img-fluid mx-auto d-block mb-4"/>
+</Col>
+</Row>
 
+<Row className="my-5">
+<Col md={12}>
 <div className="container text-center py-4 mb-5">
   <div className="intro-section bg-light p-4 rounded shadow-sm" style={{ fontFamily: 'serif' }}>
     <h1 className="mb-3 text-uppercase" style={{ fontVariant: 'small-caps' }}>Il progetto</h1>
@@ -48,198 +53,68 @@ import SchedaPersona from "../components/schedaPersona"
     </p>
   </div>
 </div>
+</Col>
+</Row>
 
-<div style={{ display: "flex", gap: "30px"}}>
-  {/* Massa Critica */}
-<div className="section-wrapper" style={{ backgroundColor: "rgba(249, 249, 165, 0.5)", width: "33%", padding: "20px", display: "flex", flexDirection: "column", justifyContent: "flex-start", border: "none", borderRadius: "10px"}}>
-    <div className="title-wrapper" style={{ 
-      position: "relative", 
-      backgroundColor: "white", 
-      width: "100%", 
-      zIndex: "1", 
-      padding: "5px 20px", 
-      fontSize: "2rem", 
-      fontWeight: "bold", 
-      color: "#2a64af", 
-      textAlign: "center", 
-      marginBottom: "20px", 
-      marginTop: "-10px",
-      borderTopLeftRadius: "15px", 
-      borderTopRightRadius: "15px", 
-      border: "1px solid black"
-    }}>
-      Massa critica
-    </div>
+<h2 className="display-7 text-center text-danger border-bottom border-danger mb-4 pb-2">
+  Massa Critica
+</h2>
 
-    <div className="cards-container" style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
-      {/* Schede Massa Critica */}
-      <SchedaPersona 
-        colore="rgba(252, 252, 240, 0.5)"  
-        image="https://www.ansa.it/webimages/img_700/2016/5/4/28fcbbbde6a088e2a870124ad8790eb7.jpg"
-        nome="Paola Buzi"
-        linkAcademia="https://uniroma1.academia.edu/PaolaBuzi"
-      />
-      <SchedaPersona 
-        colore="rgba(252, 252, 240, 0.5)"   
-        image="https://religioninsociety.com/assets/img/headshots/_200x200_crop_center-center_100/Alberto-Camplani.png"
-        nome="Alberto Camplani"
-        linkAcademia="https://uniroma1.academia.edu/AlbertoCamplani"
-      />
-      <SchedaPersona 
-        colore="rgba(252, 252, 240, 0.5)"  
-        image="https://phd.uniroma1.it/dottorati/cartellaProfili/cf2aa71c-a79f-4d77-b427-6617566fe89d.jpg"
-        nome="Umberto Gentiloni"
-        linkAcademia="https://uniroma1.academia.edu/UmbertoGentiloni"
-      />
-    </div>
-  </div>
+<Row className="g-4 my-5">
+  {[
+    { name: "Paola Buzi", img: "https://www.ansa.it/webimages/img_700/2016/5/4/28fcbbbde6a088e2a870124ad8790eb7.jpg", link: "https://uniroma1.academia.edu/PaolaBuzi" },
+    { name: "Alberto Camplani", img: "https://religioninsociety.com/assets/img/headshots/_200x200_crop_center-center_100/Alberto-Camplani.png", link: "https://uniroma1.academia.edu/AlbertoCamplani" },
+    { name: "Umberto Gentiloni", img: "https://phd.uniroma1.it/dottorati/cartellaProfili/cf2aa71c-a79f-4d77-b427-6617566fe89d.jpg", link: "https://uniroma1.academia.edu/UmbertoGentiloni" }
+  ].map(person => (
+    <Col sm={3} key={person.name}>
+      <Card className="text-center p-3 shadow bg-light">
+        <div className="d-flex justify-content-center align-items-center bg-light rounded py-3">
+          <img src={person.img} alt={person.name} className="rounded-circle border border-white" style={{ width: "100px", height: "100px", objectFit: "cover" }} />
+        </div>
+        <Card.Body style={{ minHeight: "150px" }}>
+          <Card.Title>{person.name}</Card.Title>
+        </Card.Body>
+      </Card>
+    </Col>
+  ))}
+</Row>
 
- {/* Collaboratori */}
-<div className="section-wrapper" style={{ backgroundColor: "#C0C0C0", width: "66%", padding: "20px", display: "flex", flexDirection: "column", justifyContent: "flex-start", border: "none", borderRadius: "10px" }}>
- <div className="title-wrapper" style={{ 
-      position: "relative", 
-      backgroundColor: "white", 
-      width: "100%", 
-      zIndex: "1", 
-      padding: "5px 20px", 
-      fontSize: "2rem", 
-      fontWeight: "bold", 
-      color: "#2a64af", 
-      textAlign: "center", 
-      marginBottom: "20px", 
-      marginTop: "-10px",
-      borderTopLeftRadius: "15px", 
-      borderTopRightRadius: "15px", 
-      border: "1px solid black"
-    }}>
-      Collaboratori
-    </div>
+<h2 className="display-7 text-center text-secondary border-bottom border-secondary mb-4 pb-2">
+  Collaboratori
+</h2>
 
-  <div className="cards-container" style={{ display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-    {/* Wrapper 1: Addessi, Bianchini, Emiliani */}
-    <div style={{ display: "flex", justifyContent: "space-between", gap: "10px" }}>
-      <SchedaPersona 
-        colore="#d3d3d3"
-        image="https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg"
-        nome="Addessi"
-        linkAcademia="https://www.academia.edu/"
-      />
-      <SchedaPersona 
-        colore="#d3d3d3"
-        image="https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg"
-        nome="Alexa Bianchini"
-        linkAcademia="https://www.academia.edu/"
-      />
-      <SchedaPersona 
-        colore="#d3d3d3"
-        image="https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg"
-        nome="Valentina Emiliani"
-        linkAcademia="https://www.academia.edu/"
-      />
-    </div>
+<Row className="g-4 my-5">
+  {["Marta Addessi", "Alexa Bianchini", "Valentina Emiliani", "Luca Giangolini", "Giovanni Hermanin de Reichenfeld",
+    "Letizia Leo", "Antonio Mursia", "Luciano Villani"
+  ].map(name => (
+    <Col sm={3} key={name}>
+      <Card className="text-center p-3 shadow bg-light">
+        <div className="d-flex justify-content-center align-items-center bg-light rounded py-3">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg" alt={name} className="rounded-circle border border-white" style={{ width: "100px", height: "100px", objectFit: "cover" }} />
+        </div>
+        <Card.Body style={{ minHeight: "150px" }}>
+          <Card.Title>{name}</Card.Title>
+        </Card.Body>
+      </Card>
+    </Col>
+  ))}
+</Row>
 
-      {/* Wrapper 2: Giangolini, de Reichenfeld, Leo */}
-      <div style={{ display: "flex", justifyContent: "space-between", gap: "15px" }}>
-        <SchedaPersona 
-          colore="#d3d3d3"
-          image="https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg"
-          nome="Luca Giangolini"
-          linkAcademia="https://www.academia.edu/"
-        />
-        <SchedaPersona 
-          colore="#d3d3d3"
-          image="https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg"
-          nome="Giovanni Hermanin de Reichenfeld"
-          linkAcademia="https://www.academia.edu/"
-        />
-        <SchedaPersona 
-          colore="#d3d3d3"
-          image="https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg"
-          nome="Letizia Leo"
-          linkAcademia="https://www.academia.edu/"
-        />
-      </div>
+<h2 className="display-7 text-center text-primary border-bottom border-primary mb- pb-2">
+  Supervisori
+</h2>
 
-      {/* Wrapper 3: Mursia, Villani */}
-      <div style={{ display: "flex", justifyContent: "space-between", gap: "15px" }}>
-        <SchedaPersona 
-          colore="#d3d3d3"
-          image="https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg"
-          nome="Antonio Mursia"
-          linkAcademia="https://www.academia.edu/"
-        />
-        <SchedaPersona 
-          colore="#d3d3d3"
-          image="https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg"
-          nome="Luciano Villani"
-          linkAcademia="https://www.academia.edu/"
-        />
-      </div>
-      </div>
-
-    </div>
-  </div>
-{/* Supervisori */}
-<div className="d-flex justify-content-between gap-3 p-3" style={{ 
-  backgroundColor: "#822433", 
-  borderRadius: "10px", 
-  border: "none", 
-  flexDirection: "column", 
-  alignItems: "center", 
-  paddingTop: "30px", 
-  marginTop: "30px", 
-  paddingBottom: "20px", 
-  width: "100%", 
-  boxSizing: "border-box", 
-  marginLeft: "auto", 
-  marginRight: "auto" 
-}}>
-  {/* Titolo all'interno del box rosso, centrato */}
-  <div className="bg-white px-5 py-4 rounded-3 border border-3 border-primary d-inline-block" 
-    style={{ 
-      width: "fit-content", 
-      marginBottom: "20px", 
-      textAlign: "center", 
-      backgroundColor: "#822433", 
-      color: "white", 
-      padding: "15px 30px", // Aumentato padding per il titolo
-      fontSize: "2rem" // Aumenta la dimensione del titolo
-  }}>
-    <h2 className="text-primary" style={{ marginBottom: "10px" }}>Supervisori</h2>
-  </div>
-
-  {/* Schede delle persone */}
-  <div className="d-flex justify-content-center gap-5">
-    <SchedaPersona 
-      colore="rgba(200, 142, 151, 0.5)"  
-      image="https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg"
-      nome="Julian Bogdani"
-      linkAcademia="https://www.academia.edu/"
-    />
-    <SchedaPersona 
-      colore="rgba(200, 142, 151, 0.5)"  
-      image="https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg"
-      nome="Bruno Bonomo"
-      linkAcademia="https://www.academia.edu/"
-    />
-    <SchedaPersona 
-      colore="rgba(200, 142, 151, 0.5)"  
-      image="https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg"
-      nome="Tessa Canella"
-      linkAcademia="https://www.academia.edu/"
-    />
-    <SchedaPersona 
-      colore="rgba(200, 142, 151, 0.5)"  
-      image="https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg"
-      nome="Serena Di Nepi"
-      linkAcademia="https://www.academia.edu/"
-    />
-    <SchedaPersona 
-      colore="rgba(200, 142, 151, 0.5)"  
-      image="https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg"
-      nome="Umberto Longo"
-      linkAcademia="https://www.academia.edu/"
-    />
-  </div>
-</div>
-
+<Row className="g-4 my-5">
+  {["Julian Bogdani", "Bruno Bonomo", "Tessa Canella", "Serena Di Nepi", "Umberto Longo"].map(name => (
+    <Col sm={3} key={name}>
+      <Card className="text-center p-3 shadow bg-light">
+        <div className="d-flex justify-content-center align-items-center bg-light rounded py-3">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg" alt={name} className="rounded-circle border border-white" style={{ width: "100px", height: "100px", objectFit: "cover" }} />
+        </div>
+        <Card.Body style={{ minHeight: "150px" }}>
+          <Card.Title>{name}</Card.Title>
+        </Card.Body>
+      </Card>
+    </Col>
+  ))}
+</Row>
