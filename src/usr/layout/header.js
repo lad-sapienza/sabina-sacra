@@ -9,19 +9,22 @@ const HeaderSection = () => (
     <Container>
       <div className="d-sm-flex align-items-center text-center">
         <Link to={"/"}>
-          {/* Usa StaticImage per immagini ottimizzate */}
-          <StaticImage
-            src="../images/logo_sabina.jpeg"
+          <img
+            src="/images/logo_sabina.jpeg"
             alt="Sabina Sacra"
             width={150}
-            quality={80}
-            formats={["AUTO", "WEBP", "PNG"]}
             className="img-fluid"
+            style={{
+              backgroundColor: "#ffffff",
+              borderRadius: "50%",
+              padding: "0.5rem",
+              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+            }}
           />
         </Link>
         <div className="text-start ms-3">
           <h1>Sabina Sacra</h1>
-          <p className="lead">Panorami di diversità: ebrei, cristiani e spazio sacro in Sabina e nella Valle dell’Aniene, tra Tarda Antichità, Età Moderna ed Età Contemporanea </p>
+          <p className="lead">Panorami di diversità: ebrei, cristiani e spazio sacro in Sabina e nella Valle dell’Aniene, tra Tarda Antichità ed Età Contemporanea </p>
         </div>
       </div>
     </Container>
