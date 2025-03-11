@@ -105,6 +105,7 @@ import { Row, Col } from "react-bootstrap";
 
         // Raggruppa le fonti per tipologia
         const fontiRaggruppate = fonti.reduce((acc, fonte) => {
+          console.log(fonti)
           const categoria = fonte.fonte_id.tipologia_specifica || "Altro";
           if (!acc[categoria]) acc[categoria] = [];
           acc[categoria].push(fonte.fonte_id);
