@@ -11,9 +11,7 @@ import { Row, Col } from "react-bootstrap";
 
 # Esplora l'atlante
 
-<Row className="my-4">
-<Col md={12}>
-<div className="bg-light p-4 rounded shadow-sm text-center">
+
 Il principale prodotto scientifico del progetto è costituito da un Geographic Information System
 (GIS) database ad accesso aperto che mira a restituire visivamente un ‘Atlante delle diversità’. Il
 database si compone di quattro sezioni principali tra loro interconnesse, facilmente raggiungibili a
@@ -24,12 +22,7 @@ partire dalla home page.
 L'atlante contiene informazioni relative a località e monumenti connessi alla presenza di comunità religiose tra Sabina e Valle dell’Aniene nell’ampio
 arco cronologico considerato. 
 
-<a href="#dettagli" className="btn btn-primary mt-3">
-        Per saperne di più
-      </a>
-</div>
-</Col>
-</Row>
+[Per saperne di più](#dettagli)
 
 <Row className="my-4">
 <Col md={10}>
@@ -43,10 +36,12 @@ arco cronologico considerato.
     <VectorLayerLibre
       name="Monumenti"
       source={{
-        dTable: "luogo_di_interesse",
-        geoField: "coordinate",
-        dQueryString: "filter[tipologia][_eq]=monumento&fields=id,tipo_monumento,nome_luogo,coordinate&limit=-1",
-        transType: "geojson",
+        directus: {
+          table: "luogo_di_interesse",
+          geoField: "coordinate",
+          queryString: "filter[tipologia][_eq]=monumento&fields=id,tipo_monumento,nome_luogo,coordinate&limit=-1",
+          transType: "geojson",
+        }
       }}
       checked={true}
       fitToContent={true}

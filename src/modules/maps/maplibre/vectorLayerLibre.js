@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useCallback } from "react"
-import { Source, Layer, useMap } from "react-map-gl/maplibre"
+import { Source, Layer, useMap } from "@vis.gl/react-maplibre"
 import PropTypes from "prop-types"
 import * as bbox from "geojson-bbox"
 import getDataFromSource from "../../../services/getDataFromSource"
 import sourcePropTypes from "../../../services/sourcePropTypes"
 import fieldsPropTypes from "../../../services/fieldsPropTypes"
+import plain2maplibre from "../../../services/transformers/plain2maplibre"
 
 /**
  * VectorLayerLibre component renders a vector layer on a map using GeoJSON data.
@@ -12,24 +13,24 @@ import fieldsPropTypes from "../../../services/fieldsPropTypes"
  *
  * @param {Object} props - Component properties
  * @param {Object} props.source - Data source for the GeoJSON
- * @param {string} props.refId - Reference ID for the layer
- * @param {Object} props.style - Style configuration for the layer
  * @param {string} props.name - Name of the layer
- * @param {Array} props.searchInFields - Fields to search in
- * @param {boolean} props.fitToContent - Whether to fit the map to the content
- * @param {boolean} props.checked - Whether the layer is checked/visible
  * @param {string} props.popupTemplate - Template for popups
+ * @param {boolean} props.checked - Whether the layer is checked/visible
+ * @param {boolean} props.fitToContent - Whether to fit the map to the content
+ * @param {Object} props.style - Style configuration for the layer
+ * @param {Array} props.searchInFields - Fields to search in
+ * @param {Array} props.filter - Fields to search in
  * @returns {JSX.Element} Rendered component
  */
 const VectorLayerLibre = ({
   source,
-  refId,
   style = {},
   name,
   searchInFields,
   fitToContent,
   checked,
   popupTemplate,
+  filter,
 }) => {
   // State to hold GeoJSON data and error messages
   const [geojsonData, setGeojson] = useState(null)
@@ -43,6 +44,12 @@ const VectorLayerLibre = ({
     searchInFields,
     popupTemplate,
   }
+
+  if (filter) {
+    const mapLIbreFilter = plain2maplibre(filter.conn, filter.inputs)
+    mapRef.getMap().setFilter(style.id, mapLIbreFilter)
+  }
+
 
   // Set layer visibility based on the checked prop
   if (checked === false) {
@@ -62,18 +69,18 @@ const VectorLayerLibre = ({
 
     // Applica `styledata` per assicurarsi che le modifiche avvengano dopo il caricamento dello stile
     mapInstance.on("styledata", () => {
-      const layer = mapInstance.getLayer(refId)
+      const layer = mapInstance.getLayer(style.id)
       if (layer) {
         // Update layout properties if defined
         if (style.layout) {
           Object.keys(style.layout).forEach(key => {
-            mapInstance.setLayoutProperty(refId, key, style.layout[key])
+            mapInstance.getMap().setLayoutProperty(style.id, key, style.layout[key])
           })
         }
         // Update paint properties if defined
         if (style.paint) {
           Object.keys(style.paint).forEach(key => {
-            mapInstance.setPaintProperty(refId, key, style.paint[key])
+            mapInstance.setPaintProperty(style.id, key, style.paint[key])
           })
         }
 
@@ -84,7 +91,7 @@ const VectorLayerLibre = ({
         }
       }
     })
-  }, [mapRef, style, refId])
+  }, [mapRef, style])
 
   /**
    * Fits the map view to the bounds of the GeoJSON data.
@@ -108,7 +115,7 @@ const VectorLayerLibre = ({
     }
   }, [mapRef, updateLayerStyle, fitLayerToBounds])
 
-  // Effect to fetch GeoJSON data when the component mounts or refId changes
+  // Effect to fetch GeoJSON data when the component mounts
   useEffect(() => {
     const fetchGeoData = async () => {
       try {
@@ -119,10 +126,10 @@ const VectorLayerLibre = ({
         setError("Errore nel caricamento dei dati")
       }
     }
-    if (!refId) {
-      fetchGeoData() // Fetch data if refId is not provided
+    if (source) {
+      fetchGeoData() // Fetch data if source is provided
     }
-  }, [refId, source])
+  }, [source, filter])
 
   // Render error message if there's an error
   if (error) {
@@ -152,10 +159,6 @@ VectorLayerLibre.propTypes = {
    */
   source: sourcePropTypes,
   /**
-   * Reference ID for the layer, as defined in the external styles.json file. It is used to oveerride the layer name / style / popup etc.
-   */
-  refId: PropTypes.string,
-  /**
    * Layer name to use in the Layer control
    * Required
    */
@@ -182,6 +185,10 @@ VectorLayerLibre.propTypes = {
    * If missing the layer will NOT be searcheable
    */
   searchInFields: fieldsPropTypes,
+  /**
+   * Filter Array to apply to the layer
+   */
+  filter: PropTypes.any,
 }
 
 export { VectorLayerLibre }

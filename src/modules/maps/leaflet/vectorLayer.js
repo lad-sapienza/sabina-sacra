@@ -2,13 +2,10 @@ import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
 import { GeoJSON, LayersControl, useMap } from "react-leaflet"
 import * as bbox from "geojson-bbox"
-import MarkerClusterGroup from "@changey/react-leaflet-markercluster"
 
 import getDataFromSource from "../../../services/getDataFromSource"
 import parseStringTemplate from "../../../services/parseStringTemplate"
 import sourcePropTypes from "../../../services/sourcePropTypes"
-
-import "@changey/react-leaflet-markercluster/dist/styles.min.css"
 
 const VectorLayer = ({
   source,
@@ -23,7 +20,6 @@ const VectorLayer = ({
   const [error, setError] = useState(false)
   const map = useMap()
 
-  source.transType = "geojson"
 
   useEffect(() => {
     getDataFromSource(source)
@@ -52,26 +48,24 @@ const VectorLayer = ({
 
     return (
       <LayersControl.Overlay name={name} checked={checked}>
-        <MarkerClusterGroup>
-          <GeoJSON
-            data={geojsonData}
-            pointToLayer={pointToLayer ? pointToLayer : null}
-            onEachFeature={
-              popupTemplate
-                ? typeof popupTemplate === "string"
+        <GeoJSON
+          data={geojsonData}
+          pointToLayer={pointToLayer ? pointToLayer : null}
+          onEachFeature={
+            popupTemplate
+              ? typeof popupTemplate === "string"
+                ? (feature, layer) =>
+                    layer.bindPopup(
+                      parseStringTemplate(popupTemplate, feature.properties),
+                    )
+                : typeof popupTemplate === "function"
                   ? (feature, layer) =>
-                      layer.bindPopup(
-                        parseStringTemplate(popupTemplate, feature.properties),
-                      )
-                  : typeof popupTemplate === "function"
-                    ? (feature, layer) =>
-                        layer.bindPopup(popupTemplate(feature.properties))
-                    : null
-                : null
-            }
-            filter={filter ? filter : null}
-          />
-        </MarkerClusterGroup>
+                      layer.bindPopup(popupTemplate(feature.properties))
+                  : null
+              : null
+          }
+          filter={filter ? filter : null}
+        />
       </LayersControl.Overlay>
     )
   }

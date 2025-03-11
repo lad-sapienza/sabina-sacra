@@ -31,9 +31,10 @@ dei personaggi, oltre a poter accedere ad una scheda dedicata con informazioni c
 <Col md={12}>
 <DataTb
   source={{
-    dTable: "persona",
-    // Aggiungiamo 'fields' per includere anche la relazione con 'fonti'
-    dQueryString: "limit=-1&offset=0&fields=*,fonti.fonte_id.titolo_completo",
+    directus:{
+      table: "persona",
+      queryString: "limit=-1&offset=0&fields=*,fonti.fonte_id.titolo_completo",
+    }
   }}
   striped={true}
   className="data-table shadow"
