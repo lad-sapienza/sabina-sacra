@@ -1,26 +1,21 @@
 import * as React from "react";
 import { Link } from "gatsby";
-import styled from "styled-components";
 import { StaticImage } from "gatsby-plugin-image";
 import { Container } from "react-bootstrap";
 
 const HeaderSection = () => (
-  <Header>
+  <header className="bg-primary text-white mb-5 p-3">
     <Container>
       <div className="d-sm-flex align-items-center text-center">
         <Link to={"/"}>
-          <img
-            src="/images/logo_sabina.jpeg"
-            alt="Sabina Sacra"
-            width={150}
-            className="img-fluid"
-            style={{
-              backgroundColor: "#ffffff",
-              borderRadius: "50%",
-              padding: "0.5rem",
-              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-            }}
-          />
+        <StaticImage
+          src="../images/logo-sabina-sacra.png"
+          alt="Sabina Sacra"
+          width={150}
+          quality={80}
+          formats={["AUTO", "WEBP", "PNG"]}
+          className="img-fluid"
+        />
         </Link>
         <div className="text-start ms-3">
           <h1>Sabina Sacra</h1>
@@ -28,34 +23,7 @@ const HeaderSection = () => (
         </div>
       </div>
     </Container>
-  </Header>
+  </header>
 );
-
-const Header = styled.header`
-  background-color: #822433;
-  color: #ffffff; /* Testo bianco per contrasto */
-  margin-bottom: 5rem;
-  padding: 20px 0;
-
-  h1 {
-    font-size: 2rem;
-    font-weight: bold;
-    margin: 0;
-  }
-
-  p {
-    margin: 0;
-    font-size: 1.2rem;
-    font-weight: 300;
-  }
-
-  .gatsby-image-wrapper,
-  img {
-    background-color: #ffffff;
-    border-radius: 50%; /* Logo arrotondato */
-    padding: 0.5rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
-`;
 
 export default HeaderSection;
