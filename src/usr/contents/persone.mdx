@@ -3,29 +3,29 @@ title: "Personaggi del sacro"
 date: "2023-10-01"
 slug: "personaggi"
 description: ""
-menu_position: 4
+menu_position: 3
 ---
 
 import { DataTb } from "../../modules/scms";
 import { Link } from "gatsby";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Accordion } from "react-bootstrap";
 
 # Persone
 
 <Row className="my-4">
-<Col md={12}>
-<div className="bg-light p-4 rounded shadow-sm text-center">
-La presente pagina è dedicata ai personaggi legati al territorio e al Sacro e contiene informazioni
-relative a persone connesse ai luoghi e ai monumenti considerati nell’Atlante. 
+  <Col md={12}>
+    <div className="bg-light p-4 rounded shadow-sm text-center">
+      La presente pagina è dedicata ai personaggi legati al territorio e al Sacro e contiene informazioni
+      relative a persone connesse ai luoghi e ai monumenti considerati nell’Atlante.
 
-Navigando nella tabella potrai filtrare i risultati e visualizzare i dati biografici essenziali 
-dei personaggi, oltre a poter accedere ad una scheda dedicata con informazioni complete.
-<a href="#dettagli" className="btn btn-primary mt-3">
-        Per saperne di più
-      </a>
-</div>
-</Col>
+      Navigando nella tabella potrai filtrare i risultati e visualizzare i dati biografici essenziali 
+      dei personaggi, oltre a poter accedere ad una scheda dedicata con informazioni complete.
+
+      <a href="#dettagli" className="btn btn-primary mt-3">Per saperne di più</a>
+    </div>
+  </Col>
 </Row>
+
 
 <Row className="my-4">
 <Col md={12}>
@@ -76,70 +76,46 @@ dei personaggi, oltre a poter accedere ad una scheda dedicata con informazioni c
         Ogni scheda si compone dei seguenti campi (non tutti necessariamente compilati):
       </p>
 
-      {/* Accordion per dettagli della scheda */}
-      <div className="accordion" id="accordionDettagliPersone">
+      <Accordion>
         
-        {/* Sezione: Dati anagrafici */}
-        <div className="accordion-item">
-          <h2 className="accordion-header">
-            <button className="accordion-button d-flex justify-content-between align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAnagrafici">
-              🏷️ Dati anagrafici
-              <i className="bi bi-chevron-down ms-auto"></i>
-            </button>
-          </h2>
-          <div id="collapseAnagrafici" className="accordion-collapse collapse show" data-bs-parent="#accordionDettagliPersone">
-            <div className="accordion-body">
-              <ul className="list-unstyled">
-                <li><i className="bi bi-chevron-right me-2"></i><strong>Nome e cognome</strong></li>
-                <li><i className="bi bi-chevron-right me-2"></i><strong>Soprannome</strong></li>
-                <li><i className="bi bi-chevron-right me-2"></i><strong>Provenienza</strong></li>
-                <li><i className="bi bi-chevron-right me-2"></i><strong>Anno di nascita</strong></li>
-                <li><i className="bi bi-chevron-right me-2"></i><strong>Anno di morte</strong></li>
-                <li><i className="bi bi-chevron-right me-2"></i><strong>Dies natalis</strong> (giorno della morte del santo)</li>
-                <li><i className="bi bi-chevron-right me-2"></i>Specifica se è una <strong>Data certa</strong> o meno</li>
-              </ul>
-            </div>
-          </div>
-        </div>
+        <Accordion.Item eventKey="0">
+          <Accordion.Header>
+            🏷️ **Dati anagrafici**
+          </Accordion.Header>
+          <Accordion.Body>
+            - **Nome e cognome**
+            - **Soprannome**
+            - **Provenienza**
+            - **Anno di nascita**
+            - **Anno di morte**
+            - **Dies natalis** (giorno della morte del santo)
+            - Specifica se è una **Data certa** o meno
+          </Accordion.Body>
+        </Accordion.Item>
 
-        {/* Sezione: Qualifica */}
-        <div className="accordion-item">
-          <h2 className="accordion-header">
-            <button className="accordion-button collapsed d-flex justify-content-between align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapseQualifica">
-              🎭 Dettagli specifici
-              <i className="bi bi-chevron-down ms-auto"></i>
-            </button>
-          </h2>
-          <div id="collapseQualifica" className="accordion-collapse collapse" data-bs-parent="#accordionDettagliPersone">
-            <div className="accordion-body">
-              <ul className="list-unstyled">
-                <li><i className="bi bi-chevron-right me-2"></i><strong>Qualifica</strong> (es. artista, militare, religioso, ecc.)</li>
-                <li><i className="bi bi-chevron-right me-2"></i><strong>Qualifica specifica</strong> (santo, martire, partigiano, ecc.)</li>
-                <li><i className="bi bi-chevron-right me-2"></i><strong>Confessione</strong> (cattolica, ebraica, islamica, pagana, ecc.)</li>
-                <li><i className="bi bi-chevron-right me-2"></i><strong>Note</strong>: breve profilo storico della persona</li>
-              </ul>
-            </div>
-          </div>
-        </div>
+        <Accordion.Item eventKey="1">
+          <Accordion.Header>
+            🎭 **Dettagli specifici**
+          </Accordion.Header>
+          <Accordion.Body>
+            - **Qualifica** (es. artista, militare, religioso, ecc.)
+            - **Qualifica specifica** (santo, martire, partigiano, ecc.)
+            - **Confessione** (cattolica, ebraica, islamica, pagana, ecc.)
+            - **Note**: breve profilo storico della persona
+          </Accordion.Body>
+        </Accordion.Item>
 
-        {/* Sezione: Fonti e Luoghi associati */}
-        <div className="accordion-item">
-          <h2 className="accordion-header">
-            <button className="accordion-button collapsed d-flex justify-content-between align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFontiLuoghi">
-              📜 Fonti e Luoghi associati
-              <i className="bi bi-chevron-down ms-auto"></i>
-            </button>
-          </h2>
-          <div id="collapseFontiLuoghi" className="accordion-collapse collapse" data-bs-parent="#accordionDettagliPersone">
-            <div className="accordion-body">
-              <ul className="list-unstyled">
-                <li><i className="bi bi-chevron-right me-2"></i>🔗 <strong>Fonti</strong></li>
-                <li><i className="bi bi-chevron-right me-2"></i>🔗 <strong>Luoghi associati alla persona</strong></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
+        <Accordion.Item eventKey="2">
+          <Accordion.Header>
+            📜 **Fonti e Luoghi associati**
+          </Accordion.Header>
+          <Accordion.Body>
+            - 🔗 **Fonti**
+            - 🔗 **Luoghi associati alla persona**
+          </Accordion.Body>
+        </Accordion.Item>
+        
+      </Accordion>
     </div>
   </Col>
 </Row>
