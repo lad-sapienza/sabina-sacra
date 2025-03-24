@@ -1,0 +1,162 @@
+---
+title: "Monumenti"
+date: "2023-10-01"
+slug: "monumenti"
+description: ""
+menu_position: 2
+---
+
+import { DataTb } from "../../modules/scms";
+import { Link } from "gatsby";
+import { Row, Col, Accordion } from "react-bootstrap";
+
+# Monumenti
+
+<Row className="my-4">
+  <Col md={12}>
+    <DataTb
+      source={{
+        dTable: "luogo_di_interesse",
+        dQueryString: "filter[tipologia][_eq]=monumento&fields=*,*.*.*,link_immagine,fa_parte_di.nome_luogo,fa_parte_di.toponimo,fa_parte_di.localita&limit=-1"
+      }}
+      striped
+      highlightOnHover
+      pointerOnHover
+      className="data-table shadow-sm rounded"
+      customStyles={{
+        headCells: {
+          style: {
+            backgroundColor: '#5f3dc4',
+            color: 'white',
+            fontWeight: 'bold',
+            fontSize: '1rem',
+          },
+        },
+        rows: {
+          style: {
+            '&:nth-of-type(odd)': {
+              backgroundColor: 'rgba(95, 61, 196, 0.03)',
+            },
+            '&:hover': {
+              backgroundColor: 'rgba(95, 61, 196, 0.1) !important',
+            },
+          },
+        },
+        cells: {
+          style: {
+            padding: '12px 15px',
+            verticalAlign: 'middle',
+          },
+        },
+      }}
+      paginationPerPage={10}
+      paginationRowsPerPageOptions={[10, 25, 50]}
+      defaultSortField="nome_luogo"
+      defaultSortAsc
+      columns={[
+        {
+          name: <span className="text-white">Anteprima</span>,
+          cell: row => row.link_immagine ? (
+            <a 
+              href={row.link_immagine} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="d-inline-block"
+            >
+              <img 
+                src={row.link_immagine} 
+                alt={`${row.nome_luogo} - anteprima`}
+                style={{
+                  width: '80px',
+                  height: '60px',
+                  objectFit: 'cover',
+                  borderRadius: '4px',
+                  boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                }}
+                onError={(e) => {
+                  e.target.onerror = null; 
+                  e.target.src = 'data:image/svg+xml;charset=UTF-8,%3Csvg xmlns="http://www.w3.org/2000/svg" width="80" height="60" viewBox="0 0 80 60"%3E%3Crect width="80" height="60" fill="%23e9ecef"/%3E%3Ctext x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="%236c757d" font-family="Arial"%3ENo image%3C/text%3E%3C/svg%3E'
+                }}
+              />
+            </a>
+          ) : (
+            <span className="badge bg-secondary">Nessuna immagine</span>
+          ),
+          width: '10%',
+          center: true,
+          ignoreRowClick: true,
+        },
+        {
+          name: <span className="text-white">Monumento</span>,
+          cell: row => (
+            <Link 
+              to={`/monumento/?tb=luogo_di_interesse&id=${row.id}`}
+              className="fw-semibold text-primary"
+            >
+              {row.nome_luogo || "ND"}
+            </Link>
+          ),
+          sortable: true,
+          wrap: true,
+          width: '20%',
+        },
+        {
+          name: <span className="text-white">Località</span>,
+          selector: row => row.fa_parte_di?.nome_luogo || "", // Per l'ordinamento
+          cell: row => row.fa_parte_di ? (
+            <Link 
+              to={`/monumento/?tb=luogo_di_interesse&id=${row.fa_parte_di.id}`}
+              className="text-decoration-none"
+            >
+              <div>
+                <div>{row.fa_parte_di.nome_luogo || "ND"}{row.fa_parte_di.localita ? ` (${row.fa_parte_di.localita})` : ''}</div>
+                {row.fa_parte_di.toponimo && (
+                  <small className="text-muted">
+                    {row.fa_parte_di.toponimo}
+                  </small>
+                )}
+              </div>
+            </Link>
+          ) : (
+            <span className="text-muted">Nessun luogo padre</span>
+          ),
+          width: '25%',
+          sortable: true,
+        },
+        {
+          name: <span className="text-white">Tipologia</span>,
+          cell: row => (
+            <div>
+              <div>{row.tipo_monumento || "ND"}</div>
+              {row.caratteristica_di_dettaglio && (
+                <small className="text-muted">
+                  {row.caratteristica_di_dettaglio}
+                </small>
+              )}
+            </div>
+          ),
+          sortable: true,
+          width: '20%',
+        },
+        {
+          name: <span className="text-white">Periodo</span>,
+          cell: row => {
+            const currentYear = new Date().getFullYear();
+            const showEndYear = row.periodo_fine && row.periodo_fine <= currentYear;
+            
+            return (
+              <div>
+                {row.anno_inizio || "ND"}
+                {showEndYear ? ` — ${row.periodo_fine}` : ''}
+                {!row.anno_inizio && !row.periodo_fine && "ND"}
+              </div>
+            );
+          },
+          sortable: true,
+          width: '25%',
+          center: true,
+        }
+      ]}
+    />
+  </Col>
+</Row>
