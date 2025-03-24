@@ -28,45 +28,101 @@ import { Row, Col, Accordion } from "react-bootstrap";
 
 
 <Row className="my-4">
-<Col md={12}>
-<DataTb
-  source={{
-    dTable: "persona",
-    // Aggiungiamo 'fields' per includere anche la relazione con 'fonti'
-    dQueryString: "limit=-1&offset=0&fields=*,fonti.fonte_id.titolo_completo",
-  }}
-  striped={true}
-  className="data-table shadow"
-  columns={[
-    {
-      name: "Personaggio",
-      selector: item => (
-        <Link to={`/personaggio/?tb=persona&id=${item.id}`}>
-          {`${item.nome_e_cognome || "ND"}${(item.soprannome ? ` (${item.soprannome})` : "")}`}
-        </Link>
-      ),
-      sortable: true,
-    },
-    {
-      name: "Dati Biografici",
-      cell: row => <span className={row.data_certa ? "" : "red-text"}>
-        {row.provenienza || "ND"} ({row.anno_di_nascita || "ND"} — {row.anno_di_morte || "ND"}) {row.dies_natalis ? ` - ${row.dies_natalis}` : ''}
-      </span>,
-      sortable: true,
-    },
-    {
-      name: "Qualifica",
-      selector: row => `${row.qualifica || "ND"}${row.qualifica_specifica ? ` (${row.qualifica_specifica})` : ""}`,
-      sortable: true,
-    },
-    {
-      name: "Confessione",
-      selector: row => row.confessione || "ND",
-      sortable: true,
-    }
-  ]}
-/>
-</Col>
+  <Col md={12}>
+    <DataTb
+      source={{
+        dTable: "persona",
+        dQueryString: "*.*.*",
+      }}
+      striped
+      highlightOnHover
+      pointerOnHover
+      className="data-table shadow-sm rounded"
+      customStyles={{
+        headCells: {
+          style: {
+            backgroundColor: '#6c757d',
+            color: 'white',
+            fontWeight: 'bold',
+            fontSize: '1rem',
+          },
+        },
+        rows: {
+          style: {
+            '&:nth-of-type(odd)': {
+              backgroundColor: 'rgba(0,0,0,.02)',
+            },
+            '&:hover': {
+              backgroundColor: 'rgba(0,123,255,.1) !important',
+            },
+          },
+        },
+        cells: {
+          style: {
+            padding: '12px 15px',
+          },
+        },
+      }}
+      paginationPerPage={10}
+      paginationRowsPerPageOptions={[10, 25, 50]}
+      defaultSortField="nome_e_cognome"
+      defaultSortAsc
+      columns={[
+        {
+          name: <span className="text-white">Personaggio</span>,
+          selector: item => (
+            <Link 
+              to={`/personaggio/?tb=persona&id=${item.id}`}
+              className="text-primary fw-bold"
+            >
+              {`${item.nome_e_cognome || "ND"}${(item.soprannome ? ` (${item.soprannome})` : "")}`}
+            </Link>
+          ),
+          sortable: true,
+          width: '25%',
+          wrap: true,
+        },
+        {
+          name: <span className="text-white">Dati Biografici</span>,
+          cell: row => (
+            <div className={row.data_certa ? "" : "text-danger"}>
+              <div>{row.provenienza || "ND"}</div>
+              <small className="text-muted">
+                {row.anno_di_nascita || "ND"} — {row.anno_di_morte || "ND"}
+                {row.dies_natalis ? ` - ${row.dies_natalis}` : ''}
+              </small>
+            </div>
+          ),
+          sortable: true,
+          width: '25%',
+        },
+        {
+          name: <span className="text-white">Qualifica</span>,
+          selector: row => (
+            <div>
+              <div>{row.qualifica || "ND"}</div>
+              {row.qualifica_specifica && (
+                <small className="text-muted">{row.qualifica_specifica}</small>
+              )}
+            </div>
+          ),
+          sortable: true,
+          width: '25%',
+        },
+        {
+          name: <span className="text-white">Confessione</span>,
+          cell: row => (
+            <span className={`badge bg-${row.confessione ? 'info' : 'secondary'}`}>
+              {row.confessione || "ND"}
+            </span>
+          ),
+          sortable: true,
+          width: '25%',
+          center: true,
+        }
+      ]}
+    />
+  </Col>
 </Row>
 
 <Row className="my-4" id="dettagli">
