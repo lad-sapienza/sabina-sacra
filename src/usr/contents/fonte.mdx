@@ -5,9 +5,9 @@ slug: "fonte"
 description: ""
 ---
 
-import { Record, Field } from "../../modules/scms.js";
-import "../layout/style.css";
-import { Row, Col } from "react-bootstrap";
+import { Record, Field } from "../../modules/scms.js"
+import "../layout/style.css"
+import { Row, Col } from "react-bootstrap"
 
 <Record>
   <div className="p-4 text-white bg-primary text-center">
@@ -28,7 +28,10 @@ import { Row, Col } from "react-bootstrap";
 
   <Row className="my-5">
     <Col sm={8}>
-    <h5 className="fw-bold">Luogni Menzionati</h5>
+    <div className="mb-5">
+    <Field name={["note"]} />
+</div>
+    <h5 className="fw-bold">Luoghi Menzionati</h5>
     <div className="bg-light p-3 border rounded">
       <Field 
         name={["luoghi_menzionati"]}
@@ -41,7 +44,7 @@ import { Row, Col } from "react-bootstrap";
           const luoghiRaggruppati = luoghi.reduce((acc, luogo) => {
             const luogoData = luogo.luogo_di_interesse_id;
             if (!luogoData) return acc;
-            
+
             const categoria = luogoData.caratteristica_di_dettaglio || "Altro"; // Se null, assegna "Altro"
             if (!acc[categoria]) acc[categoria] = [];
             acc[categoria].push(luogoData);
@@ -54,7 +57,7 @@ import { Row, Col } from "react-bootstrap";
               <h5 class="fw-bold text-primary">${categoria}</h5>
               <ul>` +
             luoghi
-              .map(luogo => 
+              .map(luogo =>
                 `<li><a href="/monumento/?tb=luogo_di_interesse&id=${luogo.id}" class="text-decoration-none text-primary">
                   ${luogo.nome_luogo}
                 </a></li>`
@@ -78,20 +81,25 @@ import { Row, Col } from "react-bootstrap";
         <p><strong>Inventario:</strong> <Field name={["inventario"]} transformer={(value) => value || "/"} /></p>
       </div>
     </Col>
+
   </Row>
 
-  <p><strong>Link (se disponibile):</strong> <Field name={["link"]} transformer={(value) => value ? <a href={value} target="_blank" rel="noopener noreferrer">{value}</a> : "Non disponibile"} /></p>
+{" "}
 
-  ---
 
-### Ulteriori dettagli
+  <Field
+    name={["link"]}
+    transformer={ value =>
+      value ? (
+        <p>
+  <strong>Link:</strong>{" "}
+        <a href={value} target="_blank" rel="noopener noreferrer">
+          {value}
+        </a>
+        </p>
+      ) : ''
+    }
+  />
 
-<Row className="my-5">
-  <Col sm={12}>
-     <div className="bg-light p-3 border rounded">
-        <Field name={["note"]} 
-         transformer={(value) => (value && value.trim() !== "" ? value : null)}/>
-      </div>
-  </Col>
-</Row>
+
 </Record>
