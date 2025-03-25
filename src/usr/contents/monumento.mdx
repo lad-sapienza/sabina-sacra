@@ -55,9 +55,9 @@ import {Row, Col} from "react-bootstrap";
                   style={{ maxHeight: '800px' }}
                 />
                 <small className="d-block mt-2">
-                  Authority:&nbsp;
+                  Fonte:&nbsp;
                   <a href={url} target="_blank" rel="noopener noreferrer">
-                    wikimedia_commons
+                    Wikimedia Commons
                   </a>{" "}
                   (CC BY-SA 3.0)
                 </small>
@@ -71,7 +71,6 @@ import {Row, Col} from "react-bootstrap";
         )
       }
       />
-      <div className="bg-light border rounded p-3">
         <Field 
           name={["persone_associate_al_luogo"]}
           transformer={(personaggi) => {
@@ -80,6 +79,10 @@ import {Row, Col} from "react-bootstrap";
             // Recuperiamo i dati relativi ai personaggi associati e accediamo al campo nome_e_cognome
             const personaggiAssociati = personaggi.map((assoc) => assoc.persona_id);
             return personaggiAssociati.length > 0 ? (
+              <>
+              <h4>Personaggi associati al monumento</h4>
+      <div className="bg-light border rounded p-3">
+
               <ul className="list-unstyled">
                 {personaggiAssociati.map((personaggio, index) => (
                   <li key={index}>
@@ -89,12 +92,13 @@ import {Row, Col} from "react-bootstrap";
                   </li>
                 ))}
               </ul>
+              </div>
+              </>
             ) : (
               "Nessun personaggio associato"
             );
           }}
         />
-      </div>
    </Col>
   </Row>
       
