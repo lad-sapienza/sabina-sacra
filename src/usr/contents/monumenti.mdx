@@ -15,9 +15,10 @@ import { Row, Col, Accordion } from "react-bootstrap";
 <Row className="my-4">
   <Col md={12}>
     <DataTb
+      striped={true}
       source={{
         dTable: "luogo_di_interesse",
-        dQueryString: "filter[tipologia][_eq]=monumento&fields=*,*.*.*,link_immagine,fa_parte_di.nome_luogo,fa_parte_di.toponimo,fa_parte_di.localita&limit=-1"
+        dQueryString: "filter[tipologia][_eq]=monumento&fields=id,nome_luogo,tipo_monumento,anno_inizio,periodo_fine,caratteristica_di_dettaglio,link_immagine,fa_parte_di.nome_luogo,fa_parte_di.toponimo,fa_parte_di.localita&limit=-1"
       }}
       striped
       highlightOnHover
@@ -32,16 +33,6 @@ import { Row, Col, Accordion } from "react-bootstrap";
             fontSize: '1rem',
           },
         },
-        rows: {
-          style: {
-            '&:nth-of-type(odd)': {
-              backgroundColor: 'rgba(95, 61, 196, 0.03)',
-            },
-            '&:hover': {
-              backgroundColor: 'rgba(95, 61, 196, 0.1) !important',
-            },
-          },
-        },
         cells: {
           style: {
             padding: '12px 15px',
@@ -49,20 +40,12 @@ import { Row, Col, Accordion } from "react-bootstrap";
           },
         },
       }}
-      paginationPerPage={10}
-      paginationRowsPerPageOptions={[10, 25, 50]}
       defaultSortField="nome_luogo"
       defaultSortAsc
       columns={[
         {
-          name: <span className="text-white">Image</span>,
           cell: row => row.link_immagine ? (
-            <a 
-              href={row.link_immagine} 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="d-inline-block"
-            >
+            
              <img 
               src={
                 row.link_immagine?.includes("upload.wikimedia.org/wikipedia/commons/")
@@ -86,7 +69,6 @@ import { Row, Col, Accordion } from "react-bootstrap";
                 e.target.src = 'data:image/svg+xml;charset=UTF-8,%3Csvg xmlns="http://www.w3.org/2000/svg" width="80" height="60" viewBox="0 0 80 60"%3E%3Crect width="80" height="60" fill="%23e9ecef"/%3E%3Ctext x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="%236c757d" font-family="Arial"%3ENo image%3C/text%3E%3C/svg%3E'
               }}
             />  
-            </a>
           ) : (
             <span className="badge bg-secondary">Nessuna immagine</span>
           ),
@@ -112,10 +94,7 @@ import { Row, Col, Accordion } from "react-bootstrap";
           name: <span className="text-white">Località</span>,
           selector: row => row.fa_parte_di?.nome_luogo || "", // Per l'ordinamento
           cell: row => row.fa_parte_di ? (
-            <Link 
-              to={`/monumento/?tb=luogo_di_interesse&id=${row.fa_parte_di.id}`}
-              className="text-decoration-none"
-            >
+            
               <div>
                 <div>{row.fa_parte_di.nome_luogo || "ND"}{row.fa_parte_di.localita ? ` (${row.fa_parte_di.localita})` : ''}</div>
                 {row.fa_parte_di.toponimo && (
@@ -124,7 +103,6 @@ import { Row, Col, Accordion } from "react-bootstrap";
                   </small>
                 )}
               </div>
-            </Link>
           ) : (
             <span className="text-muted">Nessun luogo padre</span>
           ),

@@ -32,9 +32,9 @@ import { Row, Col, Accordion } from "react-bootstrap";
     <DataTb
       source={{
         dTable: "persona",
-        dQueryString: "*.*.*",
+        dQueryString: "*.*.*&limit=-1",
       }}
-      striped
+      striped={true}
       highlightOnHover
       pointerOnHover
       className="data-table shadow-sm rounded"
@@ -47,16 +47,6 @@ import { Row, Col, Accordion } from "react-bootstrap";
             fontSize: '1rem',
           },
         },
-        rows: {
-          style: {
-            '&:nth-of-type(odd)': {
-              backgroundColor: 'rgba(0,0,0,.02)',
-            },
-            '&:hover': {
-              backgroundColor: 'rgba(0,123,255,.1) !important',
-            },
-          },
-        },
         cells: {
           style: {
             padding: '12px 15px',
@@ -64,7 +54,6 @@ import { Row, Col, Accordion } from "react-bootstrap";
         },
       }}
       paginationPerPage={10}
-      paginationRowsPerPageOptions={[10, 25, 50]}
       defaultSortField="nome_e_cognome"
       defaultSortAsc
       columns={[
