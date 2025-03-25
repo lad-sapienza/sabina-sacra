@@ -1,0 +1,222 @@
+---
+title: "Itinerario"
+date: "2023-10-01"
+slug: "itinerario"
+description: ""
+---
+
+import {
+  Record,
+  Field,
+  MapLibre,
+  VectorLayerLibre,
+  DataTb,
+} from "../../modules/scms.js"
+
+import { Link } from "gatsby";
+
+
+<Record>
+    <h1><Field name={["nome_itinerario"]} /></h1>
+    
+    ---
+
+  
+
+    <Field name={["luoghi_dell_itinerario"]} transformer={ ldi => {
+      const id_luoghi = ldi.map( l => l.luogo_di_interesse_id.id ).join(',');
+
+      return <MapLibre
+    height="800px"
+    baseLayers={["EsriTopo"]}
+    sprite="https://openmaptiles.github.io/osm-bright-gl-style/sprite"
+
+>
+
+    <VectorLayerLibre
+      name="Monumenti"
+      source={{
+        dTable: "luogo_di_interesse",
+        geoField: "coordinate",
+        dQueryString: "filter[id][_in]=" + id_luoghi + "&fields=id,tipo_monumento,nome_luogo,coordinate&limit=-1",
+        transType: "geojson",
+      }}
+      checked={true}
+      fitToContent={true}
+      type="geojson"
+      searchInFields={{
+        "nome_luogo": "Toponimo",
+        "tipo_monumento": {
+          "label": "Tipo di monumento",
+          "values": ["area a destinazione funeraria", "luogo dedicato alla memoria", "edificio di culto"],
+        },
+      }}
+      style={{
+        id: "luogo_di_interesse",
+        type: "symbol",
+        layout: {
+          "icon-image": [
+            "match",
+            ["get", "tipo_monumento"],
+            "area a destinazione funeraria", "cemetery_11",
+            "luogo dedicato alla memoria", "monument_11",
+            "edificio di culto", "town_hall_11",
+            "heliport_11" // Default (Altro)
+          ],
+          "icon-size": 3,
+        },
+      }}
+      popupTemplate="<h4>${nome_luogo}</h4>
+        <p>${tipo_monumento}</p>
+        <a href='/monumento/?tb=luogo_di_interesse&id=${id}'>Dettagli</a>"
+    />
+
+  </MapLibre>
+    }} />
+
+
+  ---
+
+    <Field name={["breve_descrizione"]} />
+
+
+    <Field name={["luoghi_dell_itinerario"]} transformer={ ldi => {
+      const id_luoghi = ldi.map( l => l.luogo_di_interesse_id.id ).join(',');
+
+      return <DataTb
+      striped={true}
+      source={{
+        dTable: "luogo_di_interesse",
+        dQueryString: "filter[id][_in]=" + id_luoghi + "&fields=id,nome_luogo,tipo_monumento,anno_inizio,periodo_fine,caratteristica_di_dettaglio,link_immagine,fa_parte_di.nome_luogo,fa_parte_di.toponimo,fa_parte_di.localita"
+      }}
+      striped
+      highlightOnHover
+      pointerOnHover
+      className="data-table shadow-sm rounded"
+      customStyles={{
+        headCells: {
+          style: {
+            backgroundColor: '#5f3dc4',
+            color: 'white',
+            fontWeight: 'bold',
+            fontSize: '1rem',
+          },
+        },
+        cells: {
+          style: {
+            padding: '12px 15px',
+            verticalAlign: 'middle',
+          },
+        },
+      }}
+      defaultSortField="nome_luogo"
+      defaultSortAsc
+      columns={[
+        {
+          cell: row => row.link_immagine ? (
+            
+             <img 
+              src={
+                row.link_immagine?.includes("upload.wikimedia.org/wikipedia/commons/")
+                  ? `https://upload.wikimedia.org/wikipedia/commons/thumb/${row.link_immagine.split("/")[row.link_immagine.split("/").length - 3]}/${row.link_immagine.split("/")[row.link_immagine.split("/").length - 2]}/${row.link_immagine.split("/").pop()}/400px-${row.link_immagine.split("/").pop()}`
+                  : row.link_immagine?.includes("commons.wikimedia.org/wiki/File:")
+                  ? `https://commons.wikimedia.org/wiki/Special:FilePath/${decodeURIComponent(row.link_immagine.split("File:").pop().split("?")[0])}`
+                  : row.link_immagine?.includes("#/media/File:")
+                  ? `https://commons.wikimedia.org/wiki/Special:FilePath/${decodeURIComponent(row.link_immagine.split("#/media/File:").pop().split("/")[0].split("?")[0])}`
+                  : row.link_immagine
+              }
+              alt={`${row.nome_luogo} - anteprima`}
+              style={{
+                width: '80px',
+                height: '60px',
+                objectFit: 'cover',
+                borderRadius: '4px',
+                boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+              }}
+              onError={(e) => {
+                e.target.onerror = null; 
+                e.target.src = 'data:image/svg+xml;charset=UTF-8,%3Csvg xmlns="http://www.w3.org/2000/svg" width="80" height="60" viewBox="0 0 80 60"%3E%3Crect width="80" height="60" fill="%23e9ecef"/%3E%3Ctext x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="%236c757d" font-family="Arial"%3ENo image%3C/text%3E%3C/svg%3E'
+              }}
+            />  
+          ) : (
+            <span className="badge bg-secondary">Nessuna immagine</span>
+          ),
+          width: '10%',
+          center: true,
+          ignoreRowClick: true,
+        },
+        {
+          name: <span className="text-white">Monumento</span>,
+          cell: row => (
+            <Link 
+              to={`/monumento/?tb=luogo_di_interesse&id=${row.id}`}
+              className="fw-semibold text-primary"
+            >
+              {row.nome_luogo || "ND"}
+            </Link>
+          ),
+          sortable: true,
+          wrap: true,
+          width: '20%',
+        },
+        {
+          name: <span className="text-white">Località</span>,
+          selector: row => row.fa_parte_di?.nome_luogo || "", // Per l'ordinamento
+          cell: row => row.fa_parte_di ? (
+            
+              <div>
+                <div>{row.fa_parte_di.nome_luogo || "ND"}{row.fa_parte_di.localita ? ` (${row.fa_parte_di.localita})` : ''}</div>
+                {row.fa_parte_di.toponimo && (
+                  <small className="text-muted">
+                    {row.fa_parte_di.toponimo}
+                  </small>
+                )}
+              </div>
+          ) : (
+            <span className="text-muted">Nessun luogo padre</span>
+          ),
+          width: '25%',
+          sortable: true,
+        },
+        {
+          name: <span className="text-white">Tipologia</span>,
+          cell: row => (
+            <div>
+              <div>{row.tipo_monumento || "ND"}</div>
+              {row.caratteristica_di_dettaglio && (
+                <small className="text-muted">
+                  {row.caratteristica_di_dettaglio}
+                </small>
+              )}
+            </div>
+          ),
+          sortable: true,
+          width: '20%',
+        },
+        {
+          name: <span className="text-white">Periodo</span>,
+          cell: row => {
+            const currentYear = new Date().getFullYear();
+            const showEndYear = row.periodo_fine && row.periodo_fine <= currentYear;
+            
+            return (
+              <div>
+                {row.anno_inizio || "ND"}
+                {showEndYear ? ` — ${row.periodo_fine}` : ''}
+                {!row.anno_inizio && !row.periodo_fine && "ND"}
+              </div>
+            );
+          },
+          sortable: true,
+          width: '25%',
+          center: true,
+        }
+      ]}
+    />
+
+
+       }} />
+
+    
+
+</Record>
