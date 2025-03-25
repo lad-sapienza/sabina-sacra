@@ -39,11 +39,37 @@ import {Row, Col} from "react-bootstrap";
           name={["link_immagine"]}
           transformer={(url) =>
             url ? (
-              <img src={url} alt="Anteprima immagine" className="img-fluid rounded my-5 shadow" style={{maxHeight: '800px'}} />
+              <div className="text-center my-4">
+                <img
+                  src={
+                    url.includes("upload.wikimedia.org/wikipedia/commons/")
+                      ? `https://upload.wikimedia.org/wikipedia/commons/thumb/${url.split("/").at(-3)}/${url.split("/").at(-2)}/${url.split("/").at(-1)}/400px-${url.split("/").at(-1)}`
+                      : url.includes("commons.wikimedia.org/wiki/File:")
+                      ? `https://commons.wikimedia.org/wiki/Special:FilePath/${decodeURIComponent(url.split("File:").at(-1).split("?")[0])}`
+                      : url.includes("#/media/File:")
+                      ? `https://commons.wikimedia.org/wiki/Special:FilePath/${decodeURIComponent(url.split("#/media/File:").at(-1).split("/")[0].split("?")[0])}`
+                      : url
+                  }
+                  alt="Anteprima immagine"
+                  className="img-fluid rounded shadow"
+                  style={{ maxHeight: '800px' }}
+                />
+                <small className="d-block mt-2">
+                  Authority:&nbsp;
+                  <a href={url} target="_blank" rel="noopener noreferrer">
+                    wikimedia_commons
+                  </a>{" "}
+                  (CC BY-SA 3.0)
+                </small>
+              </div>
             ) : (
-              <img src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg" alt="Nessuna immagine disponibile" className="centered-image" />
-            )
-          }
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg"
+                alt="Nessuna immagine disponibile"
+                className="img-fluid d-block mx-auto my-5"
+              />
+        )
+      }
       />
       <div className="bg-light border rounded p-3">
         <Field 

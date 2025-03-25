@@ -55,7 +55,7 @@ import { Row, Col, Accordion } from "react-bootstrap";
       defaultSortAsc
       columns={[
         {
-          name: <span className="text-white">Anteprima</span>,
+          name: <span className="text-white">Image</span>,
           cell: row => row.link_immagine ? (
             <a 
               href={row.link_immagine} 
@@ -63,21 +63,29 @@ import { Row, Col, Accordion } from "react-bootstrap";
               rel="noopener noreferrer"
               className="d-inline-block"
             >
-              <img 
-                src={row.link_immagine} 
-                alt={`${row.nome_luogo} - anteprima`}
-                style={{
-                  width: '80px',
-                  height: '60px',
-                  objectFit: 'cover',
-                  borderRadius: '4px',
-                  boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-                }}
-                onError={(e) => {
-                  e.target.onerror = null; 
-                  e.target.src = 'data:image/svg+xml;charset=UTF-8,%3Csvg xmlns="http://www.w3.org/2000/svg" width="80" height="60" viewBox="0 0 80 60"%3E%3Crect width="80" height="60" fill="%23e9ecef"/%3E%3Ctext x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="%236c757d" font-family="Arial"%3ENo image%3C/text%3E%3C/svg%3E'
-                }}
-              />
+             <img 
+              src={
+                row.link_immagine?.includes("upload.wikimedia.org/wikipedia/commons/")
+                  ? `https://upload.wikimedia.org/wikipedia/commons/thumb/${row.link_immagine.split("/")[row.link_immagine.split("/").length - 3]}/${row.link_immagine.split("/")[row.link_immagine.split("/").length - 2]}/${row.link_immagine.split("/").pop()}/400px-${row.link_immagine.split("/").pop()}`
+                  : row.link_immagine?.includes("commons.wikimedia.org/wiki/File:")
+                  ? `https://commons.wikimedia.org/wiki/Special:FilePath/${decodeURIComponent(row.link_immagine.split("File:").pop().split("?")[0])}`
+                  : row.link_immagine?.includes("#/media/File:")
+                  ? `https://commons.wikimedia.org/wiki/Special:FilePath/${decodeURIComponent(row.link_immagine.split("#/media/File:").pop().split("/")[0].split("?")[0])}`
+                  : row.link_immagine
+              }
+              alt={`${row.nome_luogo} - anteprima`}
+              style={{
+                width: '80px',
+                height: '60px',
+                objectFit: 'cover',
+                borderRadius: '4px',
+                boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+              }}
+              onError={(e) => {
+                e.target.onerror = null; 
+                e.target.src = 'data:image/svg+xml;charset=UTF-8,%3Csvg xmlns="http://www.w3.org/2000/svg" width="80" height="60" viewBox="0 0 80 60"%3E%3Crect width="80" height="60" fill="%23e9ecef"/%3E%3Ctext x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="%236c757d" font-family="Arial"%3ENo image%3C/text%3E%3C/svg%3E'
+              }}
+            />  
             </a>
           ) : (
             <span className="badge bg-secondary">Nessuna immagine</span>
