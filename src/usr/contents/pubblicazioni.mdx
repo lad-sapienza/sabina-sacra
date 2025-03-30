@@ -6,83 +6,73 @@ description: "Le nostre pubblicazioni"
 menu_position: 4
 ---
 
-import { Card, Col, Row, Container, Accordion } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
+import LogoBar from "../components/LogoBar"
 
-<Container>
-  <Row className="my-3">
-    <Col md={12} className="text-center">
-      <img src="/images/logo_changes.png" alt="Logo CHANGES" className="img-fluid mb-4" />
-    </Col>
-  </Row>
+<LogoBar />
 
+<Container className="mt-4">
   <Row>
     <Col md={12}>
-      ## Pubblicazioni
-      <Accordion>
-        <Accordion.Item eventKey="0">
-         <Accordion.Header style={{ whiteSpace: "pre-line" }}>
-            Sezione Monografica in **Studi e Materiali di Storia delle Religioni 91 (1/2025)**
-            {"\n"}Sabina sacra. Ebrei, cristiani e spazio sacro tra Sabina e Valle dell’Aniene (IV-XX secolo) (pp. 7-95)
-          </Accordion.Header>
-          <Accordion.Body>
-            - **Paola Buzi, Serena di Nepi** - Introduzione
-            - **Antonio Mursia** - Un itinerario cultuale. I santuari di San Michele Arcangelo lungo la via Salaria
-            - **Giovanni Hermanin de Reichenfeld** - Dalla imitatio Romae alla societas monachorum. Continuità e discontinuità viaria, culturale e religiosa tra Subiaco, Tivoli e Roma prima e dopo l'arrivo di San Benedetto
-            - **Francesco D'Angelo** - Devozione e controllo del territorio. Il culto di san Martino di Tours a Farfa nell’XI secolo
-            - **Alexa Bianchini** - Pellegrinaggi e devozione a Farfa tra XI e XV secolo
-            - **Andrea Zappia** - «Que antiquitis vocabatur dell'hebrei». Storia e topografia della presenza ebraica alla fiera di Farfa (secoli XVI-XVII)
-            - **Valentina Emiliani, Luca Giangolini** - Uno sguardo sulla vita religiosa della Sabina in età moderna tra governo del territorio e produzione culturale (XVI-XVIII sec.)
-            - **Luciano Villani** - Le stragi naziste nella Valle dell’Aniene: memoria pubblica e pratiche sociali del ricordo dal secondo dopoguerra a oggi
-          </Accordion.Body>
-        </Accordion.Item>
 
-        <Accordion.Item eventKey="1">
-            <Accordion.Header style={{ whiteSpace: "pre-line" }}>
-            **Serena Di Nepi, Andrea Zappia (2025)**
-            {"\n"} Jews in rome
-          </Accordion.Header>
-          <Accordion.Body>
-            Oxford, Bibliographies on Renaissance and Reformation, Oxford.
+      <h1 className="text-center mb-4">Pubblicazioni</h1>
 
-            [Leggi l'articolo](https://dx.doi.org/10.1093/obo/9780195399301-0542)
-          </Accordion.Body>
-        </Accordion.Item>
+      <div className="bg-light p-3 mb-4 rounded">
+        <h2 className="h4">Indice</h2>
+        <ul className="list-unstyled">
+          <li className="mb-2">• <a href="#sabina-sacra" className="text-decoration-none">Sabina sacra. Ebrei, cristiani e spazio sacro</a></li>
+          <li className="mb-2">• <a href="#jews-in-rome" className="text-decoration-none">Jews in Rome</a></li>
+          <li className="mb-2">• <a href="#abramo-ebreo" className="text-decoration-none">Abramo ebreo da molti giorni in qua pernotta qui, e negotia</a></li>
+          <li className="mb-2">• <a href="#storia-urbana" className="text-decoration-none">Controllo del culto, controllo del territorio</a></li>
+        </ul>
+      </div>
 
-        <Accordion.Item eventKey="2">
-         <Accordion.Header style={{ whiteSpace: "pre-line" }}>
-            **Andrea Zappia (in corso di pubblicazione)**
-            {"\n"}Abramo ebreo da molti giorni in qua pernotta qui, e negotia
-          </Accordion.Header>
-          <Accordion.Body>
-            Mercanti ebrei e comunità locali nello Stato della Chiesa (XVII-XVIII secolo).  
-            In: Riforma e Movimenti Religiosi.
-          </Accordion.Body>
-        </Accordion.Item>
+      <hr className="my-4" />
 
-        <Accordion.Item eventKey="3">
-          <Accordion.Header style={{ whiteSpace: "pre-line" }}>
-          Sezione monografica di <strong>Storia urbana 2025</strong>
-          {"\n"} Controllo del culto, controllo del territorio nelle aree interne (centro Italia, XV-XVIII secolo) (in corso di pubblicazione)
-          </Accordion.Header>
-          <Accordion.Body>
-            - **Alexa Bianchini** - Controllo del territorio e gestione del patrimonio nel Lazio: alcuni casi di studio tra la Sabina e la Valle dell’Aniene alla fine del medioevo
-            - **Valentina Emiliani** - Governo ed influenza spirituale nel Lazio orientale del Seicento. Francesco Barberini abate commendatario di S. Maria di Farfa e di S. Salvatore Maggiore
-            - **Luca Giangolini** - «Sono con Dio da sola a solo»: la direzione spirituale e le esperienze religiose di un gruppo quietista in Sabina alla fine del Seicento
-            - **Andrea Zappia** - Evadere dal ghetto. Pratiche e strategie dei mercanti ebrei nei circuiti fieristici dello Stato della Chiesa (XVII-XVIII sec.)
-          </Accordion.Body>
-        </Accordion.Item>
-      </Accordion>
+      ## <a id="sabina-sacra"></a> Sabina sacra. Ebrei, cristiani e spazio sacro tra Sabina e Valle dell'Aniene (IV-XX secolo) - 2025
+
+      <div className="border-start border-primary ps-3 mb-4">
+        <small className="text-muted">Sezione Monografica di Studi e Materiali di Storia delle Religioni 91 (1/2025)</small>
+        
+        - **Paola Buzi, Serena Di Nepi**, _Introduzione_
+        - **Antonio Mursia**, _Un itinerario cultuale. I santuari di San Michele Arcangelo lungo la via Salaria_
+        - **Giovanni Hermanin de Reichenfeld**, _Dalla imitatio Romae alla societas monachorum. Continuità e discontinuità viaria, culturale e religiosa tra Subiaco, Tivoli e Roma prima e dopo l'arrivo di San Benedetto_
+        - **Francesco D'Angelo**, _Devozione e controllo del territorio. Il culto di san Martino di Tours a Farfa nell'XI secolo_
+        - **Alexa Bianchini**, _Pellegrinaggi e devozione a Farfa tra XI e XV secolo_
+        - **Andrea Zappia**, _«Que antiquitis vocabatur dell'hebrei». Storia e topografia della presenza ebraica alla fiera di Farfa (secoli XVI-XVII)_
+        - **Valentina Emiliani, Luca Giangolini**, _Uno sguardo sulla vita religiosa della Sabina in età moderna tra governo del territorio e produzione culturale (XVI-XVIII sec.)_
+        - **Luciano Villani**, _Le stragi naziste nella Valle dell'Aniene: memoria pubblica e pratiche sociali del ricordo dal secondo dopoguerra a oggi_
+      </div>
+
+      ## <a id="jews-in-rome"></a> Jews in Rome - 2025
+
+      <div className="border-start border-primary ps-3 mb-4">
+        <small className="text-muted">Articolo in: Oxford, Bibliographies on Renaissance and Reformation, Oxford</small>
+        
+        **Autori:** Serena Di Nepi, Andrea Zappia  
+        <a href="https://dx.doi.org/10.1093/obo/9780195399301-0542" className="btn btn-sm btn-outline-primary mt-2">Leggi l'articolo</a>
+      </div>
+
+## <a id="abramo-ebreo"></a> Abramo ebreo da molti giorni in qua pernotta qui, e negotia - 2025
+
+    <div class="border-start border-primary ps-3 mb-4">
+      <p class="mb-1"><strong>Mercanti ebrei e comunità locali nello Stato della Chiesa (XVII-XVIII secolo)</strong></p>
+      <small class="text-muted d-block mb-2">Articolo in: Riforma e Movimenti Religiosi</small>
+      
+      **Autore:** Andrea Zappia
+    </div>
+
+      ## <a id="storia-urbana"></a> Controllo del culto, controllo del territorio nelle aree interne (centro Italia, XV-XVIII secolo) - in corso di pubblicazione
+
+      <div className="border-start border-primary ps-3 mb-4">
+        <small className="text-muted">Sezione monografica di Storia urbana 2025</small>
+        
+        - **Alexa Bianchini**, _Controllo del territorio e gestione del patrimonio nel Lazio: alcuni casi di studio tra la Sabina e la Valle dell'Aniene alla fine del medioevo_
+        - **Valentina Emiliani**, _Governo ed influenza spirituale nel Lazio orientale del Seicento. Francesco Barberini abate commendatario di S. Maria di Farfa e di S. Salvatore Maggiore_
+        - **Luca Giangolini**, _«Sono con Dio da sola a solo»: la direzione spirituale e le esperienze religiose di un gruppo quietista in Sabina alla fine del Seicento_
+        - **Andrea Zappia**, _Evadere dal ghetto. Pratiche e strategie dei mercanti ebrei nei circuiti fieristici dello Stato della Chiesa (XVII-XVIII sec.)_
+      </div>
+
     </Col>
   </Row>
-
-
- - Paola **Buzi**, Serena **Di Nepi** (a cura di), _Sabina sacra. Ebrei, cristiani e spazio sacro tra Sabina e Valle dell’Aniene (IV-XX secolo)_. Sezione Monografica di **Studi e Materiali di Storia delle Religioni 91 (1/2025), pp. 7-95**
-    - **Paola Buzi, Serena Di Nepi**, _Introduzione_
-    - **Antonio Mursia**, _Un itinerario cultuale. I santuari di San Michele Arcangelo lungo la via Salaria_
-    - **Giovanni Hermanin de Reichenfeld** - Dalla imitatio Romae alla societas monachorum. Continuità e discontinuità viaria, culturale e religiosa tra Subiaco, Tivoli e Roma prima e dopo l'arrivo di San Benedetto
-    - **Francesco D'Angelo** - Devozione e controllo del territorio. Il culto di san Martino di Tours a Farfa nell’XI secolo
-    - **Alexa Bianchini** - Pellegrinaggi e devozione a Farfa tra XI e XV secolo
-    - **Andrea Zappia** - «Que antiquitis vocabatur dell'hebrei». Storia e topografia della presenza ebraica alla fiera di Farfa (secoli XVI-XVII)
-    - **Valentina Emiliani, Luca Giangolini** - Uno sguardo sulla vita religiosa della Sabina in età moderna tra governo del territorio e produzione culturale (XVI-XVIII sec.)
-    - **Luciano Villani** - Le stragi naziste nella Valle dell’Aniene: memoria pubblica e pratiche sociali del ricordo dal secondo dopoguerra a oggi
 </Container>
