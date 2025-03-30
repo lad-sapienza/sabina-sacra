@@ -5,101 +5,135 @@ slug: "fonte"
 description: ""
 ---
 
-import { Record, Field } from "../../modules/scms.js"
-import "../layout/style.css"
-import { Row, Col } from "react-bootstrap"
+import { Record, Field } from "../../modules/scms.js";
+import "../layout/style.css";
+import { Row, Col } from "react-bootstrap";
 
 <Record>
-  <div className="p-4 text-white bg-primary text-center">
-    <Field 
-  name={["titolo_completo"]}
-  transformer={(value) => {
-    if (!value || typeof value !== "string" || value.trim() === "") {
-      return null;
-    }
-       return <div className="fw-bold fs-5"
-       dangerouslySetInnerHTML={{ __html: value }} 
+  <div className="p-3 text-white bg-primary rounded-top border-top border-5 border-danger">
+    <h2 className="mb-1 text-center">
+      <Field 
+        name={["titolo_completo"]}
+        transformer={(value) => {
+          if (!value || typeof value !== "string" || value.trim() === "") {
+            return "Fonte senza titolo";
+          }
+          return <div dangerouslySetInnerHTML={{ __html: value }} />;
+        }}
       />
-    }}
-  />
-    <br />
-    <p>Fonte <Field name={["tipo_generale"]} /> - <Field name={["tipologia_specifica"]} /></p>
+    </h2>
+    <p className="text-center fs-5">
+      <Field name={["tipo_generale"]} /> - <Field name={["tipologia_specifica"]} />
+    </p>
   </div>
 
-  <Row className="my-5">
-    <Col sm={8}>
-    <div className="mb-5">
-    <Field name={["note"]} />
-</div>
-    <h5 className="fw-bold">Luoghi Menzionati</h5>
-    <div className="bg-light p-3 border rounded">
+  <div className="p-4 bg-white border rounded-bottom shadow-sm">
+    <Row className="g-4">
+      <Col lg={8}>
+        {/* Sezione Note */}
+        <div className="p-4 border rounded bg-light">
+          <Field name={["note"]} />
+        </div>
+
+        {/* Link esterno */}
+        <Field
+          name={["link"]}
+          transformer={value => value && (
+            <div className="mt-4 p-3 border rounded bg-light">
+              <h5 className="text-primary mb-3">
+                <i className="bi bi-link-45deg me-2"></i>Link esterno
+              </h5>
+              <a 
+                href={value} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-decoration-none text-primary"
+              >
+                {value}
+              </a>
+            </div>
+          )}
+        />
+      </Col>
+
+      <Col lg={4}>
+        {/* Dettagli aggiuntivi */}
+        <div className="p-3 bg-light rounded border">
+          <h5 className="text-primary mb-3">
+            <i className="bi bi-archive me-2"></i>Dove trovarla
+          </h5>
+          <ul className="list-unstyled">
+            <li className="mb-2">
+              <span className="text-muted me-2">Collezione:</span>
+              <Field name={["collezione"]} transformer={(value) => value || "/"} />
+            </li>
+            <li className="mb-2">
+              <span className="text-muted me-2">Segnatura:</span>
+              <Field name={["segnatura"]} transformer={(value) => value || "/"} />
+            </li>
+            <li className="mb-2">
+              <span className="text-muted me-2">Inventario:</span>
+              <Field name={["inventario"]} transformer={(value) => value || "/"} />
+            </li>
+          </ul>
+        </div>
+      </Col>
+    </Row>
+
+    {/* Separatore */}
+    <hr className="my-5" />
+
+    {/* Luoghi Menzionati - Stile a pillole */}
+    <div className="mt-4">
+      <h4 className="text-primary mb-4 text-center">
+        <i className="bi bi-geo-alt me-2"></i>Luoghi Menzionati
+      </h4>
       <Field 
         name={["luoghi_menzionati"]}
         transformer={(luoghi) => {
-          if (!luoghi || !Array.isArray(luoghi) || luoghi.length === 0) {
-            return "Nessun luogo menzionato";
-          }
+          if (!luoghi?.length) return (
+            <div className="text-muted p-3 text-center">Nessun luogo menzionato</div>
+          );
 
           // Raggruppiamo i luoghi per categoria
           const luoghiRaggruppati = luoghi.reduce((acc, luogo) => {
             const luogoData = luogo.luogo_di_interesse_id;
             if (!luogoData) return acc;
 
-            const categoria = luogoData.caratteristica_di_dettaglio || "Altro"; // Se null, assegna "Altro"
+            const categoria = luogoData.caratteristica_di_dettaglio 
+              ? luogoData.caratteristica_di_dettaglio.charAt(0).toUpperCase() + 
+                luogoData.caratteristica_di_dettaglio.slice(1).toLowerCase()
+              : "Altro";
             if (!acc[categoria]) acc[categoria] = [];
             acc[categoria].push(luogoData);
             return acc;
           }, {});
 
-          // Creiamo il contenuto HTML
-          const contenuto = Object.entries(luoghiRaggruppati).map(([categoria, luoghi]) => (
-            `<div class="mb-3 p-3 border rounded bg-light">
-              <h5 class="fw-bold text-primary">${categoria}</h5>
-              <ul>` +
-            luoghi
-              .map(luogo =>
-                `<li><a href="/monumento/?tb=luogo_di_interesse&id=${luogo.id}" class="text-decoration-none text-primary">
-                  ${luogo.nome_luogo}
-                </a></li>`
-              )
-              .join("") +
-            `</ul>
-            </div>`
-          )).join("");
-
-          return <div dangerouslySetInnerHTML={{ __html: contenuto }} />;
+          return (
+            <div className="text-center">
+              <div className="d-inline-block text-start w-100">
+                {Object.entries(luoghiRaggruppati).map(([categoria, luoghi]) => (
+                  <div key={categoria} className="mb-4">
+                    <h5 className="fw-bold text-dark mb-3">{categoria}</h5>
+                    <div className="d-flex flex-wrap gap-2 justify-content-center">
+                      {luoghi.map(luogo => (
+                        <a 
+                          key={luogo.id}
+                          href={`/monumento/?tb=luogo_di_interesse&id=${luogo.id}`}
+                          className="text-decoration-none d-inline-block border rounded-pill px-3 py-1 bg-white text-primary hover-bg-primary hover-text-white"
+                          style={{ transition: 'all 0.2s' }}
+                        >
+                          {luogo.nome_luogo}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          );
         }}
       />
     </div>
-    </Col>
-
-    <Col sm={4}>
-      <div className="p-3 text-black border rounded" style={{ border: '2px solid black' }}>
-        <h5 className="fw-bold">Dove trovarla</h5>
-        <p><strong>Collezione:</strong> <Field name={["collezione"]} transformer={(value) => value || "/"} /></p>
-        <p><strong>Segnatura:</strong> <Field name={["segnatura"]} transformer={(value) => value || "/"} /></p>
-        <p><strong>Inventario:</strong> <Field name={["inventario"]} transformer={(value) => value || "/"} /></p>
-      </div>
-    </Col>
-
-  </Row>
-
-{" "}
-
-
-  <Field
-    name={["link"]}
-    transformer={ value =>
-      value ? (
-        <p>
-  <strong>Link:</strong>{" "}
-        <a href={value} target="_blank" rel="noopener noreferrer">
-          {value}
-        </a>
-        </p>
-      ) : ''
-    }
-  />
-
-
+  </div>
 </Record>
