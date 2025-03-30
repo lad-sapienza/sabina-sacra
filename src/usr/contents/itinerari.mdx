@@ -1,0 +1,274 @@
+---
+title: "Itinerari"
+date: "2023-10-01"
+slug: "itinerari"
+description: "Scopri i nostri itinerari"
+menu_position: 6
+---
+
+import { useState, useEffect } from "react"
+import { Row, Col, Button, ButtonGroup } from "react-bootstrap"
+import getDataFromSource from "../../services/getDataFromSource"
+import { Link } from "gatsby"
+
+# Itinerari
+
+export default function ItinerariPage() {
+  const [data, setData] = useState([])
+  const [selectedItinerari, setSelectedItinerari] = useState([])
+  const [selectedLuoghi, setSelectedLuoghi] = useState([])
+  const [activeFilter, setActiveFilter] = useState("itinerari")
+
+  useEffect(() => {
+    const fetch = async () => {
+      const result = await getDataFromSource({
+        directus: {
+          table: "itinerario",
+          queryString: "fields=*.*.*"
+        }
+      })
+      setData(result)
+    }
+    fetch()
+  }, [])
+
+  const nomiItinerari = [...new Set(data.map(row => row.nome_itinerario))]
+
+  // Mappa luogo → numero di itinerari in cui compare
+  const luogoCounter = {}
+  data.forEach(row => {
+    row.luoghi_dell_itinerario?.forEach(l => {
+      const nome = l.luogo_di_interesse_id?.nome_luogo
+      if (nome) {
+        luogoCounter[nome] = (luogoCounter[nome] || 0) + 1
+      }
+    })
+  })
+
+  const toggleItinerario = (nome) => {
+    setSelectedItinerari(prev =>
+      prev.includes(nome) ? prev.filter(n => n !== nome) : [...prev, nome]
+    )
+  }
+
+  const toggleLuogo = (nome) => {
+    setSelectedLuoghi(prev =>
+      prev.includes(nome) ? prev.filter(n => n !== nome) : [...prev, nome]
+    )
+  }
+
+  const filteredData = data.filter(row => {
+    const matchItinerario =
+      selectedItinerari.length === 0 || selectedItinerari.includes(row.nome_itinerario)
+
+    const luoghi = row.luoghi_dell_itinerario?.map(l => l.luogo_di_interesse_id?.nome_luogo) || []
+    const matchLuogo =
+      selectedLuoghi.length === 0 || luoghi.some(l => selectedLuoghi.includes(l))
+
+    return matchItinerario && matchLuogo
+  })
+
+  return (
+    <>
+      {/* SWITCH FILTRO */}
+      <Row className="mb-3">
+        <Col>
+          <ButtonGroup>
+            <Button
+              variant={activeFilter === "itinerari" ? "primary" : "outline-secondary"}
+              onClick={() => setActiveFilter("itinerari")}
+            >
+              Filtra per itinerario
+            </Button>
+            <Button
+              variant={activeFilter === "luoghi" ? "primary" : "outline-secondary"}
+              onClick={() => setActiveFilter("luoghi")}
+            >
+              Filtra per luogo
+            </Button>
+          </ButtonGroup>
+        </Col>
+      </Row>
+
+      {/* FILTRI */}
+      <Row className="mb-4">
+        <Col>
+          {activeFilter === "itinerari" && (
+            <div className="d-flex flex-wrap gap-2">
+              {nomiItinerari.map(nome => (
+                <Button
+                  key={nome}
+                  variant={selectedItinerari.includes(nome) ? "primary" : "outline-secondary"}
+                  onClick={() => toggleItinerario(nome)}
+                >
+                  {nome}
+                </Button>
+              ))}
+            </div>
+          )}
+
+          {activeFilter === "luoghi" && (
+            <div style={{ maxHeight: '300px', overflowY: 'auto', padding: '10px', border: '1px solid #dee2e6', borderRadius: '8px' }}>
+              {Object.entries(
+                data.reduce((acc, row) => {
+                  (row.luoghi_dell_itinerario || []).forEach(l => {
+                    const nomeLuogo = l.luogo_di_interesse_id?.nome_luogo
+                    const tipologia = l.luogo_di_interesse_id?.caratteristica_di_dettaglio || "Altro"
+                    if (nomeLuogo) {
+                      if (!acc[tipologia]) acc[tipologia] = new Set()
+                      acc[tipologia].add(nomeLuogo)
+                    }
+                  })
+                  return acc
+                }, {})
+              ).map(([tipologia, luoghi]) => (
+                <div key={tipologia} style={{ marginBottom: '20px' }}>
+                  <h5 style={{ marginBottom: '10px' }}>{tipologia}</h5>
+                  <div className="d-flex flex-wrap gap-2">
+                    {[...luoghi].sort().map(nome => (
+                      <Button
+                        key={nome}
+                        variant={selectedLuoghi.includes(nome) ? "primary" : "outline-secondary"}
+                        onClick={() => toggleLuogo(nome)}
+                      >
+                        {nome} {luogoCounter[nome] ? `(${luogoCounter[nome]})` : ''}
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </Col>
+      </Row>
+
+      {/* RISULTATI */}
+      <Row>
+        <Col>
+          {filteredData.map((row, index) => {
+            const luoghiOrdinati = row.luoghi_dell_itinerario
+              ? [...row.luoghi_dell_itinerario].sort((a, b) => a.ordine - b.ordine)
+              : []
+
+            return (
+              <div
+                key={row.id}
+                style={{
+                  margin: '40px 0',
+                  padding: '30px',
+                  borderRadius: '12px',
+                  border: '1px solid #e0e0e0',
+                  boxShadow: '0 2px 6px rgba(0,0,0,0.05)',
+                  backgroundColor: '#ffffff',
+                  marginLeft: index % 2 === 0 ? '0' : 'auto',
+                  marginRight: index % 2 === 0 ? 'auto' : '0',
+                  width: '90%',
+                  display: 'flex',
+                  flexDirection: index % 2 === 0 ? 'row' : 'row-reverse',
+                  gap: '30px',
+                  alignItems: 'flex-start'
+                }}
+              >
+                {/* COLONNA DESCRIZIONE */}
+                <div style={{ flex: 2 }}>
+                  <h2 style={{
+                    marginBottom: '15px',
+                    fontSize: '1.75rem',
+                    color: '#1c1c1c'
+                  }}>
+                    <Link
+                      to={`/itinerario/?tb=itinerario&id=${row.id}`}
+                      className="text-decoration-none text-primary fw-bold"
+                    >
+                      {row.nome_itinerario}
+                    </Link>
+                  </h2>
+
+                  <p style={{
+                    fontSize: '1.05rem',
+                    lineHeight: '1.6',
+                    marginBottom: '15px',
+                    color: '#495057'
+                  }}>{row.breve_descrizione}</p>
+
+                  {row.note && (
+                    <div style={{
+                      padding: '15px',
+                      backgroundColor: '#f8f9fa',
+                      borderLeft: '4px solid #adb5bd',
+                      fontStyle: 'italic',
+                      color: '#6c757d',
+                      borderRadius: '4px'
+                    }}>{row.note}</div>
+                  )}
+                </div>
+
+                {/* COLONNA LUOGHI CON LINEA E NUMERI */}
+                {luoghiOrdinati.length > 0 && (
+                  <div style={{ flex: 1 }}>
+                    <h6 style={{ fontSize: '1rem', marginBottom: '10px', fontWeight: '600', color: '#495057' }}>
+                      Luoghi dell’itinerario
+                    </h6>
+                    <ul style={{ paddingLeft: '0', listStyle: 'none', margin: 0, position: 'relative' }}>
+                      {luoghiOrdinati.map((luogo, i) => (
+                        <li key={luogo.id} style={{ position: 'relative', paddingLeft: '40px', marginBottom: '20px' }}>
+                          {/* Linea */}
+                          {i < luoghiOrdinati.length - 1 && (
+                            <div style={{
+                              position: 'absolute',
+                              left: '17px',
+                              top: '28px',
+                              height: '100%',
+                              width: '2px',
+                              backgroundColor: '#e0e0e0',
+                              zIndex: 0
+                            }} />
+                          )}
+
+                          {/* Cerchio numerato */}
+                          <span style={{
+                            position: 'absolute',
+                            left: '0',
+                            top: '0',
+                            display: 'inline-block',
+                            width: '34px',
+                            height: '34px',
+                            lineHeight: '34px',
+                            textAlign: 'center',
+                            backgroundColor: '#822433',
+                            color: 'white',
+                            borderRadius: '50%',
+                            fontWeight: 'bold',
+                            fontSize: '0.9rem',
+                            zIndex: 1
+                          }}>
+                            {i + 1}
+                          </span>
+
+                          <div>
+                            <Link
+                              to={`/monumento/?tb=luogo_di_interesse&id=${luogo.luogo_di_interesse_id.id}`}
+                              className="text-decoration-none text-dark fw-semibold"
+                            >
+                              🏛️ {luogo.luogo_di_interesse_id.nome_luogo}
+                            </Link>
+                            {luogo.luogo_di_interesse_id.caratteristica_di_dettaglio && (
+                              <span style={{ fontSize: '0.85rem', color: '#822433' }}>
+                                {" "}
+                                ({luogo.luogo_di_interesse_id.caratteristica_di_dettaglio})
+                              </span>
+                            )}
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            )
+          })}
+        </Col>
+      </Row>
+    </>
+  )
+}
