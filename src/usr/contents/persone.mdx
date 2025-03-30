@@ -16,7 +16,7 @@ import { Row, Col, Accordion } from "react-bootstrap";
   <Col md={12}>
     <div className="bg-light p-4 rounded shadow-sm text-center">
       La presente pagina è dedicata ai personaggi legati al territorio e al Sacro e contiene informazioni
-      relative a persone connesse ai luoghi e ai monumenti considerati nell’Atlante.
+      relative a persone connesse ai luoghi e ai monumenti considerati nell'Atlante.
 
       Navigando nella tabella potrai filtrare i risultati e visualizzare i dati biografici essenziali 
       dei personaggi, oltre a poter accedere ad una scheda dedicata con informazioni complete.
@@ -26,19 +26,18 @@ import { Row, Col, Accordion } from "react-bootstrap";
   </Col>
 </Row>
 
-
 <Row className="my-4">
   <Col md={12}>
     <DataTb
       source={{
         directus: {
           table: "persona",
-          queryString: "*.*.*&limit=-1",
+          queryString: "&limit=-1",
         }
       }}
       striped={true}
       highlightOnHover
-      pointerOnHover
+      pointerOnHover={false}
       className="data-table shadow-sm rounded"
       customStyles={{
         headCells: {
@@ -61,10 +60,11 @@ import { Row, Col, Accordion } from "react-bootstrap";
       columns={[
         {
           name: <span className="text-white">Personaggio</span>,
-          selector: item => (
+          selector: row => row.nome_e_cognome,
+          cell: item => (
             <Link 
               to={`/personaggio/?tb=persona&id=${item.id}`}
-              className="text-primary fw-bold"
+              className="text-primary fw-bold hover-pointer"
             >
               {`${item.nome_e_cognome || "ND"}${(item.soprannome ? ` (${item.soprannome})` : "")}`}
             </Link>
@@ -74,22 +74,38 @@ import { Row, Col, Accordion } from "react-bootstrap";
           wrap: true,
         },
         {
-          name: <span className="text-white">Dati Biografici</span>,
+          name: <span className="text-white hover-pointer">Provenienza</span>,
+          selector: row => row.provenienza,
           cell: row => (
-            <div className={row.data_certa ? "" : "text-danger"}>
-              <div>{row.provenienza || "ND"}</div>
-              <small className="text-muted">
-                {row.anno_di_nascita || "ND"} — {row.anno_di_morte || "ND"}
-                {row.dies_natalis ? ` - ${row.dies_natalis}` : ''}
-              </small>
+            <div>
+              {row.provenienza || "ND"}
             </div>
           ),
           sortable: true,
-          width: '25%',
+          width: '15%',
         },
         {
-          name: <span className="text-white">Qualifica</span>,
-          selector: row => (
+          name: <span className="text-white">Date</span>,
+          selector: row => row.anno_di_nascita || row.anno_di_morte,
+          cell: row => (
+            <div>
+              <div>
+                {!row.anno_di_nascita && !row.anno_di_morte ? "(/)" : 
+                  `${row.anno_di_nascita ? (row.data_certa ? row.anno_di_nascita : `${row.anno_di_nascita}(~)`) : "(?)"} — 
+                   ${row.anno_di_morte ? (row.data_certa ? row.anno_di_morte : `${row.anno_di_morte}(~)`) : "(?)"}`}
+              </div>
+              {row.dies_natalis && (
+                <small className="text-muted">Dies natalis: {row.dies_natalis}</small>
+              )}
+            </div>
+          ),
+          sortable: true,
+          width: '20%',
+        },
+        {
+          name: <span className="text-white hover-pointer">Qualifica</span>,
+          selector: row => row.qualifica,
+          cell: row => (
             <div>
               <div>{row.qualifica || "ND"}</div>
               {row.qualifica_specifica && (
@@ -98,17 +114,18 @@ import { Row, Col, Accordion } from "react-bootstrap";
             </div>
           ),
           sortable: true,
-          width: '25%',
+          width: '20%',
         },
         {
-          name: <span className="text-white">Confessione</span>,
+          name: <span className="text-white hover-pointer">Confessione</span>,
+          selector: row => row.confessione,
           cell: row => (
             <span className={`badge bg-${row.confessione ? 'info' : 'secondary'}`}>
               {row.confessione || "ND"}
             </span>
           ),
           sortable: true,
-          width: '25%',
+          width: '20%',
           center: true,
         }
       ]}
@@ -117,9 +134,7 @@ import { Row, Col, Accordion } from "react-bootstrap";
 </Row>
 
 <div className="bg-light p-4 rounded shadow-sm">
-
   <Accordion>
-    
     <Accordion.Item eventKey="0">
       <Accordion.Header>
         🏷️ **Dati anagrafici**
@@ -156,6 +171,14 @@ import { Row, Col, Accordion } from "react-bootstrap";
         - 🔗 **Luoghi associati alla persona**
       </Accordion.Body>
     </Accordion.Item>
-    
   </Accordion>
 </div>
+
+<style>{`
+  .hover-pointer:hover {
+    cursor: pointer;
+  }
+  .data-table .rdt_TableHead .rdt_TableCol:not(:first-child):hover {
+    cursor: pointer;
+  }
+`}</style>
