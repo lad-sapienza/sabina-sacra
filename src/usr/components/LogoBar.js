@@ -28,7 +28,7 @@ const separatorStyle = {
 
 const LogoBar = () => {
   return (
-    <Container fluid style={{ backgroundColor: "#2b65af" }} className="py-1 px-0">
+    <Container fluid style={{ backgroundColor: "#2b65af" }} className="py-1 px-0 mb-5">
       <Row className="align-items-center justify-content-center text-center g-0 flex-wrap">
         {logos.map((logo, idx) => (
           <React.Fragment key={logo.alt}>

@@ -29,7 +29,7 @@ Cultural Heritage Active Innovation for Sustainable Society
 **Linea tematica 3 (SARAS): “Panorami di diversità: Ebrei, cristiani e spazio sacro tra Sabina e Valle dell’Aniene dalla Tarda Antichità all’Età Contemporanea”**
 - Co-PI: prof.ssa Paola Buzi
 
-Il progetto è stato sviluppato nell’ambito delle attività della Fondazione [CHANGES (Cultural Heritage Active Innovation for Sustainable Society)](https://www.fondazionechanges.org/en/), e rientra nel Piano Nazionale di Ripresa e Resilienza (PNRR), **ITALIA DOMANI**.
+Il progetto è stato sviluppato nell’ambito delle attività della Fondazione [CHANGES (Cultural Heritage Active Innovation for Sustainable Society)](https://www.fondazionechanges.org), e rientra nel Piano Nazionale di Ripresa e Resilienza (PNRR), **ITALIA DOMANI**.
 
 <div className="my-5 border-top"></div>
 
@@ -44,10 +44,15 @@ Il progetto è stato sviluppato nell’ambito delle attività della Fondazione [
     <Col sm={4} key={person.name}>
       <Card className="text-center p-3 shadow bg-light">
         <div className="d-flex justify-content-center align-items-center bg-light rounded py-3">
-          <img src={person.img} alt={person.name} className="rounded-circle border border-white" style={{ width: "100px", height: "100px", objectFit: "cover" }} />
+          <img 
+            src={person.img} 
+            alt={person.name} 
+            className="rounded-circle border border-white img-fluid" 
+            style={{ width: "100px", height: "100px", objectFit: "cover" }}
+          />
         </div>
-        <Card.Body style={{ minHeight: "150px" }}>
-          <Card.Title>{person.name}</Card.Title>
+        <Card.Title>{person.name}</Card.Title>
+        <Card.Body>
         </Card.Body>
       </Card>
     </Col>
@@ -67,8 +72,8 @@ Il progetto è stato sviluppato nell’ambito delle attività della Fondazione [
         <div className="d-flex justify-content-center align-items-center bg-light rounded py-3">
           <img src="https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg" alt={name} className="rounded-circle border border-white" style={{ width: "100px", height: "100px", objectFit: "cover" }} />
         </div>
-        <Card.Body style={{ minHeight: "150px" }}>
-          <Card.Title>{name}</Card.Title>
+        <Card.Title>{name}</Card.Title>
+        <Card.Body>
         </Card.Body>
       </Card>
     </Col>
@@ -80,14 +85,40 @@ Il progetto è stato sviluppato nell’ambito delle attività della Fondazione [
 ## Supervisori
 
 <Row className="g-4 mb-5">
-  {["Julian Bogdani", "Bruno Bonomo", "Tessa Canella", "Serena Di Nepi", "Umberto Longo"].map(name => (
-    <Col xs={6} sm key={name}>
+  {[{
+    "name": "Julian Bogdani",
+    "img": "/images/persons/julian_bogdani.jpg",
+    "link": {
+      "text": "LAD @Sapienza", 
+      "url": "https://lad.saras.uniroma1.it/"
+    }
+  },
+  {
+    "name": "Bruno Bonomo"
+  },
+  {
+    "name": "Tessa Canella"
+  }, 
+  {
+    "name": "Serena Di Nepi"
+  },
+  {
+    "name": "Umberto Longo"
+  },
+  ]
+  .map(item => (
+    <Col xs={6} sm key={item.name}>
       <Card className="text-center p-3 shadow bg-light">
-        <div className="d-flex justify-content-center align-items-center bg-light rounded py-3">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg" alt={name} className="rounded-circle border border-white" style={{ width: "100px", height: "100px", objectFit: "cover" }} />
+        <div className="d-flex justify-content-center align-items-center bg-light py-3">
+          <img
+            src={ item.img ? item.img : "https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg" } 
+            alt={ item.name } 
+            className="rounded-circle border border-white img-fluid" 
+            />
         </div>
-        <Card.Body style={{ minHeight: "150px" }}>
-          <Card.Title>{name}</Card.Title>
+        <Card.Title>{item.name}</Card.Title>
+        <Card.Body>
+          { item.link ?  <div className="mt-2 pt-2 border-top"><a href={item.link.url} target="_blank" rel="noopener noreferrer">{ item.link.text }</a></div> : ''}
         </Card.Body>
       </Card>
     </Col>
