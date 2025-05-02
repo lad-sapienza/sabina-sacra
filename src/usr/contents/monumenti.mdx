@@ -3,17 +3,44 @@ title: "Monumenti"
 date: "2023-10-01"
 slug: "monumenti"
 description: ""
-menu_position: 2
+menu_position: 3
 ---
 
 import { DataTb } from "../../modules/scms";
 import { Link } from "gatsby";
 import { Row, Col, Accordion } from "react-bootstrap";
 
-# Monumenti
+# Monumenti sacri della Sabina
 
 <Row className="my-4">
   <Col md={12}>
+    <div className="bg-light p-4 rounded-3 mb-4 shadow-sm">
+      <h4 className="text-muted mb-3">Patrimonio storico-religioso</h4>
+      <p>
+        Questa sezione raccoglie i principali monumenti legati alla sfera del sacro nell'area della Sabina, 
+        testimonianze preziose di un patrimonio artistico e religioso che spazia dall'epoca pagana a quella cristiana.
+      </p>
+      <p>
+        Dai templi antichi alle chiese medievali, questi luoghi rappresentano un ponte tra passato e presente, 
+        offrendo spunti per comprendere l'evoluzione spirituale e culturale del territorio.
+      </p>
+      <Accordion className="mt-3">
+        <Accordion.Item eventKey="0">
+          <Accordion.Header>Informazioni sulla ricerca</Accordion.Header>
+          <Accordion.Body>
+            <p>
+              La tabella è ordinabile per nome, località, tipologia e periodo. Clicca sull'intestazione di colonna 
+              per cambiare l'ordinamento. Per visualizzare i dettagli completi di ciascun monumento, clicca sul suo nome.
+            </p>
+            <p className="mb-0">
+              <i className="bi bi-info-circle me-2"></i>
+              Alcuni monumenti potrebbero non avere tutte le informazioni complete
+            </p>
+          </Accordion.Body>
+        </Accordion.Item>
+      </Accordion>
+    </div>
+
     <DataTb
       striped={true}
       source={{
@@ -28,7 +55,7 @@ import { Row, Col, Accordion } from "react-bootstrap";
       customStyles={{
         headCells: {
           style: {
-            backgroundColor: '#5f3dc4',
+            backgroundColor: '#a81c1c', // Rosso tenue
             color: 'white',
             fontWeight: 'bold',
             fontSize: '1rem',
@@ -40,14 +67,25 @@ import { Row, Col, Accordion } from "react-bootstrap";
             verticalAlign: 'middle',
           },
         },
+        striped: {
+          default: {
+            style: {
+              backgroundColor: '#f8f9fa', // Grigio chiaro per le righe pari
+            }
+          },
+          striped: {
+            style: {
+              backgroundColor: '#ffffff', // Bianco per le righe dispari
+            }
+          }
+        }
       }}
       defaultSortField="nome_luogo"
       defaultSortAsc
       columns={[
         {
           cell: row => row.link_immagine ? (
-            
-             <img 
+            <img 
               src={
                 row.link_immagine?.includes("upload.wikimedia.org/wikipedia/commons/")
                   ? `https://upload.wikimedia.org/wikipedia/commons/thumb/${row.link_immagine.split("/")[row.link_immagine.split("/").length - 3]}/${row.link_immagine.split("/")[row.link_immagine.split("/").length - 2]}/${row.link_immagine.split("/").pop()}/400px-${row.link_immagine.split("/").pop()}`
@@ -79,6 +117,7 @@ import { Row, Col, Accordion } from "react-bootstrap";
         },
         {
           name: <span className="text-white">Monumento</span>,
+          selector: row => row.nome_luogo || "", // Per l'ordinamento
           cell: row => (
             <Link 
               to={`/monumento/?tb=luogo_di_interesse&id=${row.id}`}
@@ -95,15 +134,14 @@ import { Row, Col, Accordion } from "react-bootstrap";
           name: <span className="text-white">Località</span>,
           selector: row => row.fa_parte_di?.nome_luogo || "", // Per l'ordinamento
           cell: row => row.fa_parte_di ? (
-            
-              <div>
-                <div>{row.fa_parte_di.nome_luogo || "ND"}{row.fa_parte_di.localita ? ` (${row.fa_parte_di.localita})` : ''}</div>
-                {row.fa_parte_di.toponimo && (
-                  <small className="text-muted">
-                    {row.fa_parte_di.toponimo}
-                  </small>
-                )}
-              </div>
+            <div>
+              <div>{row.fa_parte_di.nome_luogo || "ND"}{row.fa_parte_di.localita ? ` (${row.fa_parte_di.localita})` : ''}</div>
+              {row.fa_parte_di.toponimo && (
+                <small className="text-muted">
+                  {row.fa_parte_di.toponimo}
+                </small>
+              )}
+            </div>
           ) : (
             <span className="text-muted">Nessun luogo padre</span>
           ),
@@ -112,6 +150,7 @@ import { Row, Col, Accordion } from "react-bootstrap";
         },
         {
           name: <span className="text-white">Tipologia</span>,
+          selector: row => row.tipo_monumento || "", // Per l'ordinamento
           cell: row => (
             <div>
               <div>{row.tipo_monumento || "ND"}</div>
@@ -127,6 +166,7 @@ import { Row, Col, Accordion } from "react-bootstrap";
         },
         {
           name: <span className="text-white">Periodo</span>,
+          selector: row => row.anno_inizio || 0, // Per l'ordinamento
           cell: row => {
             const currentYear = new Date().getFullYear();
             const showEndYear = row.periodo_fine && row.periodo_fine <= currentYear;
