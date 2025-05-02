@@ -3,11 +3,11 @@ title: "Itinerari"
 date: "2023-10-01"
 slug: "itinerari"
 description: "Scopri i nostri itinerari"
-menu_position: 6
+menu_position: 5
 ---
 
 import { useState, useEffect } from "react"
-import { Row, Col, Button, ButtonGroup } from "react-bootstrap"
+import { Row, Col, Button, ButtonGroup, Form } from "react-bootstrap"
 import getDataFromSource from "../../services/getDataFromSource"
 import { Link } from "gatsby"
 
@@ -18,6 +18,7 @@ export default function ItinerariPage() {
   const [selectedItinerari, setSelectedItinerari] = useState([])
   const [selectedLuoghi, setSelectedLuoghi] = useState([])
   const [activeFilter, setActiveFilter] = useState("itinerari")
+  const [searchTerm, setSearchTerm] = useState("")
 
   useEffect(() => {
     const fetch = async () => {
@@ -68,11 +69,24 @@ export default function ItinerariPage() {
     return matchItinerario && matchLuogo
   })
 
+  // Filtra i luoghi per nome in base al searchTerm
+  const filteredLuoghi = data.reduce((acc, row) => {
+    (row.luoghi_dell_itinerario || []).forEach(l => {
+      const nomeLuogo = l.luogo_di_interesse_id?.nome_luogo
+      const tipologia = l.luogo_di_interesse_id?.caratteristica_di_dettaglio || "Altro"
+      if (nomeLuogo && nomeLuogo.toLowerCase().includes(searchTerm.toLowerCase())) {
+        if (!acc[tipologia]) acc[tipologia] = new Set()
+        acc[tipologia].add(nomeLuogo)
+      }
+    })
+    return acc
+  }, {})
+
   return (
     <>
       {/* SWITCH FILTRO */}
-      <Row className="mb-3">
-        <Col>
+      <Row className="mb-3 justify-content-center">
+        <Col xs="auto">
           <ButtonGroup>
             <Button
               variant={activeFilter === "itinerari" ? "primary" : "outline-secondary"}
@@ -91,10 +105,10 @@ export default function ItinerariPage() {
       </Row>
 
       {/* FILTRI */}
-      <Row className="mb-4">
-        <Col>
+      <Row className="mb-4 justify-content-center">
+        <Col md={10}>
           {activeFilter === "itinerari" && (
-            <div className="d-flex flex-wrap gap-2">
+            <div className="d-flex flex-wrap gap-2 justify-content-center">
               {nomiItinerari.map(nome => (
                 <Button
                   key={nome}
@@ -109,34 +123,35 @@ export default function ItinerariPage() {
 
           {activeFilter === "luoghi" && (
             <div style={{ maxHeight: '300px', overflowY: 'auto', padding: '10px', border: '1px solid #dee2e6', borderRadius: '8px' }}>
-              {Object.entries(
-                data.reduce((acc, row) => {
-                  (row.luoghi_dell_itinerario || []).forEach(l => {
-                    const nomeLuogo = l.luogo_di_interesse_id?.nome_luogo
-                    const tipologia = l.luogo_di_interesse_id?.caratteristica_di_dettaglio || "Altro"
-                    if (nomeLuogo) {
-                      if (!acc[tipologia]) acc[tipologia] = new Set()
-                      acc[tipologia].add(nomeLuogo)
-                    }
-                  })
-                  return acc
-                }, {})
-              ).map(([tipologia, luoghi]) => (
-                <div key={tipologia} style={{ marginBottom: '20px' }}>
-                  <h5 style={{ marginBottom: '10px' }}>{tipologia}</h5>
-                  <div className="d-flex flex-wrap gap-2">
-                    {[...luoghi].sort().map(nome => (
-                      <Button
-                        key={nome}
-                        variant={selectedLuoghi.includes(nome) ? "primary" : "outline-secondary"}
-                        onClick={() => toggleLuogo(nome)}
-                      >
-                        {nome} {luogoCounter[nome] ? `(${luogoCounter[nome]})` : ''}
-                      </Button>
-                    ))}
+              <div className="text-center mb-3">
+                <Form.Control
+                  type="text"
+                  placeholder="Cerca luogo..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  style={{ maxWidth: '300px', margin: '0 auto' }}
+                />
+              </div>
+              {Object.entries(filteredLuoghi).length > 0 ? (
+                Object.entries(filteredLuoghi).map(([tipologia, luoghi]) => (
+                  <div key={tipologia} style={{ marginBottom: '20px' }}>
+                    <h5 style={{ marginBottom: '10px', textAlign: 'center' }}>{tipologia}</h5>
+                    <div className="d-flex flex-wrap gap-2 justify-content-center">
+                      {[...luoghi].sort().map(nome => (
+                        <Button
+                          key={nome}
+                          variant={selectedLuoghi.includes(nome) ? "primary" : "outline-secondary"}
+                          onClick={() => toggleLuogo(nome)}
+                        >
+                          {nome} {luogoCounter[nome] ? `(${luogoCounter[nome]})` : ''}
+                        </Button>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))
+              ) : (
+                <p className="text-center">Nessun luogo trovato</p>
+              )}
             </div>
           )}
         </Col>
@@ -207,7 +222,7 @@ export default function ItinerariPage() {
                 {luoghiOrdinati.length > 0 && (
                   <div style={{ flex: 1 }}>
                     <h6 style={{ fontSize: '1rem', marginBottom: '10px', fontWeight: '600', color: '#495057' }}>
-                      Luoghi dell’itinerario
+                      Luoghi dell'itinerario
                     </h6>
                     <ul style={{ paddingLeft: '0', listStyle: 'none', margin: 0, position: 'relative' }}>
                       {luoghiOrdinati.map((luogo, i) => (
