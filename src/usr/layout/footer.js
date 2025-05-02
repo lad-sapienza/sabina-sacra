@@ -11,20 +11,20 @@ const FooterSection = () => {
         <Row className="py-3 align-items-center">
           {/* Colonna sinistra - Logo Sapienza ingrandito */}
           <Col md={2} className="text-center">
-            <a href="https://www.uniroma1.it" target="_blank" rel="noreferrer">
-              <StaticImage
-                src="../images/logo_sapienza_footer.png"
-                width={200}  // Aumentato al 200%
-                quality={90}
-                formats={["AUTO", "WEBP"]}
-                alt="Sapienza Università di Roma"
-                className="img-fluid"
-                style={{ 
-                  filter: "brightness(0) contrast(100%)",
-                  opacity: 0.9
-                }}
-              />
-            </a>
+          <a href="https://www.uniroma1.it" target="_blank" rel="noreferrer">
+            <StaticImage
+              src="../images/logo_sapienza_footer.png"
+              width={200}
+              quality={90}
+              formats={["AUTO", "WEBP", "PNG"]}
+              alt="Sapienza Università di Roma"
+              className="img-fluid"
+              style={{ 
+                filter: "brightness(0) contrast(100%)",
+                opacity: 0.9
+              }}
+            />
+          </a>
           </Col>
 
           {/* Colonna centrale - Credits (80% width) */}
@@ -68,16 +68,16 @@ const FooterSection = () => {
                 </div>
                 
                 <div className="d-flex align-items-center mx-3 mb-2">
-                  <div className="me-2" style={{ width: '24px' }}>
-                    <StaticImage
-                      src="../images/logo_erasmo.svg"
-                      width={24}
-                      quality={90}
-                      formats={["AUTO", "WEBP"]}
-                      alt=""
-                      style={{ 
-                        filter: "drop-shadow(0 0 1px rgba(0,0,0,0.2))",
-                        mixBlendMode: "multiply"
+                <div className="me-2" style={{ width: '24px' }}>
+                  <StaticImage
+                    src="../images/logo_erasmo.svg"
+                    width={24}
+                    quality={90}
+                    formats={["AUTO", "WEBP", "PNG"]}
+                    alt=""
+                    style={{ 
+                      filter: "drop-shadow(0 0 1px rgba(0,0,0,0.2))",
+                      mixBlendMode: "multiply"
                       }}
                     />
                   </div>
