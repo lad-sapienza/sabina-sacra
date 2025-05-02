@@ -6,84 +6,103 @@ description: "Homepage project"
 ---
 
 import { Link } from "gatsby";
-import FormatCard from "../components/FormatCard";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Card } from "react-bootstrap";
 import LogoBar from "../components/LogoBar"
-
 
 <LogoBar />
 
-{/* Blocco descrittivo con sfondo grigio */}
-<Col md={12}>
-<div className="bg-light p-4 rounded shadow-sm text-center">
-  <p className="lead fw-bold">Panorami di diversità: ebrei, cristiani e spazio sacro in Sabina e nella Valle dell’Aniene tra Tarda Antichità ed Età Contemporanea
-    scaturisce dalla corale esperienza di ricerca di parte del Dipartimento di Storia Antropologia Religioni Arte Spettacolo (SARAS) 
-    della Sapienza Università di Roma.</p>
+{/* Hero section - tutto il testo incluso */}
+<Container className="py-5 mb-5 px-0">
+  <div className="text-center mb-4">
+    <h1 className="display-5 fw-bold text-danger">PANORAMI DI DIVERSITÀ</h1>
+    <div className="mx-auto my-3" style={{width: '80px', height: '3px', background: '#8B0000'}}></div>
+    <p className="lead mb-4 text-muted">Ebrei, cristiani e spazio sacro tra Sabina e Valle dell'Aniene</p>
+  </div>
 
-    Il progetto è stato sviluppato nell’ambito delle attività della Fondazione
-    <a href="https://www.fondazionechanges.org" className="text-primary"> CHANGES</a>, e rientra nel Piano Nazionale di Ripresa e
-    Resilienza (PNRR), <strong>ITALIA DOMANI</strong>.
+  <Card className="border-0 shadow-sm p-4">
+    <p className="mb-3">Il progetto scaturisce dalla corale esperienza di ricerca di parte del Dipartimento di Storia Antropologia Religioni Arte Spettacolo (SARAS) 
+    della Sapienza Università di Roma, sviluppato nell'ambito delle attività della Fondazione
+    <a href="https://www.fondazionechanges.org" className="text-decoration-none ms-1 text-danger">CHANGES</a>.</p>
 
-    Le azioni del Dipartimento SARAS si inseriscono prevalentemente nello <strong>Spoke 1</strong> - Historical landscapes, traditions and cultural identities, 
-    e in particolare nel <strong>Work Package (WP) 5</strong> (“Archeologia del sacro lungo l’Aniene”), linea tematica 3: “Panorami di diversità: Ebrei, cristiani e 
-    spazio sacro tra Sabina e Valle dell’Aniene dalla Tarda Antichità all’Età Contemporanea”.
+    <p className="mb-3">Le azioni del Dipartimento SARAS si inseriscono prevalentemente nello <strong>Spoke 1</strong> - Historical landscapes, traditions and cultural identities, 
+    e in particolare nel <strong>Work Package (WP) 5</strong> ("Archeologia del sacro lungo l'Aniene"), linea tematica 3: "Panorami di diversità: Ebrei, cristiani e 
+    spazio sacro tra Sabina e Valle dell'Aniene dalla Tarda Antichità all'Età Contemporanea".</p>
 
-    La ricerca si concentra sulla <strong>mappatura e lo studio delle presenze del sacro</strong> nella regione compresa tra la Valle dell’Aniene e la Sabina, 
-    tra la Tarda Antichità e l’Età contemporanea. Queste due aree, pur tangenti, si distinguono per storia, tipologia di monumenti e presenze religiose.
+    <p className="mb-3"><em>Il fine primario del progetto è la valorizzazione di questi territori, promuovendone la conoscenza e contribuendo alla mitigazione del fenomeno 
+    dell'<strong>iperturismo</strong>, attraverso un'originale ricerca storica e culturale.</em></p>
 
+    <hr className="my-4" />
+
+    <p className="small text-muted mb-0">
+      Oltre al Dipartimento SARAS, il WP5 ha visto la partecipazione dei Dipartimenti di Architettura e Progetto (DIAP), 
+      di Storia Disegno e Restauro dell'Architettura (DSRA) e Scienze dell'Antichità (SA). Il PI del WP5 è Orazio Carpenzano (DIAP), 
+      mentre i co-PI dei singoli Dipartimenti sono Alessandra Capuano (DIAP), Daniela Esposito (DSRA), Andrea Cucchiarelli (SA) e Paola Buzi (SARAS).
+    </p>
+  </Card>
+</Container>
+
+{/* Sezione numeri del progetto */}
+<Container className="my-5">
+  <h2 className="text-center fw-light mb-5 position-relative">
+    <span className="px-3 bg-white text-danger position-relative z-1">Esplora il progetto</span>
+    <span className="position-absolute top-50 start-0 end-0 border-top border-danger opacity-50" style={{height: '1px'}}></span>
+  </h2>
   
-    _Il fine primario del progetto è la valorizzazione di questi territori, promuovendone la conoscenza e contribuendo alla mitigazione del fenomeno 
-    dell’**iperturismo**, attraverso un’originale ricerca storica e culturale._
-
-  <hr className="my-3" />
-
-  <p className="small text-muted"><em>Nota:</em> Oltre al Dipartimento SARAS, il WP5 ha visto la partecipazione dei Dipartimenti di Architettura e Progetto (DIAP), di Storia Disegno e Restauro dell’Architettura (DSRA) 
-    e Scienze dell’Antichità (SA). Il PI del WP5 è Orazio Carpenzano (DIAP), mentre i co-PI dei singoli Dipartimenti sono Alessandra Capuano (DIAP), Daniela Esposito (DSRA), 
-    Andrea Cucchiarelli (SA) e Paola Buzi (SARAS).</p>
-</div>
-</Col>
-
-{/* Sezione con i quadrati 2x2 */}
-<Container className="mt-5">
-  <Row className="row-settore-home">
-    <Col md={6}>
-      <FormatCard 
-        title="Atlante della Sabina"
-        subtitle="Esplora la mappa interattiva"
-        link="/atlante/"
-        image="/images/atlante.jpg"
-        titleColor="#FFFFFF"
-        subtitleColor="#FFFFFF"
-      />
-    </Col>
-    <Col md={6}>
-      <FormatCard 
-        title="Personaggi Storici"
-        subtitle="Scopri le figure storiche della Sabina"
-        link="/personaggi/"
-        image="/images/personaggi.jpg"
-      />
-    </Col>
+  <Row className="g-4">
+    {[
+      { title: "Itinerari", count: 26, icon: "signpost", desc: "Percorsi tematici attraverso la storia e il sacro", link: "/itinerari" },
+      { title: "Luoghi", count: 365, icon: "geo-alt", desc: "Siti di interesse storico e religioso catalogati", link: "/atlante" },
+      { title: "Monumenti", count: 240, icon: "building", desc: "Architetture sacre e testimonianze storiche", link: "/monumenti" },
+      { title: "Personaggi", count: 177, icon: "people", desc: "Figure storiche che hanno plasmato il territorio", link: "/personaggi" }
+    ].map((item, idx) => (
+      <Col key={idx} md={3} sm={6}>
+        <Card className="h-100 border-0 shadow-sm text-center rounded-3">
+          <Card.Body className="d-flex flex-column justify-content-center p-4">
+            <div className="mb-3 mx-auto rounded-circle d-flex align-items-center justify-content-center bg-opacity-10 bg-danger text-danger" style={{width: '70px', height: '70px', fontSize: '1.75rem'}}>
+              <i className={`bi bi-${item.icon}`}></i>
+            </div>
+            <h3 className="mb-3 fw-bold text-danger">{item.count}</h3>
+            <Card.Title className="mb-2 fw-bold">{item.title}</Card.Title>
+            <Card.Text className="text-muted small mb-0">{item.desc}</Card.Text>
+            <Link to={item.link} className="stretched-link"></Link>
+          </Card.Body>
+        </Card>
+      </Col>
+    ))}
   </Row>
+</Container>
 
-  <Row className="row-settore-home mt-4">
-    <Col md={6}>
-      <FormatCard 
-        title="Pubblicazioni"
-        link="/pubblicazioni/"
-        image="/images/credits.svg"
-        titleColor="#4A4A4A"
-      />
-    </Col>
-    <Col md={6}>
-      <FormatCard 
-        title="Credits"
-        subtitle="Chi ha contribuito al progetto"
-        link="/crediti/"
-        image="/images/credits.jpg"
-        titleColor="#000000"
-        subtitleColor="#000000"
-      />
-    </Col>
+{/* Sezione risorse e produzione scientifica */}
+<Container className="my-5">
+  <Row className="g-4">
+    {[
+      {
+        title: "Team Scientifico",
+        desc: "Scopri i membri del personale scientifico e accademico che hanno contribuito alla realizzazione e alla cura del progetto.",
+        icon: "people-fill",
+        link: "/crediti",
+        button: "Scopri"
+      },
+      {
+        title: "Produzione Scientifica",
+        desc: "Pubblicazioni, studi e risultati della ricerca.",
+        icon: "journal-text",
+        link: "/produzione",
+        button: "Scopri"
+      }
+    ].map((item, idx) => (
+      <Col key={idx} md={6}>
+        <Card className="h-100 border-0 shadow-sm d-flex flex-row align-items-center p-4">
+          <div className="me-4 rounded-circle d-flex align-items-center justify-content-center bg-opacity-10 bg-danger text-danger" style={{width: '80px', height: '80px', fontSize: '2rem', flexShrink: '0'}}>
+            <i className={`bi bi-${item.icon}`}></i>
+          </div>
+          <div>
+            <Card.Title className="h4 mb-3 fw-bold text-danger">{item.title}</Card.Title>
+            <Card.Text className="mb-3">{item.desc}</Card.Text>
+            <Link to={item.link} className="btn btn-sm mt-2 text-white" style={{background: '#8B0000', border: 'none'}}>{item.button}</Link>
+          </div>
+        </Card>
+      </Col>
+    ))}
   </Row>
 </Container>
