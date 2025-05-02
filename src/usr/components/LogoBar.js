@@ -32,8 +32,7 @@ const LogoBar = () => {
       <Row className="align-items-center justify-content-center text-center g-0 flex-wrap">
         {logos.map((logo, idx) => (
           <React.Fragment key={logo.alt}>
-            {idx !== 0 && <div style={separatorStyle} />}
-            <Col xs={6} sm={4} md={2} className="d-flex justify-content-center">
+            <Col xs={12} sm className={idx !==0 && 'border-start'}>
               <div style={logoWrapperStyle}>
                 <img
                   src={logo.src}
