@@ -3,124 +3,153 @@ title: "Crediti"
 date: "2023-10-01"
 slug: "crediti"
 description: "About us"
-menu_position: 5
+menu_position: 1
 ---
 
-import { Card, Col, Row } from "react-bootstrap";
-import LogoBar from "../components/LogoBar"
-
+import { Card, Col, Row, Badge, OverlayTrigger, Tooltip, ButtonGroup, Button } from "react-bootstrap";
+import LogoBar from "../components/LogoBar";
 
 <LogoBar />
 
-# Sabina Sacra. Panorami di diversità: ebrei, cristiani e spazio sacro in Sabina e nella Valle dell’Aniene, tra Tarda Antichità ed Età Contemporanea 
+# Sabina Sacra. Panorami di diversità: ebrei, cristiani e spazio sacro in Sabina e nella Valle dell'Aniene, tra Tarda Antichità ed Età Contemporanea 
 
-Cultural Heritage Active Innovation for Sustainable Society
-- Codice Progetto: `PE0000020`
-- CUP: `B53C22003780006`
+Cultural Heritage Active Innovation for Sustainable Society  
+- Codice Progetto: `PE0000020`  
+- CUP: `B53C22003780006`  
 - Fondazione Changes, presso Sapienza Università di Roma
 
-- Presidente: prof. Marco Mancini
-- Spoke leader: Università di Bari “Aldo Moro”
+- Presidente: prof. Marco Mancini  
+- Spoke leader: Università di Bari "Aldo Moro"  
 - Coordinatore scientifico: prof. Giuliano Volpe
 
-**WorkPackage 5 “Itinerari del Sacro lungo l’Aniene”**
+**WorkPackage 5 "Itinerari del Sacro lungo l'Aniene"**  
 - PI: prof. Orazio Carpenzano
 
-**Linea tematica 3 (SARAS): “Panorami di diversità: Ebrei, cristiani e spazio sacro tra Sabina e Valle dell’Aniene dalla Tarda Antichità all’Età Contemporanea”**
+**Linea tematica 3 (SARAS): "Panorami di diversità: Ebrei, cristiani e spazio sacro tra Sabina e Valle dell'Aniene dalla Tarda Antichità all'Età Contemporanea"**  
 - Co-PI: prof.ssa Paola Buzi
 
-Il progetto è stato sviluppato nell’ambito delle attività della Fondazione [CHANGES (Cultural Heritage Active Innovation for Sustainable Society)](https://www.fondazionechanges.org), e rientra nel Piano Nazionale di Ripresa e Resilienza (PNRR), **ITALIA DOMANI**.
+**Massa critica**
+- Alberto Camplani 
+- Umberto Gentiloni
+
+
+Il progetto è stato sviluppato nell'ambito delle attività della Fondazione [CHANGES](https://www.fondazionechanges.org/en/), e rientra nel Piano Nazionale di Ripresa e Resilienza (PNRR), **ITALIA DOMANI**.
+
 
 <div className="my-5 border-top"></div>
 
-## Collaboratori
+{/* Pulsanti di navigazione */}
+<ButtonGroup className="d-flex justify-content-center mb-5">
+  <Button variant="outline-primary" className="me-3 rounded-pill px-4 py-2" onClick={() => document.getElementById("responsabile-scientifico").scrollIntoView({ behavior: "smooth" })}>
+    Responsabile Scientifico
+  </Button>
+  <Button variant="outline-secondary" className="me-3 rounded-pill px-4 py-2" onClick={() => document.getElementById("massa-critica").scrollIntoView({ behavior: "smooth" })}>
+    Massa Critica
+  </Button>
+  <Button variant="outline-dark" className="rounded-pill px-4 py-2" onClick={() => document.getElementById("supervisori").scrollIntoView({ behavior: "smooth" })}>
+    Supervisori
+  </Button>
+</ButtonGroup>
 
-<Row className="g-4 mb-5">
+{/* Sezione Responsabile Scientifico */}
+<div id="responsabile-scientifico" className="text-center my-5">
+  <Badge bg="primary" className="fs-5 px-3 py-2 rounded-pill">Responsabile scientifico</Badge>
+</div>
+
+<Row className="g-4 mb-5 justify-content-center">
+  <Col sm={4}>
+    <OverlayTrigger
+      overlay={<Tooltip id="buzi-tooltip">Professore Ordinario di Egittologia e Civiltà Copta presso il dipartimento di Storia Antropologia Religioni Arte Spettacolo (SARAS) della Sapienza Università di Roma</Tooltip>}
+    >
+      <a href="https://corsidilaurea.uniroma1.it/it/users/paolabuziuniroma1it" className="text-decoration-none" target="_blank" rel="noopener noreferrer">
+        <Card
+          className="text-center p-3 bg-white border border-light shadow-sm rounded-4 hover-card"
+        >
+          <div className="d-flex justify-content-center py-3">
+            <img src="https://www.ansa.it/webimages/img_700/2016/5/4/28fcbbbde6a088e2a870124ad8790eb7.jpg" alt="Paola Buzi" className="rounded-circle border border-3 border-primary shadow" style={{ width: "120px", height: "120px", objectFit: "cover" }} />
+          </div>
+          <Card.Body>
+            <Card.Title className="fs-5 fw-bold text-primary">Paola Buzi</Card.Title>
+          </Card.Body>
+        </Card>
+      </a>
+    </OverlayTrigger>
+  </Col>
+</Row>
+
+<div className="my-5 border-top"></div>
+
+{/* Sezione Massa Critica */}
+<div id="massa-critica" className="text-center my-5">
+  <Badge bg="secondary" className="fs-5 px-3 py-2 rounded-pill">Massa Critica</Badge>
+</div>
+
+<Row className="g-4 mb-5 justify-content-center">
   {[
-    { name: "Paola Buzi", img: "https://www.ansa.it/webimages/img_700/2016/5/4/28fcbbbde6a088e2a870124ad8790eb7.jpg", link: "https://uniroma1.academia.edu/PaolaBuzi" },
-    { name: "Alberto Camplani", img: "https://religioninsociety.com/assets/img/headshots/_200x200_crop_center-center_100/Alberto-Camplani.png", link: "https://uniroma1.academia.edu/AlbertoCamplani" },
-    { name: "Umberto Gentiloni", img: "https://phd.uniroma1.it/dottorati/cartellaProfili/cf2aa71c-a79f-4d77-b427-6617566fe89d.jpg", link: "https://uniroma1.academia.edu/UmbertoGentiloni" }
+    { name: "Marta Addessi", subtitle: "Assegnista di ricerca presso il dipartimento di Storia Antropologia Religioni Arte Spettacolo (SARAS) della Sapienza Università di Roma", link: "https://research.uniroma1.it/researcher/58e3177ba196c1515b00821b8ffa7a27de2d5a6fc9aac89ea00f4f4f", img: "/images/marta_addessi.PNG" },
+    { name: "Alexa Bianchini", subtitle: "Assegnista di ricerca in storia medievale", link: "https://orcid.org/0000-0001-7487-6505", img: "/images/alexa_bianchini.jpg" },
+    { name: "Valentina Emiliani", subtitle: "", link: "#", img: "https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg" },
+    { name: "Luca Giangolini", subtitle: "Dottore di ricerca presso Dipartimento di Storia, Antropologia, Religioni, Arte, Spettacolo", link: "https://phd.uniroma1.it/web/LUCA-GIANGOLINI_nT1273362_IT.aspx", img: "/images/luca_giangolini.png" },
+    { name: "Giovanni Hermanin de Reichenfeld", subtitle: "", link: "#", img: "https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg" },
+    { name: "Letizia Leo", subtitle: "", link: "https://research.uniroma1.it/researcher/7bc830e421dc902f7d739300758772385585b4487b5b65e5e70885b0", img: "/images/letizia_leo.png" },
+    { name: "Antonio Mursia", subtitle: "", link: "#", img: "https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg" },
+    { name: "Luciano Villani", subtitle: "", link: "#", img: "https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg" },
+    { name: "Francesco D'Angelo", subtitle: "Assegnista di ricerca in storia medievale", link: "#", img: "https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg"}
   ].map(person => (
-    <Col sm={4} key={person.name}>
-      <Card className="text-center p-3 shadow bg-light">
-        <div className="d-flex justify-content-center align-items-center bg-light rounded py-3">
-          <img 
-            src={person.img} 
-            alt={person.name} 
-            className="rounded-circle border border-white img-fluid" 
-            style={{ width: "100px", height: "100px", objectFit: "cover" }}
-          />
-        </div>
-        <Card.Title>{person.name}</Card.Title>
-        <Card.Body>
-        </Card.Body>
-      </Card>
+    <Col xs={6} md={3} key={person.name}>
+      <OverlayTrigger
+        overlay={<Tooltip id={`${person.name}-tooltip`}>{person.subtitle}</Tooltip>}
+      >
+        <a href={person.link} className="text-decoration-none" target="_blank" rel="noopener noreferrer">
+          <Card
+            className="text-center p-3 bg-white border border-light shadow-sm rounded-4 hover-card"
+          >
+            <div className="d-flex justify-content-center py-3">
+              <img src={person.img} alt={person.name} className="rounded-circle border border-3 border-secondary shadow" style={{ width: "100px", height: "100px", objectFit: "cover" }} />
+            </div>
+            <Card.Body>
+              <Card.Title className="fs-6 fw-bold text-secondary">{person.name}</Card.Title>
+            </Card.Body>
+          </Card>
+        </a>
+      </OverlayTrigger>
     </Col>
   ))}
 </Row>
 
 <div className="my-5 border-top"></div>
 
-## Massa Critica
+{/* Sezione Supervisori */}
+<div id="supervisori" className="text-center my-5">
+  <Badge bg="dark" className="fs-5 px-3 py-2 rounded-pill">Supervisori</Badge>
+</div>
 
-<Row className="g-4 mb-5">
-  {["Marta Addessi", "Alexa Bianchini", "Valentina Emiliani", "Luca Giangolini", "Giovanni Hermanin de Reichenfeld",
-    "Letizia Leo", "Antonio Mursia", "Luciano Villani"
-  ].map(name => (
-    <Col xs={6} md={3} key={name}>
-      <Card className="text-center p-3 shadow bg-light">
-        <div className="d-flex justify-content-center align-items-center bg-light rounded py-3">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg" alt={name} className="rounded-circle border border-white" style={{ width: "100px", height: "100px", objectFit: "cover" }} />
-        </div>
-        <Card.Title>{name}</Card.Title>
-        <Card.Body>
-        </Card.Body>
-      </Card>
-    </Col>
-  ))}
-</Row>
-
-<div className="my-5 border-top"></div>
-
-## Supervisori
-
-<Row className="g-4 mb-5">
-  {[{
-    "name": "Julian Bogdani",
-    "img": "/images/persons/julian_bogdani.jpg",
-    "link": {
-      "text": "LAD @Sapienza", 
-      "url": "https://lad.saras.uniroma1.it/"
-    }
-  },
-  {
-    "name": "Bruno Bonomo"
-  },
-  {
-    "name": "Tessa Canella"
-  }, 
-  {
-    "name": "Serena Di Nepi"
-  },
-  {
-    "name": "Umberto Longo"
-  },
-  ]
-  .map(item => (
-    <Col xs={6} sm key={item.name}>
-      <Card className="text-center p-3 shadow bg-light">
-        <div className="d-flex justify-content-center align-items-center bg-light py-3">
-          <img
-            src={ item.img ? item.img : "https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg" } 
-            alt={ item.name } 
-            className="rounded-circle border border-white img-fluid" 
-            />
-        </div>
-        <Card.Title>{item.name}</Card.Title>
-        <Card.Body>
-          { item.link ?  <div className="mt-2 pt-2 border-top"><a href={item.link.url} target="_blank" rel="noopener noreferrer">{ item.link.text }</a></div> : ''}
-        </Card.Body>
-      </Card>
+<Row className="g-4 mb-5 justify-content-center">
+  {[
+    { name: "Julian Bogdani", subtitle: "Professore Associato di Metodologie della Ricerca Archeologica presso il dipartimento di Storia Antropologia Religioni Arte Spettacolo (SARAS) della Sapienza Università di Roma", link: "https://corsidilaurea.uniroma1.it/it/users/julianbogdaniuniroma1it", img: "/images/julian_bogdani.jpg" },
+    { name: "Bruno Bonomo", subtitle: "Professore associato di Storia contemporanea presso il dipartimento di Storia Antropologia Religioni Arte Spettacolo (SARAS) della Sapienza Università di Roma", link: "https://corsidilaurea.uniroma1.it/user/29953", img: "/images/bruno_buonuomo.png" },
+    { name: "Tessa Canella", subtitle: "", link: "https://corsidilaurea.uniroma1.it/it/users/tessacanellauniroma1it", img: "https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg" },
+    { name: "Serena Di Nepi", subtitle: "Professore associato in storia moderna nel Dipartimento di Storia, Culture, Religioni dell'Università di Roma La Sapienza", link: "https://corsidilaurea.uniroma1.it/user/26455", img: "https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg" },
+    { name: "Umberto Longo", subtitle: "Professore ordinario di storia medievale presso il dipartimento di Storia Antropologia Religioni Arte Spettacolo (SARAS) della Sapienza Università di Roma", link: "https://corsidilaurea.uniroma1.it/it/users/umbertolongouniroma1it", img: "https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg" },
+    { name: "Andrea Zappia", subtitle: "RtdA, Università la sapienza di Roma", link: "https://corsidilaurea.uniroma1.it/user/44833", img: "/images/andrea_zappia.png" }
+  ].map(person => (
+    <Col xs={6} md={4} lg={3} key={person.name}>
+      <OverlayTrigger
+        overlay={<Tooltip id={`${person.name}-tooltip`}>{person.subtitle}</Tooltip>}
+      >
+        <a href={person.link} className="text-decoration-none" target="_blank" rel="noopener noreferrer">
+          <Card
+            className="text-center p-3 bg-white border border-light shadow-sm rounded-4 hover-card"
+          >
+            <div className="d-flex justify-content-center py-3">
+              <img src={person.img} alt={person.name} className="rounded-circle border border-3 border-dark shadow" style={{ width: "100px", height: "100px", objectFit: "cover" }} />
+            </div>
+            <Card.Body>
+              <Card.Title className="fs-6 fw-bold text-dark">{person.name}</Card.Title>
+            </Card.Body>
+          </Card>
+        </a>
+      </OverlayTrigger>
     </Col>
   ))}
 </Row>
