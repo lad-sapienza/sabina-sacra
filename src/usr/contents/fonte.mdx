@@ -31,9 +31,14 @@ import { Row, Col } from "react-bootstrap";
     <Row className="g-4">
       <Col lg={8}>
         {/* Sezione Note */}
-        <div className="p-4 border rounded bg-light">
-          <Field name={["note"]} />
-        </div>
+      <div className="p-4 border rounded bg-light">
+        <Field 
+          name={["note"]}
+          transformer={(value) => (
+            <div dangerouslySetInnerHTML={{ __html: value }} />
+          )}
+        />
+      </div>
 
         {/* Link esterno */}
         <Field
