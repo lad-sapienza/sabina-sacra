@@ -10,12 +10,16 @@ import "../layout/style.css";
 import { Row, Col } from "react-bootstrap";
 
 <Record>
-  <div className="p-3 text-white bg-primary rounded-top border-top border-5 border-danger">
-    <h2 className="mb-1 ms-3">
+<div className="p-3 text-white bg-primary rounded-top border-top border-5 border-danger">
+  <div className="ms-3">
+    <h2 className="mb-1">
       <Field name={["nome_luogo"]} />
     </h2>
-    <Field name={["tipo_monumento"]} className="fs-5 ms-3" />
+    <div className="fs-5">
+      <Field name={["tipo_monumento"]} />
+    </div>
   </div>
+</div>
 
   <div className="p-4 bg-white border rounded-bottom shadow-sm">
     <Row className="g-4">
