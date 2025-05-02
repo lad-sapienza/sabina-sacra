@@ -8,219 +8,324 @@ description: ""
 import {
   Record,
   Field,
-  MapLibre,
-  VectorLayerLibre,
   DataTb,
 } from "../../modules/scms.js"
-
 import { Link } from "gatsby";
-
+import { MapLeaflet } from "../../modules/maps/leaflet/mapLeaflet"
+import { VectorLayer } from "../../modules/maps/leaflet/vectorLayer"
+import L from "leaflet";
+import { useState } from "react";
 
 <Record>
-    <h1><Field name={["nome_itinerario"]} /></h1>
-    
-    ---
+  {/* Header con titolo */}
+  <div className="bg-light p-5 mb-5 rounded-4 border position-relative" style={{ background: 'linear-gradient(to right, #f8f9fa, #e9ecef)' }}>
+    <div className="container">
+      <h1 className="display-4 text-center fw-bold mb-3 text-dark">
+        <Field name={["nome_itinerario"]} />
+      </h1>
+    </div>
+  </div>
 
-  
+  {/* Selettore a tab */}
+  <div className="container mb-5">
+    <ul className="nav nav-pills nav-justified mb-4" id="itinerarioTabs" role="tablist">
+      <li className="nav-item" role="presentation">
+        <button className="nav-link active fs-5 py-3" id="mappa-tab" data-bs-toggle="tab" data-bs-target="#mappa" type="button" role="tab">
+          Mappa
+          <small className="d-block mt-1 fw-normal text-muted">Visualizza il percorso geografico</small>
+        </button>
+      </li>
+      <li className="nav-item" role="presentation">
+        <button className="nav-link fs-5 py-3" id="luoghi-tab" data-bs-toggle="tab" data-bs-target="#luoghi" type="button" role="tab">
+          Luoghi
+          <small className="d-block mt-1 fw-normal text-muted">Scopri tutte le tappe</small>
+        </button>
+      </li>
+    </ul>
 
-    <Field name={["luoghi_dell_itinerario"]} transformer={ ldi => {
-      const id_luoghi = ldi.map( l => l.luogo_di_interesse_id.id ).join(',');
+    <div className="tab-content" id="itinerarioTabsContent">
+      {/* Tab Mappa con Descrizione integrata */}
+      <div className="tab-pane fade show active" id="mappa" role="tabpanel">
+        <div className="card mb-4 border-0 shadow-sm">
+          <div className="card-header bg-white border-bottom py-3">
+            <h2 className="h4 mb-0 text-dark">
+              Mappa dell'itinerario
+            </h2>
+            <p className="mb-0 text-muted">
+              Naviga la mappa interattiva per scoprire la sequenza delle tappe
+            </p>
+          </div>
+          <div className="card-body p-0">
+            <Field name={["luoghi_dell_itinerario"]} transformer={ldi => {
+              const id_luoghi = ldi.map(l => l.luogo_di_interesse_id.id).join(',');
+              const ordini = {};
+              
+              ldi.forEach(l => {
+                ordini[l.luogo_di_interesse_id.id] = l.ordine;
+              });
 
-      return <MapLibre
-    height="800px"
-    baseLayers={["EsriTopo"]}
-    sprite="https://openmaptiles.github.io/osm-bright-gl-style/sprite"
+              // Scala di colori delicata blu -> rosso/giallo
+              const colorScale = (order, total) => {
+                const ratio = order / total;
+                // Da blu (hsl(210, 60%, 65%)) a rosso/arancio (hsl(20, 80%, 65%))
+                const hue = 210 - (ratio * 190);
+                return `hsl(${hue}, 70%, 65%)`;
+              };
 
->
+              const createCustomIcon = (feature) => {
+                const order = ordini[feature.properties.id];
+                const total = ldi.length;
+                const color = colorScale(order, total);
+                
+                return L.divIcon({
+                  html: `<div style="background-color: ${color}; 
+                                      width: 32px; 
+                                      height: 32px; 
+                                      border-radius: 50%; 
+                                      display: flex; 
+                                      align-items: center; 
+                                      justify-content: center; 
+                                      color: white; 
+                                      font-weight: bold;
+                                      border: 2px solid white;
+                                      box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                            ${order}
+                         </div>`,
+                  className: '',
+                  iconSize: [32, 32],
+                  iconAnchor: [16, 16]
+                });
+              };
 
-    <VectorLayerLibre
-      name="Monumenti"
-      source={{
-        directus: {
-          table: "luogo_di_interesse",
-          geoField: "coordinate",
-          queryString: `filter[id][_in]=${id_luoghi}&fields=id,tipo_monumento,nome_luogo,coordinate&limit=-1`,
-          transType: "geojson",
-        }
-      }}
-      checked={true}
-      fitToContent={true}
-      type="geojson"
-      searchInFields={{
-        "nome_luogo": "Toponimo",
-        "tipo_monumento": {
-          "label": "Tipo di monumento",
-          "values": ["area a destinazione funeraria", "luogo dedicato alla memoria", "edificio di culto"],
-        },
-      }}
-      style={{
-        id: "luogo_di_interesse",
-        type: "symbol",
-        layout: {
-          "icon-image": [
-            "match",
-            ["get", "tipo_monumento"],
-            "area a destinazione funeraria", "cemetery_11",
-            "luogo dedicato alla memoria", "monument_11",
-            "edificio di culto", "town_hall_11",
-            "heliport_11" // Default (Altro)
-          ],
-          "icon-size": 3,
-        },
-      }}
-      popupTemplate="<strong>${nome_luogo}</strong>
-        <p>${tipo_monumento}</p>
-        <a href='/monumento/?tb=luogo_di_interesse&id=${id}'>Dettagli</a>"
-    />
+              return (
+                <>
+                  <MapLeaflet
+                    height="600px"
+                    baseLayers={["EsriTopo"]}
+                    scrollWheelZoom={true}
+                  >
+                    <VectorLayer
+                      name="Monumenti"
+                      source={{
+                        directus: {
+                          table: "luogo_di_interesse",
+                          geoField: "coordinate",
+                          queryString: `filter[id][_in]=${id_luoghi}&fields=id,tipo_monumento,note,nome_luogo,coordinate&limit=-1`,
+                          transType: "geojson",
+                        }
+                      }}
+                      checked={true}
+                      fitToContent={true}
+                      pointToLayer={(feature, latlng) => {
+                        return L.marker(latlng, {
+                          icon: createCustomIcon(feature)
+                        });
+                      }}
+                      popupTemplate={(properties) => {
+                        const order = ordini[properties.id];
+                        return `
+                          <div class="p-2">
+                            <h5 class="mb-2">${properties.nome_luogo}</h5>
+                            <p class="mb-1"><strong>Tappa ${order}</strong> dell'itinerario</p>
+                            <p class="mb-2 text-muted">${properties.tipo_monumento}</p>
+                            <a href='/monumento/?tb=luogo_di_interesse&id=${properties.id}' class="btn btn-sm btn-outline-primary">Dettagli</a>
+                          </div>
+                        `;
+                      }}
+                    />
+                  </MapLeaflet>
+                  
+                  {/* Sezione Descrizione con dashboard */}
+                  <div className="p-4 border-top">
+                    <div className="row">
+                      <div className="col-lg-9">
+                        <div className="bg-light p-4 rounded-3">
+                          <h3 className="h5 mb-3 text-dark fw-bold">Descrizione dell'itinerario</h3>
+                          <div className="lead" style={{ fontFamily: 'Georgia, serif', lineHeight: '1.6' }}>
+                            <Field name={["breve_descrizione"]} />
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-lg-3">
+                        <div className="bg-white p-4 rounded-3 border h-100">
+                          <h4 className="h6 mb-3 text-dark fw-bold">Tappe dell'itinerario</h4>
+                          <div className="d-flex flex-column gap-2">
+                            {ldi.sort((a, b) => a.ordine - b.ordine).map((luogo) => {
+                              const color = colorScale(luogo.ordine, ldi.length);
+                              return (
+                                <div key={luogo.ordine} className="d-flex align-items-center">
+                                  <div 
+                                    className="rounded-circle flex-shrink-0 me-2" 
+                                    style={{
+                                      width: '24px',
+                                      height: '24px',
+                                      backgroundColor: color,
+                                      display: 'flex',
+                                      alignItems: 'center',
+                                      justifyContent: 'center',
+                                      color: 'white',
+                                      fontSize: '0.75rem',
+                                      fontWeight: 'bold'
+                                    }}
+                                  >
+                                    {luogo.ordine}
+                                  </div>
+                                  <div className="small text-truncate">
+                                    {luogo.luogo_di_interesse_id.nome_luogo}
+                                  </div>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              );
+            }} />
+          </div>
+        </div>
+      </div>
 
-  </MapLibre>
-    }} />
+      {/* Tab Luoghi */}
+      <div className="tab-pane fade" id="luoghi" role="tabpanel">
+        <div className="card border-0 mb-4 shadow-sm">
+          <div className="card-header bg-white border-bottom py-3">
+            <h2 className="h4 mb-0 text-dark">
+              Luoghi dell'itinerario
+            </h2>
+            <p className="mb-0 text-muted">
+              Tutte le tappe che compongono questo percorso, ordinate secondo la sequenza di visita
+            </p>
+          </div>
+          <div className="card-body">
+            <Field name={["luoghi_dell_itinerario"]} transformer={ldi => {
+              const id_luoghi = ldi.map(l => l.luogo_di_interesse_id.id).join(',');
+              
+              // Componente per le note con limite caratteri
+              const NoteWithToggle = ({ note }) => {
+                const [expanded, setExpanded] = useState(false);
+                const maxLength = 300;
+                
+                if (!note) {
+                  return <p className='text-muted small'>Nessuna nota disponibile per questo luogo</p>;
+                }
+                
+                const displayText = expanded ? note : note.slice(0, maxLength) + (note.length > maxLength ? '...' : '');
+                
+                return (
+                  <div>
+                    <div 
+                      className="text-justify small" 
+                      dangerouslySetInnerHTML={{ __html: displayText }} 
+                    />
+                    {note.length > maxLength && (
+                      <button 
+                        onClick={() => setExpanded(!expanded)} 
+                        className="btn btn-link p-0 small"
+                      >
+                        {expanded ? 'Mostra meno' : 'Scopri di più'}
+                      </button>
+                    )}
+                  </div>
+                );
+              };
 
+              return (
+                <div className="row row-cols-1 row-cols-md-2 g-4">
+                  {ldi.map((luogo, index) => (
+                    <div key={index} className="col">
+                      <div className="card h-100 shadow-sm border-0">
+                        <div className="row g-0">
+                          <div className="col-md-6 d-flex flex-column justify-content-between p-4">
+                            <div>
+                              <div className="d-flex align-items-center mb-2">
+                                <span 
+                                  className="badge me-2 text-white" 
+                                  style={{ 
+                                    width: '28px', 
+                                    height: '28px', 
+                                    display: 'flex', 
+                                    alignItems: 'center', 
+                                    justifyContent: 'center',
+                                    backgroundColor: `hsl(${210 - (luogo.ordine/ldi.length)*190}, 70%, 65%)`
+                                  }}
+                                >
+                                  {luogo.ordine}
+                                </span>
+                                <h5 className="card-title mb-0">
+                                  <Link
+                                    to={`/monumento/?tb=luogo_di_interesse&id=${luogo.luogo_di_interesse_id.id}`}
+                                    className="text-decoration-none text-dark"
+                                  >
+                                    {luogo.luogo_di_interesse_id.nome_luogo || "ND"}
+                                  </Link>
+                                </h5>
+                              </div>
+                              <div className="d-flex flex-wrap gap-2 mb-2">
+                                <span className="badge bg-light text-dark border">
+                                  {luogo.luogo_di_interesse_id.tipo_monumento || "ND"}
+                                </span>
+                                {luogo.luogo_di_interesse_id.caratteristica_di_dettaglio && (
+                                  <span className="badge bg-light text-dark border">
+                                    {luogo.luogo_di_interesse_id.caratteristica_di_dettaglio}
+                                  </span>
+                                )}
+                              </div>
+                              <p className="card-text small text-muted">
+                                {luogo.luogo_di_interesse_id.anno_inizio || "ND"}
+                                {luogo.luogo_di_interesse_id.periodo_fine && luogo.luogo_di_interesse_id.periodo_fine <= new Date().getFullYear() ? ` — ${luogo.luogo_di_interesse_id.periodo_fine}` : ''}
+                              </p>
+                            </div>
+                            {luogo.luogo_di_interesse_id.link_immagine && (
+                              <div className="mt-3 overflow-hidden rounded">
+                                <img
+                                  src={
+                                    luogo.luogo_di_interesse_id.link_immagine?.includes("upload.wikimedia.org/wikipedia/commons/")
+                                      ? `https://upload.wikimedia.org/wikipedia/commons/thumb/${luogo.luogo_di_interesse_id.link_immagine.split("/")[luogo.luogo_di_interesse_id.link_immagine.split("/").length - 3]}/${luogo.luogo_di_interesse_id.link_immagine.split("/")[luogo.luogo_di_interesse_id.link_immagine.split("/").length - 2]}/${luogo.luogo_di_interesse_id.link_immagine.split("/").pop()}/400px-${luogo.luogo_di_interesse_id.link_immagine.split("/").pop()}`
+                                      : luogo.luogo_di_interesse_id.link_immagine?.includes("commons.wikimedia.org/wiki/File:")
+                                        ? `https://commons.wikimedia.org/wiki/Special:FilePath/${decodeURIComponent(luogo.luogo_di_interesse_id.link_immagine.split("File:").pop().split("?")[0])}`
+                                        : luogo.luogo_di_interesse_id.link_immagine?.includes("#/media/File:")
+                                          ? `https://commons.wikimedia.org/wiki/Special:FilePath/${decodeURIComponent(luogo.luogo_di_interesse_id.link_immagine.split("#/media/File:").pop().split("/")[0].split("?")[0])}`
+                                          : luogo.luogo_di_interesse_id.link_immagine
+                                  }
+                                  alt={`${luogo.luogo_di_interesse_id.nome_luogo} - anteprima`}
+                                  className="img-fluid rounded"
+                                  onError={(e) => {
+                                    e.target.onerror = null;
+                                    e.target.src = 'data:image/svg+xml;charset=UTF-8,%3Csvg xmlns="http://www.w3.org/2000/svg" width="80" height="60" viewBox="0 0 80 60"%3E%3Crect width="80" height="60" fill="%23e9ecef"/%3E%3Ctext x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="%236c757d" font-family="Arial"%3ENo image%3C/text%3E%3C/svg%3E';
+                                  }}
+                                />
+                              </div>
+                            )}
+                          </div>
 
-  ---
-
-    <Field name={["breve_descrizione"]} />
-
-
-    <Field name={["luoghi_dell_itinerario"]} transformer={ ldi => {
-      const id_luoghi = ldi.map( l => l.luogo_di_interesse_id.id ).join(',');
-
-      return <DataTb
-      striped={true}
-      source={{
-        directus: {
-          table: "luogo_di_interesse",
-          queryString: `filter[id][_in]=${id_luoghi}&fields=id,nome_luogo,tipo_monumento,anno_inizio,periodo_fine,caratteristica_di_dettaglio,link_immagine,fa_parte_di.nome_luogo,fa_parte_di.toponimo,fa_parte_di.localita&`
-        }
-      }}
-      striped
-      highlightOnHover
-      pointerOnHover
-      className="data-table shadow-sm rounded"
-      customStyles={{
-        headCells: {
-          style: {
-            backgroundColor: '#5f3dc4',
-            color: 'white',
-            fontWeight: 'bold',
-            fontSize: '1rem',
-          },
-        },
-        cells: {
-          style: {
-            padding: '12px 15px',
-            verticalAlign: 'middle',
-          },
-        },
-      }}
-      defaultSortField="nome_luogo"
-      defaultSortAsc
-      columns={[
-        {
-          cell: row => row.link_immagine ? (
-            
-             <img 
-              src={
-                row.link_immagine?.includes("upload.wikimedia.org/wikipedia/commons/")
-                  ? `https://upload.wikimedia.org/wikipedia/commons/thumb/${row.link_immagine.split("/")[row.link_immagine.split("/").length - 3]}/${row.link_immagine.split("/")[row.link_immagine.split("/").length - 2]}/${row.link_immagine.split("/").pop()}/400px-${row.link_immagine.split("/").pop()}`
-                  : row.link_immagine?.includes("commons.wikimedia.org/wiki/File:")
-                  ? `https://commons.wikimedia.org/wiki/Special:FilePath/${decodeURIComponent(row.link_immagine.split("File:").pop().split("?")[0])}`
-                  : row.link_immagine?.includes("#/media/File:")
-                  ? `https://commons.wikimedia.org/wiki/Special:FilePath/${decodeURIComponent(row.link_immagine.split("#/media/File:").pop().split("/")[0].split("?")[0])}`
-                  : row.link_immagine
-              }
-              alt={`${row.nome_luogo} - anteprima`}
-              style={{
-                width: '80px',
-                height: '60px',
-                objectFit: 'cover',
-                borderRadius: '4px',
-                boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-              }}
-              onError={(e) => {
-                e.target.onerror = null; 
-                e.target.src = 'data:image/svg+xml;charset=UTF-8,%3Csvg xmlns="http://www.w3.org/2000/svg" width="80" height="60" viewBox="0 0 80 60"%3E%3Crect width="80" height="60" fill="%23e9ecef"/%3E%3Ctext x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="%236c757d" font-family="Arial"%3ENo image%3C/text%3E%3C/svg%3E'
-              }}
-            />  
-          ) : (
-            <span className="badge bg-secondary">Nessuna immagine</span>
-          ),
-          width: '10%',
-          center: true,
-          ignoreRowClick: true,
-        },
-        {
-          name: <span className="text-white">Monumento</span>,
-          cell: row => (
-            <Link 
-              to={`/monumento/?tb=luogo_di_interesse&id=${row.id}`}
-              className="fw-semibold text-primary"
-            >
-              {row.nome_luogo || "ND"}
-            </Link>
-          ),
-          sortable: true,
-          wrap: true,
-          width: '20%',
-        },
-        {
-          name: <span className="text-white">Località</span>,
-          selector: row => row.fa_parte_di?.nome_luogo || "", // Per l'ordinamento
-          cell: row => row.fa_parte_di ? (
-            
-              <div>
-                <div>{row.fa_parte_di.nome_luogo || "ND"}{row.fa_parte_di.localita ? ` (${row.fa_parte_di.localita})` : ''}</div>
-                {row.fa_parte_di.toponimo && (
-                  <small className="text-muted">
-                    {row.fa_parte_di.toponimo}
-                  </small>
-                )}
-              </div>
-          ) : (
-            <span className="text-muted">Nessun luogo padre</span>
-          ),
-          width: '25%',
-          sortable: true,
-        },
-        {
-          name: <span className="text-white">Tipologia</span>,
-          cell: row => (
-            <div>
-              <div>{row.tipo_monumento || "ND"}</div>
-              {row.caratteristica_di_dettaglio && (
-                <small className="text-muted">
-                  {row.caratteristica_di_dettaglio}
-                </small>
-              )}
-            </div>
-          ),
-          sortable: true,
-          width: '20%',
-        },
-        {
-          name: <span className="text-white">Periodo</span>,
-          cell: row => {
-            const currentYear = new Date().getFullYear();
-            const showEndYear = row.periodo_fine && row.periodo_fine <= currentYear;
-            
-            return (
-              <div>
-                {row.anno_inizio || "ND"}
-                {showEndYear ? ` — ${row.periodo_fine}` : ''}
-                {!row.anno_inizio && !row.periodo_fine && "ND"}
-              </div>
-            );
-          },
-          sortable: true,
-          width: '25%',
-          center: true,
-        }
-      ]}
-    />
-
-
-       }} />
-
-    
-
+                          {/* Sezione Note aggiornata */}
+                          <div className="col-md-6 p-4 bg-light">
+                            <h6 className="border-bottom pb-2">
+                              Note sul luogo
+                            </h6>
+                            <NoteWithToggle note={luogo.luogo_di_interesse_id.note} />
+                            <div className="mt-3">
+                              <Link 
+                                to={`/monumento/?tb=luogo_di_interesse&id=${luogo.luogo_di_interesse_id.id}`}
+                                className="btn btn-sm btn-outline-primary"
+                              >
+                                Vedi tutte le informazioni
+                              </Link>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              );
+            }} />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </Record>
