@@ -27,7 +27,7 @@ const FooterSection = () => {
           </Col>
 
           {/* Colonna centrale - Credits (80% width) */}
-          <Col md={6}>
+          <Col md={7} className="text-center">
             <p>
               <strong>Partenariato Esteso 5 (“CHANGES”)</strong>
               <br />
@@ -49,8 +49,8 @@ const FooterSection = () => {
           </Col>
 
           {/* Colonna destra - Developers (20% width) */}
-          <Col md={4} className="text-center">
-            <p>
+          <Col md={3} className="text-center">
+            <small>
               Il portale Sabina Sacra è stato costruito con{" "}
               <strong>s:CMS</strong>, un framework sviluppato dal{" "}
               <a
@@ -60,8 +60,7 @@ const FooterSection = () => {
               >
                 LAD: Laboratorio di Archeologia Digitale alla Sapienza
               </a>
-            </p>
-            <p>
+            <br />
               <a
                 href="https://lad.saras.uniroma1.it"
                 target="_blank"
@@ -114,7 +113,7 @@ const FooterSection = () => {
               >
                 <Bug /> Issues
               </a>
-            </p>
+            </small>
           </Col>
         </Row>
       </Container>

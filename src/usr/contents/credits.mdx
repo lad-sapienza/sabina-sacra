@@ -40,15 +40,18 @@ Il progetto è stato sviluppato nell'ambito delle attività della Fondazione [CH
 
 {/* Pulsanti di navigazione */}
 <ButtonGroup className="d-flex justify-content-center mb-5">
-  <Button variant="outline-primary" className="me-3 rounded-pill px-4 py-2" onClick={() => document.getElementById("responsabile-scientifico").scrollIntoView({ behavior: "smooth" })}>
-    Responsabile Scientifico
-  </Button>
-  <Button variant="outline-secondary" className="me-3 rounded-pill px-4 py-2" onClick={() => document.getElementById("massa-critica").scrollIntoView({ behavior: "smooth" })}>
-    Massa Critica
-  </Button>
-  <Button variant="outline-dark" className="rounded-pill px-4 py-2" onClick={() => document.getElementById("supervisori").scrollIntoView({ behavior: "smooth" })}>
-    Supervisori
-  </Button>
+  <Button 
+    variant="outline-primary" 
+    className="me-3 rounded-pill px-4 py-2" 
+    onClick={() => document.getElementById("responsabile-scientifico").scrollIntoView({ behavior: "smooth" })}>Responsabile Scientifico</Button>
+  <Button 
+    variant="outline-secondary" 
+    className="me-3 rounded-pill px-4 py-2" 
+    onClick={() => document.getElementById("massa-critica").scrollIntoView({ behavior: "smooth" })}>Massa Critica</Button>
+  <Button 
+    variant="outline-dark" 
+    className="rounded-pill px-4 py-2" 
+    onClick={() => document.getElementById("supervisori").scrollIntoView({ behavior: "smooth" })}>Supervisori</Button>
 </ButtonGroup>
 
 {/* Sezione Responsabile Scientifico */}
