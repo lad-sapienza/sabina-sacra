@@ -18,14 +18,6 @@ const logoWrapperStyle = {
   height: "100%",
 };
 
-const separatorStyle = {
-  width: "2px",
-  backgroundColor: "white",
-  height: "60px",
-  margin: "0 1rem",
-  alignSelf: "center",
-};
-
 const LogoBar = () => {
   return (
     <Container fluid style={{ backgroundColor: "#2b65af" }} className="py-1 px-0">

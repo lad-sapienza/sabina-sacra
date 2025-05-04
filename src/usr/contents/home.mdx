@@ -7,6 +7,7 @@ description: "Homepage project"
 
 import { Link } from "gatsby";
 import { Container, Row, Col, Card } from "react-bootstrap";
+import { Signpost, GeoAlt, Building, People, PeopleFill, JournalText } from 'react-bootstrap-icons';
 import LogoBar from "../components/LogoBar"
 
 <LogoBar />
@@ -14,7 +15,7 @@ import LogoBar from "../components/LogoBar"
 {/* Hero section - tutto il testo incluso */}
 <Container className="py-5 mb-5 px-0">
   <div className="text-center mb-4">
-    <h1 className="display-5 fw-bold text-danger">PANORAMI DI DIVERSITÀ</h1>
+    <h1 className="display-5 fw-bold text-primary">PANORAMI DI DIVERSITÀ</h1>
     <div className="mx-auto my-3" style={{width: '80px', height: '3px', background: '#8B0000'}}></div>
     <p className="lead mb-4 text-muted">Ebrei, cristiani e spazio sacro tra Sabina e Valle dell'Aniene</p>
   </div>
@@ -22,7 +23,7 @@ import LogoBar from "../components/LogoBar"
   <Card className="border-0 shadow-sm p-4">
     <p className="mb-3">Il progetto scaturisce dalla corale esperienza di ricerca di parte del Dipartimento di Storia Antropologia Religioni Arte Spettacolo (SARAS) 
     della Sapienza Università di Roma, sviluppato nell'ambito delle attività della Fondazione
-    <a href="https://www.fondazionechanges.org" className="text-decoration-none ms-1 text-danger">CHANGES</a>.</p>
+    <a href="https://www.fondazionechanges.org" className="text-decoration-none ms-1 text-primary">CHANGES</a>.</p>
 
     <p className="mb-3">Le azioni del Dipartimento SARAS si inseriscono prevalentemente nello <strong>Spoke 1</strong> - Historical landscapes, traditions and cultural identities, 
     e in particolare nel <strong>Work Package (WP) 5</strong> ("Archeologia del sacro lungo l'Aniene"), linea tematica 3: "Panorami di diversità: Ebrei, cristiani e 
@@ -47,19 +48,20 @@ import LogoBar from "../components/LogoBar"
     <span className="px-3 bg-white text-danger position-relative z-1">Esplora il progetto</span>
     <span className="position-absolute top-50 start-0 end-0 border-top border-danger opacity-50" style={{height: '1px'}}></span>
   </h2>
+
   
   <Row className="g-4">
     {[
-      { title: "Itinerari", count: 26, icon: "signpost", desc: "Percorsi tematici attraverso la storia e il sacro", link: "/itinerari" },
-      { title: "Luoghi", count: 365, icon: "geo-alt", desc: "Siti di interesse storico e religioso catalogati", link: "/atlante" },
-      { title: "Monumenti", count: 240, icon: "building", desc: "Architetture sacre e testimonianze storiche", link: "/monumenti" },
-      { title: "Personaggi", count: 177, icon: "people", desc: "Figure storiche che hanno plasmato il territorio", link: "/personaggi" }
+      { title: "Itinerari", count: 26, icon: <Signpost />, desc: "Percorsi tematici attraverso la storia e il sacro", link: "/itinerari" },
+      { title: "Luoghi", count: 365, icon: <GeoAlt />, desc: "Siti di interesse storico e religioso catalogati", link: "/atlante" },
+      { title: "Monumenti", count: 240, icon: <Building />, desc: "Architetture sacre e testimonianze storiche", link: "/monumenti" },
+      { title: "Personaggi", count: 177, icon: <People />, desc: "Figure storiche che hanno plasmato il territorio", link: "/personaggi" }
     ].map((item, idx) => (
       <Col key={idx} md={3} sm={6}>
         <Card className="h-100 border-0 shadow-sm text-center rounded-3">
           <Card.Body className="d-flex flex-column justify-content-center p-4">
             <div className="mb-3 mx-auto rounded-circle d-flex align-items-center justify-content-center bg-opacity-10 bg-danger text-danger" style={{width: '70px', height: '70px', fontSize: '1.75rem'}}>
-              <i className={`bi bi-${item.icon}`}></i>
+              {item.icon}
             </div>
             <h3 className="mb-3 fw-bold text-danger">{item.count}</h3>
             <Card.Title className="mb-2 fw-bold">{item.title}</Card.Title>
@@ -79,14 +81,14 @@ import LogoBar from "../components/LogoBar"
       {
         title: "Team Scientifico",
         desc: "Scopri i membri del personale scientifico e accademico che hanno contribuito alla realizzazione e alla cura del progetto.",
-        icon: "people-fill",
+        icon: <PeopleFill />,
         link: "/crediti",
         button: "Scopri"
       },
       {
         title: "Produzione Scientifica",
         desc: "Pubblicazioni, studi e risultati della ricerca.",
-        icon: "journal-text",
+        icon: <JournalText />,
         link: "/produzione",
         button: "Scopri"
       }
@@ -94,7 +96,7 @@ import LogoBar from "../components/LogoBar"
       <Col key={idx} md={6}>
         <Card className="h-100 border-0 shadow-sm d-flex flex-row align-items-center p-4">
           <div className="me-4 rounded-circle d-flex align-items-center justify-content-center bg-opacity-10 bg-danger text-danger" style={{width: '80px', height: '80px', fontSize: '2rem', flexShrink: '0'}}>
-            <i className={`bi bi-${item.icon}`}></i>
+            {item.icon}
           </div>
           <div>
             <Card.Title className="h4 mb-3 fw-bold text-danger">{item.title}</Card.Title>
