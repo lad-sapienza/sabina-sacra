@@ -15,9 +15,9 @@ import LogoBar from "../components/LogoBar"
 {/* Hero section - tutto il testo incluso */}
 <Container className="py-5 mb-5 px-0">
   <div className="text-center mb-4">
-    <h1 className="display-5 fw-bold text-primary">PANORAMI DI DIVERSITÀ</h1>
-    <div className="mx-auto my-3" style={{width: '80px', height: '3px', background: '#8B0000'}}></div>
-    <p className="lead mb-4 text-muted">Ebrei, cristiani e spazio sacro tra Sabina e Valle dell'Aniene</p>
+    <h1 className="fw-bold text-primary">PANORAMI DI DIVERSITÀ</h1>
+    <hr className="mx-auto bg-primary b-0" style={{width: '80px', height: '2px', opacity: 1 }} />
+    <p className="lead mb-4">Ebrei, cristiani e spazio sacro tra Sabina e Valle dell'Aniene</p>
   </div>
 
   <Card className="border-0 shadow-sm p-4">
@@ -34,7 +34,7 @@ import LogoBar from "../components/LogoBar"
 
     <hr className="my-4" />
 
-    <p className="small text-muted mb-0">
+    <p className="">
       Oltre al Dipartimento SARAS, il WP5 ha visto la partecipazione dei Dipartimenti di Architettura e Progetto (DIAP), 
       di Storia Disegno e Restauro dell'Architettura (DSRA) e Scienze dell'Antichità (SA). Il PI del WP5 è Orazio Carpenzano (DIAP), 
       mentre i co-PI dei singoli Dipartimenti sono Alessandra Capuano (DIAP), Daniela Esposito (DSRA), Andrea Cucchiarelli (SA) e Paola Buzi (SARAS).
@@ -45,8 +45,8 @@ import LogoBar from "../components/LogoBar"
 {/* Sezione numeri del progetto */}
 <Container className="my-5">
   <h2 className="text-center fw-light mb-5 position-relative">
-    <span className="px-3 bg-white text-danger position-relative z-1">Esplora il progetto</span>
-    <span className="position-absolute top-50 start-0 end-0 border-top border-danger opacity-50" style={{height: '1px'}}></span>
+    <span className="px-3 bg-white text-primary position-relative z-1">Esplora il progetto</span>
+    <span className="position-absolute top-50 start-0 end-0 border-top border-primary opacity-50" style={{height: '1px'}}></span>
   </h2>
 
   
@@ -60,10 +60,10 @@ import LogoBar from "../components/LogoBar"
       <Col key={idx} md={3} sm={6}>
         <Card className="h-100 border-0 shadow-sm text-center rounded-3">
           <Card.Body className="d-flex flex-column justify-content-center p-4">
-            <div className="mb-3 mx-auto rounded-circle d-flex align-items-center justify-content-center bg-opacity-10 bg-danger text-danger" style={{width: '70px', height: '70px', fontSize: '1.75rem'}}>
+            <div className="mb-3 mx-auto rounded-circle d-flex align-items-center justify-content-center bg-opacity-10 bg-primary text-primary" style={{width: '70px', height: '70px', fontSize: '1.75rem'}}>
               {item.icon}
             </div>
-            <h3 className="mb-3 fw-bold text-danger">{item.count}</h3>
+            <h3 className="mb-3 fw-bold text-primary">{item.count}</h3>
             <Card.Title className="mb-2 fw-bold">{item.title}</Card.Title>
             <Card.Text className="text-muted small mb-0">{item.desc}</Card.Text>
             <Link to={item.link} className="stretched-link"></Link>
@@ -95,11 +95,11 @@ import LogoBar from "../components/LogoBar"
     ].map((item, idx) => (
       <Col key={idx} md={6}>
         <Card className="h-100 border-0 shadow-sm d-flex flex-row align-items-center p-4">
-          <div className="me-4 rounded-circle d-flex align-items-center justify-content-center bg-opacity-10 bg-danger text-danger" style={{width: '80px', height: '80px', fontSize: '2rem', flexShrink: '0'}}>
+          <div className="me-4 rounded-circle d-flex align-items-center justify-content-center bg-opacity-10 bg-primary text-primary" style={{width: '80px', height: '80px', fontSize: '2rem', flexShrink: '0'}}>
             {item.icon}
           </div>
           <div>
-            <Card.Title className="h4 mb-3 fw-bold text-danger">{item.title}</Card.Title>
+            <Card.Title className="h4 mb-3 fw-bold text-primary">{item.title}</Card.Title>
             <Card.Text className="mb-3">{item.desc}</Card.Text>
             <Link to={item.link} className="btn btn-sm mt-2 text-white" style={{background: '#8B0000', border: 'none'}}>{item.button}</Link>
           </div>

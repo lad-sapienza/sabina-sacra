@@ -32,40 +32,43 @@ const FooterSection = () => {
               <strong>Partenariato Esteso 5 (“CHANGES”)</strong>
               <br />
               <strong>Spoke 1:</strong> Historical landscapes, traditions and
-              cultural identities
+              cultural identities.
               <br />
-              <strong>WP 5:</strong> Archeologia del sacro
+              <strong>WP 5:</strong> Archeologia del sacro.
               <br />
               <strong>Linea tematica 3:</strong> Panorami di diversità. Ebrei,
               Cristiani e spazio sacro tra Sabina e Valle dell'Aniene, dall'età
-              tardoantica a quella contemporanea
+              tardoantica a quella contemporanea.
               <br />
-              <strong>Co-PI per il Dip. SARAS:</strong> Paola Buzi
+              <strong>Co-PI per il Dip. SARAS:</strong> Paola Buzi.
               <br />
-              <strong>PI per Sapienza:</strong> Orazio Carpenzano
+              <strong>PI per Sapienza:</strong> Orazio Carpenzano.
             </p>
 
             {/* s:CMS centrato sopra i nomi */}
           </Col>
 
           {/* Colonna destra - Developers (20% width) */}
-          <Col md={3} className="text-center">
-            <small>
-              Il portale Sabina Sacra è stato costruito con{" "}
-              <strong>s:CMS</strong>, un framework sviluppato dal{" "}
+          <Col md={3} className="text-center fs-6">
+            Il portale Sabina Sacra è stato costruito con <strong>s:CMS</strong>
+            , un framework sviluppato dal{" "}
+            <a
+              href="https://lad.saras.uniroma1.it"
+              target="_blank"
+              rel="noreferrer"
+            >
+              LAD: Laboratorio di Archeologia Digitale alla Sapienza
+            </a>
+            <hr />
+            <a
+              href="https://lad.saras.uniroma1.it"
+              target="_blank"
+              rel="noreferrer"
+              className="me-2"
+            >
               <a
-                href="https://lad.saras.uniroma1.it"
-                target="_blank"
-                rel="noreferrer"
-              >
-                LAD: Laboratorio di Archeologia Digitale alla Sapienza
-              </a>
-            <br />
-              <a
-                href="https://lad.saras.uniroma1.it"
-                target="_blank"
-                rel="noreferrer"
-                className="me-2"
+                href="mailto:julian.bogdani@uniroma1.it"
+                title="Invia una mail a Julian Bogdani"
               >
                 <StaticImage
                   src="../images/lad-rect.png"
@@ -73,47 +76,50 @@ const FooterSection = () => {
                   quality={90}
                   formats={["AUTO", "WEBP"]}
                   alt="LAD: Laboratorio di Archeologia Digitale alla Sapienza"
+                  className="me-2"
                   style={{
                     filter: "grayscale(100%) brightness(0.5)",
                   }}
                 />
               </a>
-              Julian Bogdani |{" "}
-              <a href="mailto:julian.bogdani@uniroma1.it">
-                julian.bogdani@uniroma1.it
-              </a>
-              <br />
+              Julian Bogdani
+            </a>
+            <br />
+            <a
+              href="mailto:erasmo.difonso@libero.it"
+              title="Invia una mail a Erasmo di Fonso"
+            >
               <StaticImage
                 src="../images/logo_erasmo.svg"
                 width={30}
                 quality={90}
                 formats={["AUTO", "WEBP", "PNG"]}
-                alt=""
+                alt="Erasmo di Fonso"
+                className="me-2"
                 style={{
                   mixBlendMode: "multiply",
                 }}
               />
-              Erasmo di Fonso |{" "}
-              <a href="mailto:erasmo.difonso@libero.it">
-                erasmo.difonso@libero.it
-              </a>
-              <br />
-              <a
-                href="https://github.com/lab-archeologia-digitale/sCMS"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <Github className="me-1" /> Code
-              </a>{" "}
-              —{" "}
-              <a
-                href="https://github.com/lab-archeologia-digitale/sCMS/issues"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <Bug /> Issues
-              </a>
-            </small>
+              Erasmo di Fonso
+            </a>
+            <br />
+            <a
+              href="https://github.com/lab-archeologia-digitale/sCMS"
+              target="_blank"
+              rel="noreferrer"
+              title="Codice sorgente"
+            >
+              <Github className="me-2" />
+            </a>{" "}
+            —{" "}
+            <a
+              href="https://github.com/lab-archeologia-digitale/sCMS/issues"
+              target="_blank"
+              rel="noreferrer"
+              title="Segnala un problema"
+            >
+              <Bug className="ms-2" />
+            </a>
           </Col>
         </Row>
       </Container>
