@@ -7,6 +7,7 @@ menu_position: 6
 ---
 
 import { Container, Row, Col, Card, Button, ListGroup, Badge, Accordion } from "react-bootstrap";
+import { Image, FilePdf, FileEarmarkImage } from "react-bootstrap-icons";
 import LogoBar from "../components/LogoBar"
 
 <LogoBar />
@@ -50,9 +51,7 @@ import LogoBar from "../components/LogoBar"
                 <Accordion flush>
                   <Accordion.Item eventKey="0" className="border-0 bg-transparent">
                     <Accordion.Header className="p-0 border-0 bg-transparent">
-                      <Button variant="link" size="sm" className="ps-0 mt-1 text-decoration-none">
-                        Mostra tutti i contributi
-                      </Button>
+                      <Button variant="link" size="sm" className="ps-0 mt-1 text-decoration-none">Mostra tutti i contributi</Button>
                     </Accordion.Header>
                     <Accordion.Body className="p-0">
                       <ListGroup.Item className="border-0 px-0 py-1 bg-transparent small">
@@ -92,9 +91,7 @@ import LogoBar from "../components/LogoBar"
             
             <div className="d-flex align-items-center justify-content-between border-top pt-3">
               <p className="mb-0 small"><strong>Autori:</strong> Serena Di Nepi, Andrea Zappia</p>
-              <Button href="https://dx.doi.org/10.1093/obo/9780195399301-0542" variant="outline-success" size="sm" className="rounded-pill px-3">
-                Vai alla pubblicazione →
-              </Button>
+              <Button href="https://dx.doi.org/10.1093/obo/9780195399301-0542" variant="outline-success" size="sm" className="rounded-pill px-3">Vai alla pubblicazione →</Button>
             </div>
           </Card.Body>
         </Card>
@@ -174,17 +171,19 @@ import LogoBar from "../components/LogoBar"
                   } catch {
                     return (
                       <div className="text-center p-4 text-muted">
-                        <i className="bi bi-file-earmark-image fs-1"></i>
+                        <FileEarmarkImage className="fs-1" />
                         <p className="small mt-2 mb-0">Locandina</p>
                       </div>
                     )
                   }
                 })()}
               </div>
-              <Button variant="primary" size="sm" className="position-absolute bottom-0 start-50 translate-middle-x mb-3 rounded-pill shadow-sm" 
-                      href="/images/I monasteri di Subiaco e Farfa come crocevia monatico-culturale nei secoli XV e XVI.pdf" target="_blank">
-                Programma PDF
-              </Button>
+              <Button 
+                variant="primary" 
+                size="sm" 
+                className="position-absolute bottom-0 start-50 translate-middle-x mb-3 rounded-pill shadow-sm" 
+                href="/images/I monasteri di Subiaco e Farfa come crocevia monatico-culturale nei secoli XV e XVI.pdf" 
+                target="_blank">Programma PDF</Button>
             </Col>
             <Col md={7} className="d-flex flex-column">
               <Card.Body className="p-4">
@@ -193,9 +192,10 @@ import LogoBar from "../components/LogoBar"
                 <p className="small mb-0">I monasteri benedettini di Subiaco e Farfa hanno avuto una grande importanza per la vita monastica, politica, economica e liturgica-culturale...</p>
               </Card.Body>
               <Card.Footer className="bg-transparent border-0 pt-0 pb-3 px-4">
-                <Button variant="outline-primary" size="sm" className="rounded-pill">
-                  Dettagli evento
-                </Button>
+                <Button 
+                  variant="outline-primary" 
+                  size="sm" 
+                  className="rounded-pill">Dettagli evento</Button>
               </Card.Footer>
             </Col>
           </Row>
@@ -222,17 +222,19 @@ import LogoBar from "../components/LogoBar"
                   } catch {
                     return (
                       <div className="text-center p-4 text-muted">
-                        <i className="bi bi-file-earmark-image fs-1"></i>
+                        <FileEarmarkImage className="fs-1" />
                         <p className="small mt-2 mb-0">Locandina</p>
                       </div>
                     )
                   }
                 })()}
               </div>
-              <Button variant="primary" size="sm" className="position-absolute bottom-0 start-50 translate-middle-x mb-3 rounded-pill shadow-sm" 
-                      href="/images/III convegno SISMED Udine Programma generale web.pdf" target="_blank">
-                Programma PDF
-              </Button>
+              <Button 
+                variant="primary" 
+                size="sm" 
+                className="position-absolute bottom-0 start-50 translate-middle-x mb-3 rounded-pill shadow-sm" 
+                href="/images/III convegno SISMED Udine Programma generale web.pdf"
+                target="_blank">Programma PDF</Button>
             </Col>
             <Col md={7} className="d-flex flex-column">
               <Card.Body className="p-4">
@@ -241,9 +243,10 @@ import LogoBar from "../components/LogoBar"
                 <p className="small mb-0">Convegno organizzato dalla Società italiana per la storia medievale con numerose sessioni parallele su temi diversi.</p>
               </Card.Body>
               <Card.Footer className="bg-transparent border-0 pt-0 pb-3 px-4">
-                <Button variant="outline-primary" size="sm" className="rounded-pill">
-                  Dettagli evento
-                </Button>
+                <Button 
+                  variant="outline-primary" 
+                  size="sm" 
+                  className="rounded-pill">Dettagli evento</Button>
               </Card.Footer>
             </Col>
           </Row>
@@ -259,10 +262,12 @@ import LogoBar from "../components/LogoBar"
                 <h3 className="h5 mb-1">Panorami di diversità</h3>
                 <p className="small text-muted mb-2">Workshop - Roma, 19 dicembre 2023</p>
               </div>
-              <Button variant="outline-primary" size="sm" className="rounded-pill" 
-                      href="/images/Programma workshop 19 dicembre.jpg" target="_blank">
-                <i className="bi bi-image me-1"></i> Locandina
-              </Button>
+              <Button 
+                variant="outline-primary" 
+                size="sm" 
+                className="rounded-pill" 
+                href="/images/Programma workshop 19 dicembre.jpg" 
+                target="_blank"><Image /> Locandina</Button>
             </div>
             <p className="small mb-0">Luoghi sacri, storia religiosa e storia del territorio in Sabina tra tarda antichità e epoca moderna.</p>
           </Card.Body>
@@ -281,10 +286,12 @@ import LogoBar from "../components/LogoBar"
                 <h3 className="h5 mb-1">Dal documento al territorio</h3>
                 <p className="small text-muted mb-2">Workshop laboratoriale - Roma, 23 novembre 2023</p>
               </div>
-              <Button variant="outline-primary" size="sm" className="rounded-pill" 
-                      href="/images/Locandina workshop 23 nov. 2023.jpg" target="_blank">
-                <i className="bi bi-image me-1"></i> Locandina
-              </Button>
+              <Button
+                variant="outline-primary" 
+                size="sm" 
+                className="rounded-pill" 
+                href="/images/Locandina workshop 23 nov. 2023.jpg"
+                target="_blank"><Image /> Locandina</Button>
             </div>
             <p className="small mb-0">Dalle carte degli archivi romani (XVI-XVIII sec.) alla ricostruzione storica del territorio.</p>
           </Card.Body>
@@ -303,10 +310,12 @@ import LogoBar from "../components/LogoBar"
                 <h3 className="h5 mb-1">Tecnologie digitali</h3>
                 <p className="small text-muted mb-2">Panel al III Convegno SISMED - Udine, giugno 2024</p>
               </div>
-              <Button variant="outline-primary" size="sm" className="rounded-pill" 
-                      href="/images/Proposta di panel - Tecnologie digitali, ricerca scientifica e valorizzazione del territorio.pdf" target="_blank">
-                <i className="bi bi-file-pdf me-1"></i> Dettagli
-              </Button>
+              <Button
+                variant="outline-primary" 
+                size="sm" 
+                className="rounded-pill" 
+                href="/images/Proposta di panel - Tecnologie digitali, ricerca scientifica e valorizzazione del territorio.pdf" 
+                target="_blank"><FilePdf /> Dettagli</Button>
             </div>
             <p className="small mb-0">L'abbazia di Farfa e le opportunità legate al PNRR - Partenariato Esteso 5, Spoke 1, WP5.</p>
           </Card.Body>
