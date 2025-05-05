@@ -1,15 +1,15 @@
-import * as React from "react"
-import { StaticImage } from "gatsby-plugin-image"
-import styled from "styled-components"
-import { Container, Row, Col } from "react-bootstrap"
-import { Github, Bug } from "react-bootstrap-icons"
+import * as React from "react";
+import { StaticImage } from "gatsby-plugin-image";
+import styled from "styled-components";
+import { Container, Row, Col } from "react-bootstrap";
+import { Github, Bug } from "react-bootstrap-icons";
 
 const FooterSection = () => {
   return (
     <Footer>
       <Container>
         <Row className="py-3">
-          {/* Colonna sinistra - Logo Sapienza ingrandito */}
+          {/* Left Column - Sapienza Logo */}
           <Col md={2} className="text-center">
             <a href="https://www.uniroma1.it" target="_blank" rel="noreferrer">
               <StaticImage
@@ -19,14 +19,12 @@ const FooterSection = () => {
                 formats={["AUTO", "WEBP", "PNG"]}
                 alt="Sapienza Università di Roma"
                 className="img-fluid"
-                style={{
-                  filter: "brightness(0) contrast(100%)",
-                }}
+                style={{ filter: "brightness(0) contrast(100%)" }}
               />
             </a>
           </Col>
 
-          {/* Colonna centrale - Credits (80% width) */}
+          {/* Center Column - Credits */}
           <Col md={7} className="text-center">
             <p>
               <strong>Partenariato Esteso 5 (“CHANGES”)</strong>
@@ -44,28 +42,22 @@ const FooterSection = () => {
               <br />
               <strong>PI per Sapienza:</strong> Orazio Carpenzano.
             </p>
-
-            {/* s:CMS centrato sopra i nomi */}
           </Col>
 
-          {/* Colonna destra - Developers (20% width) */}
+          {/* Right Column - Developers */}
           <Col md={3} className="text-center fs-6">
-            Il portale Sabina Sacra è stato costruito con <strong>s:CMS</strong>
-            , un framework sviluppato dal{" "}
-            <a
-              href="https://lad.saras.uniroma1.it"
-              target="_blank"
-              rel="noreferrer"
-            >
-              LAD: Laboratorio di Archeologia Digitale alla Sapienza
-            </a>
+            <p>
+              Il portale Sabina Sacra è stato costruito con <strong>s:CMS</strong>, un framework sviluppato dal{" "}
+              <a
+                href="https://lad.saras.uniroma1.it"
+                target="_blank"
+                rel="noreferrer"
+              >
+                LAD: Laboratorio di Archeologia Digitale alla Sapienza
+              </a>
+            </p>
             <hr />
-            <a
-              href="https://lad.saras.uniroma1.it"
-              target="_blank"
-              rel="noreferrer"
-              className="me-2"
-            >
+            <div>
               <a
                 href="mailto:julian.bogdani@uniroma1.it"
                 title="Invia una mail a Julian Bogdani"
@@ -77,57 +69,55 @@ const FooterSection = () => {
                   formats={["AUTO", "WEBP"]}
                   alt="LAD: Laboratorio di Archeologia Digitale alla Sapienza"
                   className="me-2"
-                  style={{
-                    filter: "grayscale(100%) brightness(0.5)",
-                  }}
+                  style={{ filter: "grayscale(100%) brightness(0.5)" }}
                 />
+                Julian Bogdani
               </a>
-              Julian Bogdani
-            </a>
-            <br />
-            <a
-              href="mailto:erasmo.difonso@libero.it"
-              title="Invia una mail a Erasmo di Fonso"
-            >
-              <StaticImage
-                src="../images/logo_erasmo.svg"
-                width={30}
-                quality={90}
-                formats={["AUTO", "WEBP", "PNG"]}
-                alt="Erasmo di Fonso"
-                className="me-2"
-                style={{
-                  mixBlendMode: "multiply",
-                }}
-              />
-              Erasmo di Fonso
-            </a>
-            <br />
-            <a
-              href="https://github.com/lab-archeologia-digitale/sCMS"
-              target="_blank"
-              rel="noreferrer"
-              title="Codice sorgente"
-            >
-              <Github className="me-2" />
-            </a>{" "}
-            —{" "}
-            <a
-              href="https://github.com/lab-archeologia-digitale/sCMS/issues"
-              target="_blank"
-              rel="noreferrer"
-              title="Segnala un problema"
-            >
-              <Bug className="ms-2" />
-            </a>
+            </div>
+            <div>
+              <a
+                href="mailto:erasmo.difonso@libero.it"
+                title="Invia una mail a Erasmo di Fonso"
+              >
+                <StaticImage
+                  src="../images/logo_erasmo.svg"
+                  width={30}
+                  quality={90}
+                  formats={["AUTO", "WEBP", "PNG"]}
+                  alt="Erasmo di Fonso"
+                  className="me-2"
+                  style={{ mixBlendMode: "multiply" }}
+                />
+                Erasmo di Fonso
+              </a>
+            </div>
+            <div className="mt-2">
+              <a
+                href="https://github.com/lab-archeologia-digitale/sCMS"
+                target="_blank"
+                rel="noreferrer"
+                title="Codice sorgente"
+              >
+                <Github className="me-2" />
+              </a>
+              —
+              <a
+                href="https://github.com/lab-archeologia-digitale/sCMS/issues"
+                target="_blank"
+                rel="noreferrer"
+                title="Segnala un problema"
+              >
+                <Bug className="ms-2" />
+              </a>
+            </div>
           </Col>
         </Row>
       </Container>
     </Footer>
-  )
-}
+  );
+};
 
-// Stile ottimizzato
+// Styled Footer Component
 const Footer = styled.footer`
   background-color: #f8f4e9;
   border-top: 4px solid #5a3921;
@@ -145,6 +135,6 @@ const Footer = styled.footer`
       text-decoration: underline;
     }
   }
-`
+`;
 
-export default FooterSection
+export default FooterSection;
