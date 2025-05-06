@@ -26,13 +26,108 @@ import { useState } from "react";
     </div>
   </div>
 
-  {/* Selettore a tab */}
+  {/* Mappa fissa */}
+  <div className="container mb-4">
+    <div className="card border-0 shadow-sm">
+      <div className="card-header bg-white border-bottom py-3">
+        <h2 className="h4 mb-0 text-dark">
+          Mappa dell'itinerario
+        </h2>
+        <p className="mb-0 text-muted">
+          Naviga la mappa interattiva per scoprire la sequenza delle tappe
+        </p>
+      </div>
+      <div className="card-body p-0">
+        <Field name={["luoghi_dell_itinerario"]} transformer={ldi => {
+          const id_luoghi = ldi.map(l => l.luogo_di_interesse_id.id).join(',');
+          const ordini = {};
+          
+          ldi.forEach(l => {
+            ordini[l.luogo_di_interesse_id.id] = l.ordine;
+          });
+
+          // Scala di colori delicata blu -> rosso/giallo
+          const colorScale = (order, total) => {
+            const ratio = order / total;
+            // Da blu (hsl(210, 60%, 65%)) a rosso/arancio (hsl(20, 80%, 65%))
+            const hue = 210 - (ratio * 190);
+            return `hsl(${hue}, 70%, 65%)`;
+          };
+
+          const createCustomIcon = (feature) => {
+            const order = ordini[feature.properties.id];
+            const total = ldi.length;
+            const color = colorScale(order, total);
+            
+            return L.divIcon({
+              html: `<div style="background-color: ${color}; 
+                                  width: 32px; 
+                                  height: 32px; 
+                                  border-radius: 50%; 
+                                  display: flex; 
+                                  align-items: center; 
+                                  justify-content: center; 
+                                  color: white; 
+                                  font-weight: bold;
+                                  border: 2px solid white;
+                                  box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                        ${order}
+                     </div>`,
+              className: '',
+              iconSize: [32, 32],
+              iconAnchor: [16, 16]
+            });
+          };
+
+          return (
+            <MapLeaflet
+              height="600px"
+              baseLayers={["EsriTopo"]}
+              scrollWheelZoom={true}
+            >
+              <VectorLayer
+                name="Monumenti"
+                source={{
+                  directus: {
+                    table: "luogo_di_interesse",
+                    geoField: "coordinate",
+                    queryString: `filter[id][_in]=${id_luoghi}&fields=id,tipo_monumento,note,nome_luogo,coordinate&limit=-1`,
+                    transType: "geojson",
+                  }
+                }}
+                checked={true}
+                fitToContent={true}
+                pointToLayer={(feature, latlng) => {
+                  return L.marker(latlng, {
+                    icon: createCustomIcon(feature)
+                  });
+                }}
+                popupTemplate={(properties) => {
+                  const order = ordini[properties.id];
+                  return `
+                    <div class="p-2">
+                      <h5 class="mb-2">${properties.nome_luogo}</h5>
+                      <p class="mb-1"><strong>Tappa ${order}</strong> dell'itinerario</p>
+                      <p class="mb-2 text-muted">${properties.tipo_monumento}</p>
+                      <a href='/monumento/?tb=luogo_di_interesse&id=${properties.id}' class="btn btn-sm btn-outline-primary">Dettagli</a>
+                    </div>
+                  `;
+                }}
+              />
+            </MapLeaflet>
+          );
+        }} />
+      </div>
+    </div>
+  </div>
+
+  {/* Selettore a tab per descrizione/schede luoghi */}
   <div className="container mb-5">
     <ul className="nav nav-pills nav-justified mb-4" id="itinerarioTabs" role="tablist">
       <li className="nav-item" role="presentation">
-        <button className="nav-link active fs-5 py-3" id="mappa-tab" data-bs-toggle="tab" data-bs-target="#mappa" type="button" role="tab">
-          Mappa
-          <small className="d-block mt-1 fw-normal text-muted">Visualizza il percorso geografico</small>
+        <button className="nav-link active fs-5 py-3" id="descrizione-tab" data-bs-toggle="tab" data-bs-target="#descrizione" type="button" role="tab">
+          Descrizione
+          <small className="d-block mt-1 fw-normal text-muted">Informazioni sull'itinerario</small>
         </button>
       </li>
       <li className="nav-item" role="presentation">
@@ -44,153 +139,71 @@ import { useState } from "react";
     </ul>
 
     <div className="tab-content" id="itinerarioTabsContent">
-      {/* Tab Mappa con Descrizione integrata */}
-      <div className="tab-pane fade show active" id="mappa" role="tabpanel">
-        <div className="card mb-4 border-0 shadow-sm">
-          <div className="card-header bg-white border-bottom py-3">
-            <h2 className="h4 mb-0 text-dark">
-              Mappa dell'itinerario
-            </h2>
-            <p className="mb-0 text-muted">
-              Naviga la mappa interattiva per scoprire la sequenza delle tappe
-            </p>
-          </div>
-          <div className="card-body p-0">
-            <Field name={["luoghi_dell_itinerario"]} transformer={ldi => {
-              const id_luoghi = ldi.map(l => l.luogo_di_interesse_id.id).join(',');
-              const ordini = {};
-              
-              ldi.forEach(l => {
-                ordini[l.luogo_di_interesse_id.id] = l.ordine;
-              });
+      {/* Tab Descrizione */}
+      <div className="tab-pane fade show active" id="descrizione" role="tabpanel">
+        <Field name={["luoghi_dell_itinerario"]} transformer={ldi => {
+          // Scala di colori delicata blu -> rosso/giallo
+          const colorScale = (order, total) => {
+            const ratio = order / total;
+            const hue = 210 - (ratio * 190);
+            return `hsl(${hue}, 70%, 65%)`;
+          };
 
-              // Scala di colori delicata blu -> rosso/giallo
-              const colorScale = (order, total) => {
-                const ratio = order / total;
-                // Da blu (hsl(210, 60%, 65%)) a rosso/arancio (hsl(20, 80%, 65%))
-                const hue = 210 - (ratio * 190);
-                return `hsl(${hue}, 70%, 65%)`;
-              };
-
-              const createCustomIcon = (feature) => {
-                const order = ordini[feature.properties.id];
-                const total = ldi.length;
-                const color = colorScale(order, total);
-                
-                return L.divIcon({
-                  html: `<div style="background-color: ${color}; 
-                                      width: 32px; 
-                                      height: 32px; 
-                                      border-radius: 50%; 
-                                      display: flex; 
-                                      align-items: center; 
-                                      justify-content: center; 
-                                      color: white; 
-                                      font-weight: bold;
-                                      border: 2px solid white;
-                                      box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
-                            ${order}
-                         </div>`,
-                  className: '',
-                  iconSize: [32, 32],
-                  iconAnchor: [16, 16]
-                });
-              };
-
-              return (
-                <>
-                  <MapLeaflet
-                    height="600px"
-                    baseLayers={["EsriTopo"]}
-                    scrollWheelZoom={true}
-                  >
-                    <VectorLayer
-                      name="Monumenti"
-                      source={{
-                        directus: {
-                          table: "luogo_di_interesse",
-                          geoField: "coordinate",
-                          queryString: `filter[id][_in]=${id_luoghi}&fields=id,tipo_monumento,note,nome_luogo,coordinate&limit=-1`,
-                          transType: "geojson",
-                        }
-                      }}
-                      checked={true}
-                      fitToContent={true}
-                      pointToLayer={(feature, latlng) => {
-                        return L.marker(latlng, {
-                          icon: createCustomIcon(feature)
-                        });
-                      }}
-                      popupTemplate={(properties) => {
-                        const order = ordini[properties.id];
-                        return `
-                          <div class="p-2">
-                            <h5 class="mb-2">${properties.nome_luogo}</h5>
-                            <p class="mb-1"><strong>Tappa ${order}</strong> dell'itinerario</p>
-                            <p class="mb-2 text-muted">${properties.tipo_monumento}</p>
-                            <a href='/monumento/?tb=luogo_di_interesse&id=${properties.id}' class="btn btn-sm btn-outline-primary">Dettagli</a>
-                          </div>
-                        `;
-                      }}
-                    />
-                  </MapLeaflet>
-                  
-                  {/* Sezione Descrizione con dashboard */}
-                  <div className="p-4 border-top">
-                    <div className="row">
-                      <div className="col-lg-9">
-                        <div className="bg-light p-4 rounded-3">
-                          <h3 className="h5 mb-3 text-dark fw-bold">Descrizione dell'itinerario</h3>
-                          <div className="lead" style={{ fontFamily: 'Georgia, serif', lineHeight: '1.6' }}>
-                            <Field name={["breve_descrizione"]} />
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-lg-3">
-                        <div className="bg-white p-4 rounded-3 border h-100">
-                          <h4 className="h6 mb-3 text-dark fw-bold">Tappe dell'itinerario</h4>
-                          <div className="d-flex flex-column gap-2">
-                            {ldi.sort((a, b) => a.ordine - b.ordine).map((luogo) => {
-                              const color = colorScale(luogo.ordine, ldi.length);
-                              return (
-                                <div key={luogo.ordine} className="d-flex align-items-center">
-                                  <div 
-                                    className="rounded-circle flex-shrink-0 me-2" 
-                                    style={{
-                                      width: '24px',
-                                      height: '24px',
-                                      backgroundColor: color,
-                                      display: 'flex',
-                                      alignItems: 'center',
-                                      justifyContent: 'center',
-                                      color: 'white',
-                                      fontSize: '0.75rem',
-                                      fontWeight: 'bold'
-                                    }}
-                                  >
-                                    {luogo.ordine}
-                                  </div>
-                                  <div className="small text-truncate">
-                                    {luogo.luogo_di_interesse_id.nome_luogo}
-                                  </div>
-                                </div>
-                              );
-                            })}
-                          </div>
-                        </div>
+          return (
+            <div className="card border-0 shadow-sm">
+              <div className="card-body">
+                <div className="row">
+                  <div className="col-lg-9">
+                    <div className="bg-light p-4 rounded-3">
+                      <h3 className="h5 mb-3 text-dark fw-bold">Descrizione dell'itinerario</h3>
+                      <div className="lead" style={{ fontFamily: 'Georgia, serif', lineHeight: '1.6' }}>
+                        <Field name={["breve_descrizione"]} />
                       </div>
                     </div>
                   </div>
-                </>
-              );
-            }} />
-          </div>
-        </div>
+                  <div className="col-lg-3">
+                    <div className="bg-white p-4 rounded-3 border h-100">
+                      <h4 className="h6 mb-3 text-dark fw-bold">Tappe dell'itinerario</h4>
+                      <div className="d-flex flex-column gap-2">
+                        {ldi.sort((a, b) => a.ordine - b.ordine).map((luogo) => {
+                          const color = colorScale(luogo.ordine, ldi.length);
+                          return (
+                            <div key={luogo.ordine} className="d-flex align-items-center">
+                              <div 
+                                className="rounded-circle flex-shrink-0 me-2" 
+                                style={{
+                                  width: '24px',
+                                  height: '24px',
+                                  backgroundColor: color,
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  justifyContent: 'center',
+                                  color: 'white',
+                                  fontSize: '0.75rem',
+                                  fontWeight: 'bold'
+                                }}
+                              >
+                                {luogo.ordine}
+                              </div>
+                              <div className="small text-truncate">
+                                {luogo.luogo_di_interesse_id.nome_luogo}
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        }} />
       </div>
 
       {/* Tab Luoghi */}
       <div className="tab-pane fade" id="luoghi" role="tabpanel">
-        <div className="card border-0 mb-4 shadow-sm">
+        <div className="card border-0 shadow-sm">
           <div className="card-header bg-white border-bottom py-3">
             <h2 className="h4 mb-0 text-dark">
               Luoghi dell'itinerario
