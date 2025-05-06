@@ -93,7 +93,7 @@ const FooterSection = () => {
             </div>
             <div className="mt-2">
               <a
-                href="https://github.com/lab-archeologia-digitale/sCMS"
+                href="https://github.com/lad-sapienza/sabina-sacra"
                 target="_blank"
                 rel="noreferrer"
                 title="Codice sorgente"
@@ -102,7 +102,7 @@ const FooterSection = () => {
               </a>
               —
               <a
-                href="https://github.com/lab-archeologia-digitale/sCMS/issues"
+                href="https://github.com/lab-archeologia-digitale/sabina-sacra/issues"
                 target="_blank"
                 rel="noreferrer"
                 title="Segnala un problema"
