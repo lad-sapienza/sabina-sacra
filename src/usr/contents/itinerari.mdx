@@ -11,8 +11,6 @@ import { Row, Col, Button, ButtonGroup, Form } from "react-bootstrap"
 import getDataFromSource from "../../services/getDataFromSource"
 import { Link } from "gatsby"
 
-# Itinerari
-
 export default function ItinerariPage() {
   const [data, setData] = useState([])
   const [selectedItinerari, setSelectedItinerari] = useState([])
@@ -158,131 +156,73 @@ export default function ItinerariPage() {
       </Row>
 
       {/* RISULTATI */}
-      <Row>
-        <Col>
-          {filteredData.map((row, index) => {
-            const luoghiOrdinati = row.luoghi_dell_itinerario
-              ? [...row.luoghi_dell_itinerario].sort((a, b) => a.ordine - b.ordine)
-              : []
-
-            return (
-              <div
-                key={row.id}
-                style={{
-                  margin: '40px 0',
-                  padding: '30px',
-                  borderRadius: '12px',
-                  border: '1px solid #e0e0e0',
-                  boxShadow: '0 2px 6px rgba(0,0,0,0.05)',
-                  backgroundColor: '#ffffff',
-                  marginLeft: index % 2 === 0 ? '0' : 'auto',
-                  marginRight: index % 2 === 0 ? 'auto' : '0',
-                  width: '90%',
-                  display: 'flex',
-                  flexDirection: index % 2 === 0 ? 'row' : 'row-reverse',
-                  gap: '30px',
-                  alignItems: 'flex-start'
-                }}
-              >
-                {/* COLONNA DESCRIZIONE */}
-                <div style={{ flex: 2 }}>
-                  <h2 style={{
-                    marginBottom: '15px',
-                    fontSize: '1.75rem',
-                    color: '#1c1c1c'
-                  }}>
-                    <Link
-                      to={`/itinerario/?tb=itinerario&id=${row.id}`}
-                      className="text-decoration-none text-primary fw-bold"
-                    >
-                      {row.nome_itinerario}
-                    </Link>
-                  </h2>
-
-                  <p style={{
-                    fontSize: '1.05rem',
-                    lineHeight: '1.6',
-                    marginBottom: '15px',
-                    color: '#495057'
-                  }}>{row.breve_descrizione}</p>
-
-                  {row.note && (
-                    <div style={{
-                      padding: '15px',
-                      backgroundColor: '#f8f9fa',
-                      borderLeft: '4px solid #adb5bd',
-                      fontStyle: 'italic',
-                      color: '#6c757d',
-                      borderRadius: '4px'
-                    }}>{row.note}</div>
-                  )}
-                </div>
-
-                {/* COLONNA LUOGHI CON LINEA E NUMERI */}
-                {luoghiOrdinati.length > 0 && (
-                  <div style={{ flex: 1 }}>
-                    <h6 style={{ fontSize: '1rem', marginBottom: '10px', fontWeight: '600', color: '#495057' }}>
-                      Luoghi dell'itinerario
-                    </h6>
-                    <ul style={{ paddingLeft: '0', listStyle: 'none', margin: 0, position: 'relative' }}>
-                      {luoghiOrdinati.map((luogo, i) => (
-                        <li key={luogo.id} style={{ position: 'relative', paddingLeft: '40px', marginBottom: '20px' }}>
-                          {/* Linea */}
-                          {i < luoghiOrdinati.length - 1 && (
-                            <div style={{
-                              position: 'absolute',
-                              left: '17px',
-                              top: '28px',
-                              height: '100%',
-                              width: '2px',
-                              backgroundColor: '#e0e0e0',
-                              zIndex: 0
-                            }} />
-                          )}
-
-                          {/* Cerchio numerato */}
-                          <span style={{
-                            position: 'absolute',
-                            left: '0',
-                            top: '0',
-                            display: 'inline-block',
-                            width: '34px',
-                            height: '34px',
-                            lineHeight: '34px',
-                            textAlign: 'center',
-                            backgroundColor: '#822433',
-                            color: 'white',
-                            borderRadius: '50%',
-                            fontWeight: 'bold',
-                            fontSize: '0.9rem',
-                            zIndex: 1
-                          }}>
-                            {i + 1}
-                          </span>
-
-                          <div>
-                            <Link
-                              to={`/monumento/?tb=luogo_di_interesse&id=${luogo.luogo_di_interesse_id.id}`}
-                              className="text-decoration-none text-dark fw-semibold"
-                            >
-                              🏛️ {luogo.luogo_di_interesse_id.nome_luogo}
-                            </Link>
-                            {luogo.luogo_di_interesse_id.caratteristica_di_dettaglio && (
-                              <span style={{ fontSize: '0.85rem', color: '#822433' }}>
-                                {" "}
-                                ({luogo.luogo_di_interesse_id.caratteristica_di_dettaglio})
-                              </span>
-                            )}
-                          </div>
-                        </li>
-                      ))}
-                    </ul>
+          <Row className="justify-content-center">
+        {filteredData.map((row, index) => (
+          <Col key={row.id} xs={12} className="mb-4">
+            <div className={`
+              d-flex flex-column p-3 p-md-4 bg-white rounded shadow-sm
+              ${window.innerWidth > 768 ? 
+                (index % 2 ? 'flex-md-row-reverse' : 'flex-md-row') : ''}
+              ${window.innerWidth > 768 ? (index % 2 ? 'ms-auto' : 'me-auto') : 'mx-auto'}
+            `} style={{
+              width: window.innerWidth > 768 ? '90%' : '95%',
+              gap: '30px',
+              border: '1px solid #e0e0e0'
+            }}>
+              {/* Colonna Descrizione */}
+              <div style={{ flex: 2 }}>
+                <h2 style={{ fontSize: window.innerWidth > 768 ? '1.75rem' : '1.5rem' }}>
+                  <Link to={`/itinerario/?tb=itinerario&id=${row.id}`} 
+                    className="text-decoration-none text-primary fw-bold">
+                    {row.nome_itinerario}
+                  </Link>
+                </h2>
+                <p style={{ fontSize: window.innerWidth > 768 ? '1.05rem' : '1rem' }}>
+                  {row.breve_descrizione}
+                </p>
+                {row.note && (
+                  <div className="p-3 bg-light border-start border-3 border-secondary font-italic text-muted rounded">
+                    {row.note}
                   </div>
                 )}
               </div>
-            )
-          })}
-        </Col>
+
+              {/* Colonna Luoghi */}
+              {row.luoghi_dell_itinerario?.length > 0 && (
+                <div style={{ flex: 1 }}>
+                  <h6 className="fw-semibold mb-3">Luoghi dell'itinerario</h6>
+                  <ul className="list-unstyled position-relative ps-4">
+                    {[...row.luoghi_dell_itinerario]
+                      .sort((a,b) => a.ordine - b.ordine)
+                      .map((luogo, i, arr) => (
+                      <li key={luogo.id} className="position-relative mb-3 ps-4">
+                        {i < arr.length - 1 && (
+                          <div className="position-absolute start-4 top-0 h-100 border-start" 
+                            style={{ top: '28px' }} />
+                        )}
+                        <span className="position-absolute start-0 translate-middle rounded-circle bg-primary text-white d-flex align-items-center justify-content-center" 
+                          style={{ width: '34px', height: '34px' }}>
+                          {i + 1}
+                        </span>
+                        <div>
+                          <Link to={`/monumento/?tb=luogo_di_interesse&id=${luogo.luogo_di_interesse_id.id}`}
+                            className="text-decoration-none text-dark fw-semibold">
+                            🏛️ {luogo.luogo_di_interesse_id.nome_luogo}
+                          </Link>
+                          {luogo.luogo_di_interesse_id.caratteristica_di_dettaglio && (
+                            <small className="text-primary ms-1">
+                              ({luogo.luogo_di_interesse_id.caratteristica_di_dettaglio})
+                            </small>
+                          )}
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          </Col>
+        ))}
       </Row>
     </>
   )
