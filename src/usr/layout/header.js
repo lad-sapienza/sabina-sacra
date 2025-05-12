@@ -9,7 +9,7 @@ const HeaderSection = () => (
       <div className="d-sm-flex align-items-center text-center">
         <Link to={"/"}>
         <StaticImage
-          src="../images/logo-sabina-sacra.png"
+          src="../images/logo-Sabina-sacra.png"
           alt="Sabina Sacra"
           width={150}
           quality={80}

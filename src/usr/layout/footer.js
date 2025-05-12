@@ -32,10 +32,10 @@ const FooterSection = () => {
               <strong>Spoke 1:</strong> Historical landscapes, traditions and
               cultural identities.
               <br />
-              <strong>WP 5:</strong> Archeologia del sacro.
+              <strong>WP 5:</strong> Archeologia del Sacro.
               <br />
               <strong>Linea tematica 3:</strong> Panorami di diversità. Ebrei,
-              Cristiani e spazio sacro tra Sabina e Valle dell'Aniene, dall'età
+              Cristiani e spazio Sacro tra Sabina e Valle dell'Aniene, dall'età
               tardoantica a quella contemporanea.
               <br />
               <strong>Co-PI per il Dip. SARAS:</strong> Paola Buzi.
@@ -43,7 +43,7 @@ const FooterSection = () => {
               <strong>PI per Sapienza:</strong> Orazio Carpenzano.
             </p>
           </Col>
-
+          
           {/* Right Column - Developers */}
           <Col md={3} className="text-center fs-6">
             <p>
