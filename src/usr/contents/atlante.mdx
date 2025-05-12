@@ -22,88 +22,126 @@ import { Row, Col, Accordion } from "react-bootstrap";
 </div>
 
 
-<div className="text-end text-secondary">Clicca sul selettore layer<br />per filtrare i monumenti in base<br />ai criteri stabiliti 👇</div>
-  <div className="position-relative" >
-    <MapLibre
-      height="800px"
-      baseLayers={["EsriStreets"]}
-      sprite="https://openmaptiles.github.io/osm-bright-gl-style/sprite">
-      <VectorLayerLibre
-        name="Monumenti"
-        source={{
-          directus: {
-            table: "luogo_di_interesse",
-            geoField: "coordinate",
-            queryString: "filter[tipologia][_eq]=monumento&fields=id,tipo_monumento,nome_luogo,coordinate&limit=-1",
-            transType: "geojson",
-          }
-        }}
-        checked={true}
-        fitToContent={true}
-        type="geojson"
-        searchInFields={{
-          "nome_luogo": "Toponimo",
-          "tipo_monumento": {
-            "label": "Tipo di monumento",
-            "values": ["area a destinazione funeraria", "luogo dedicato alla memoria", "edificio di culto"],
-          },
-        }}
-        style={{
-          id: "luogo_di_interesse",
-          type: "symbol",
-          layout: {
-            "icon-image": [
-              "match",
-              ["get", "tipo_monumento"],
-              "area a destinazione funeraria", "cemetery_11",
-              "luogo dedicato alla memoria", "monument_11",
-              "edificio di culto", "town_hall_11",
-              "marker_11" // Default (Altro)
-            ],
-            "icon-size": 2,
-          },
-        }}
-        popupTemplate="<strong>${nome_luogo}</strong><p>${tipo_monumento}</p><a href='/monumento/?tb=luogo_di_interesse&id=${id}'>Dettagli</a>"
-      />
-    </MapLibre>
+<div className="text-end text-secondary">
+  Clicca sul selettore layer<br />per filtrare i monumenti in base<br />ai criteri stabiliti 👇
+</div>
+<div className="position-relative">
+  <MapLibre
+    height="800px"
+    baseLayers={["CartoDb"]}
+    sprite="https://openmaptiles.github.io/osm-bright-gl-style/sprite">
 
-  
-    <div className="position-absolute bottom-0 start-0 m-3" style={{ zIndex: 1000, minWidth: "220px", maxWidth: "280px" }}>
-      <button
-        className="btn w-100 text-white py-1"
-        style={{ backgroundColor: "#990033" }} 
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#legendCollapse"
-        aria-expanded="false"
-        aria-controls="legendCollapse"
-      >
-        Legenda ▼
-      </button>
+    {/* Layer MONUMENTI con icone differenziate */}
+    <VectorLayerLibre
+      name="Monumenti"
+      source={{
+        directus: {
+          table: "luogo_di_interesse",
+          geoField: "coordinate",
+          queryString: "filter[tipologia][_eq]=monumento&fields=id,tipo_monumento,nome_luogo,coordinate&limit=-1",
+          transType: "geojson",
+        }
+      }}
+      checked={true}
+      fitToContent={true}
+      type="geojson"
+      searchInFields={{
+        "nome_luogo": "Toponimo",
+        "tipo_monumento": {
+          "label": "Tipo di monumento",
+          "values": ["area a destinazione funeraria", "luogo dedicato alla memoria", "edificio di culto"],
+        },
+      }}
+      style={{
+        id: "luogo_di_interesse",
+        type: "symbol",
+        layout: {
+          "icon-image": [
+            "match",
+            ["get", "tipo_monumento"],
+            "area a destinazione funeraria", "cemetery_11",
+            "luogo dedicato alla memoria", "monument_11",
+            "edificio di culto", "town_hall_11",
+            "triangle_11" // Default
+          ],
+          "icon-size": 2,
+        },
+      }}
+      popupTemplate="<strong>${nome_luogo}</strong><p>${tipo_monumento}</p><a href='/monumento/?tb=luogo_di_interesse&id=${id}'>Dettagli</a>"
+    />
 
-      <div className="collapse show bg-white bg-opacity-75 rounded shadow-sm p-2" id="legendCollapse">
-        <div className="d-flex flex-wrap gap-2">
-          <div className="d-flex align-items-center w-100">
-            <img src="/images/marker_11.svg" width="30" height="30" className="me-2"/>
-            <span className="text-wrap">Altro</span>
-          </div>
-          <div className="d-flex align-items-center w-100">
-            <img src="/images/monument_11.svg" width="30" height="30" className="me-2"/>
-            <span className="text-wrap">Luogo dedicato alla memoria</span>
-          </div>
-          <div className="d-flex align-items-center w-100">
-            <img src="/images/town_hall_11.svg" width="30" height="30" className="me-2"/>
-            <span className="text-wrap">Edificio di culto</span>
-          </div>
-          <div className="d-flex align-items-center w-100">
-            <img src="/images/cemetery_11.svg" width="30" height="30" className="me-2"/>
-            <span className="text-wrap">Area a destinazione funeraria</span>
-          </div>
+    {/* Layer LUOGHI con icona esistente (es. embassy_11) */}
+    <VectorLayerLibre
+      name="Luoghi"
+      source={{
+        directus: {
+          table: "luogo_di_interesse",
+          geoField: "coordinate",
+          queryString: "filter[tipologia][_eq]=luogo&fields=id,nome_luogo,coordinate&limit=-1",
+          transType: "geojson",
+        }
+      }}
+      checked={true}
+      type="geojson"
+      style={{
+        id: "luoghi_layer",
+        type: "symbol",
+        layout: {
+          "icon-image": "marker_11", // Icona esistente e visibile
+          "icon-size": 2.5,
+        },
+        metadata: {
+          label: "Luoghi"
+        }
+      }}
+      popupTemplate="<strong>${nome_luogo}</strong><p>Luogo</p><a href='/luogo/?tb=luogo_di_interesse&id=${id}'>Dettagli</a>"
+    />
+  </MapLibre>
+
+  {/* Legenda aggiornata */}
+  <div className="position-absolute bottom-0 start-0 m-3" style={{ zIndex: 1000, minWidth: "220px", maxWidth: "280px" }}>
+    <button
+      className="btn w-100 text-white py-1"
+      style={{ backgroundColor: "#990033" }} 
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#legendCollapse"
+      aria-expanded="false"
+      aria-controls="legendCollapse"
+    >
+      Legenda ▼
+    </button>
+
+    <div className="collapse show bg-white bg-opacity-75 rounded shadow-sm p-2" id="legendCollapse">
+      <div className="d-flex flex-wrap gap-2">
+
+        {/* Luogo (icona diversa) */}
+        <div className="d-flex align-items-center w-100">
+          <img src="/images/marker_11.svg" width="30" height="30" className="me-2"/>
+          <span className="text-wrap">Comune</span>
+        </div>
+
+        {/* Monumenti */}
+        <div className="d-flex align-items-center w-100">
+          <img src="/images/triangle_11.svg" width="30" height="30" className="me-2"/>
+          <span className="text-wrap">Altra tipologia di attestazione</span>
+        </div>
+        <div className="d-flex align-items-center w-100">
+          <img src="/images/monument_11.svg" width="30" height="30" className="me-2"/>
+          <span className="text-wrap">Luogo dedicato alla memoria</span>
+        </div>
+        <div className="d-flex align-items-center w-100">
+          <img src="/images/town_hall_11.svg" width="30" height="30" className="me-2"/>
+          <span className="text-wrap">Edificio di culto</span>
+        </div>
+        <div className="d-flex align-items-center w-100">
+          <img src="/images/cemetery_11.svg" width="30" height="30" className="me-2"/>
+          <span className="text-wrap">Area a destinazione funeraria</span>
         </div>
       </div>
     </div>
   </div>
-  
+</div>
 
 <Row className="my-4" id="dettagli">
   <Col md={12}>
@@ -142,7 +180,7 @@ import { Row, Col, Accordion } from "react-bootstrap";
 
         <Accordion.Item eventKey="1">
           <Accordion.Header>
-            🏛️ **Informazioni Locus** (per schede luogo)
+            🏛️ **dati relativi ai _loci_** (per schede luogo)
           </Accordion.Header>
           <Accordion.Body>
             - **Toponimo**
@@ -153,7 +191,7 @@ import { Row, Col, Accordion } from "react-bootstrap";
 
         <Accordion.Item eventKey="2">
           <Accordion.Header>
-            🏗️ **Dettagli del Monumento** (per schede monumento)
+            🏗️ **Dati relativi ai monumenti** (per schede monumento)
           </Accordion.Header>
           <Accordion.Body>
             - **Tipo di monumento** (es. area di culto, edificio religioso, ecc.)
