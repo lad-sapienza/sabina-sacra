@@ -9,6 +9,7 @@ menu_position: 3
 import { DataTb } from "../../modules/scms";
 import { Link } from "gatsby";
 import { Row, Col, Accordion } from "react-bootstrap";
+import Collabora from "../components/collabora"
 
 # Monumenti sacri della Sabina
 
@@ -29,8 +30,8 @@ import { Row, Col, Accordion } from "react-bootstrap";
           <Accordion.Header>Informazioni sulla ricerca</Accordion.Header>
           <Accordion.Body>
             <p>
-              La tabella è ordinabile per nome, località, tipologia e periodo. Clicca sull'intestazione di colonna 
-              per cambiare l'ordinamento. Per visualizzare i dettagli completi di ciascun monumento, clicca sul suo nome.
+              La tabella è ordinabile per nome, località, tipologia e periodo. Cliccare sull'intestazione di colonna 
+              per cambiare l'ordinamento. Per visualizzare i dettagli completi di ciascun monumento, cliccare sul suo nome.
             </p>
             <p className="mb-0">
               <i className="bi bi-info-circle me-2"></i>
@@ -187,3 +188,5 @@ import { Row, Col, Accordion } from "react-bootstrap";
     />
   </Col>
 </Row>
+
+  <Collabora />

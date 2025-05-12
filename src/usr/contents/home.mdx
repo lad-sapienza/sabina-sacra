@@ -9,6 +9,7 @@ import { Link } from "gatsby";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import { Signpost, GeoAlt, Building, People, PeopleFill, JournalText } from 'react-bootstrap-icons';
 import LogoBar from "../components/LogoBar"
+import Collabora from "../components/collabora"
 
 <LogoBar />
 
@@ -17,20 +18,24 @@ import LogoBar from "../components/LogoBar"
   <div className="text-center mb-4">
     <h1 className="fw-bold text-primary">PANORAMI DI DIVERSITÀ</h1>
     <hr className="mx-auto bg-primary b-0" style={{width: '80px', height: '2px', opacity: 1 }} />
-    <p className="lead mb-4">Ebrei, cristiani e spazio sacro tra Sabina e Valle dell'Aniene</p>
+    <p className="lead mb-4">Ebrei, Cristiani e spazio Sacro tra Sabina e Valle dell'Aniene</p>
   </div>
 
   <Card className="border-0 shadow-sm p-4">
-    <p className="mb-3">Il progetto scaturisce dalla corale esperienza di ricerca di parte del Dipartimento di Storia Antropologia Religioni Arte Spettacolo (SARAS) 
-    della Sapienza Università di Roma, sviluppato nell'ambito delle attività della Fondazione
-    <a href="https://www.fondazionechanges.org" className="text-decoration-none ms-1 text-primary">CHANGES</a>.</p>
+<p className="mb-3">
+    Il progetto nasce dall’attività di ricerca del 
+    <a href="https://saras.web.uniroma1.it/it" className="text-decoration-none ms-1 text-primary">Dipartimento di Storia Antropologia Religioni Arte Spettacolo (SARAS)</a> 
+    della Sapienza Università di Roma, ed è inserito nell’ambito di un intervento finanziato dal 
+    Piano Nazionale di Ripresa e Resilienza (PNRR), promosso e coordinato dalla 
+    <a href="https://www.fondazionechanges.org" className="text-decoration-none ms-1 text-primary">Fondazione CHANGES</a>.
+</p>
 
-    <p className="mb-3">Le azioni del Dipartimento SARAS si inseriscono prevalentemente nello <strong>Spoke 1</strong> - Historical landscapes, traditions and cultural identities, 
-    e in particolare nel <strong>Work Package (WP) 5</strong> ("Archeologia del sacro lungo l'Aniene"), linea tematica 3: "Panorami di diversità: Ebrei, cristiani e 
-    spazio sacro tra Sabina e Valle dell'Aniene dalla Tarda Antichità all'Età Contemporanea".</p>
+    <p className="mb-3">Le azioni del Dipartimento si inseriscono prevalentemente nello <strong>Spoke 1</strong> - Historical landscapes, traditions and cultural identities, 
+    e in particolare nel <strong>Work Package (WP) 5</strong> ("Archeologia del Sacro lungo l'Aniene"), linea tematica 3: "Panorami di diversità: Ebrei, cristiani e 
+    spazio Sacro tra Sabina e Valle dell'Aniene dalla Tarda Antichità all'Età Contemporanea".</p>
 
-    <p className="mb-3"><em>Il fine primario del progetto è la valorizzazione di questi territori, promuovendone la conoscenza e contribuendo alla mitigazione del fenomeno 
-    dell'<strong>iperturismo</strong>, attraverso un'originale ricerca storica e culturale.</em></p>
+    <p className="mb-3"><em>Il fine primario del progetto è la valorizzazione di questi territori, promuovendone la conoscenza e contribuendo anche alla mitigazione del fenomeno 
+    dell'iperturismo, attraverso un'originale ricerca storica e culturale.</em></p>
 
     <hr className="my-4" />
 
@@ -52,7 +57,7 @@ import LogoBar from "../components/LogoBar"
   
   <Row className="g-4">
     {[
-      { title: "Itinerari", count: 26, icon: <Signpost />, desc: "Percorsi tematici attraverso la storia e il sacro", link: "/itinerari" },
+      { title: "Itinerari", count: 26, icon: <Signpost />, desc: "Percorsi tematici attraverso la storia e il Sacro", link: "/itinerari" },
       { title: "Luoghi", count: 365, icon: <GeoAlt />, desc: "Siti di interesse storico e religioso catalogati", link: "/atlante" },
       { title: "Monumenti", count: 240, icon: <Building />, desc: "Architetture sacre e testimonianze storiche", link: "/monumenti" },
       { title: "Personaggi", count: 177, icon: <People />, desc: "Figure storiche che hanno plasmato il territorio", link: "/personaggi" }
@@ -79,7 +84,7 @@ import LogoBar from "../components/LogoBar"
   <Row className="g-4">
     {[
       {
-        title: "Team Scientifico",
+        title: "Quadro istituzionale e team scientifico",
         desc: "Scopri i membri del personale scientifico e accademico che hanno contribuito alla realizzazione e alla cura del progetto.",
         icon: <PeopleFill />,
         link: "/crediti",
@@ -107,4 +112,5 @@ import LogoBar from "../components/LogoBar"
       </Col>
     ))}
   </Row>
+  <Collabora />
 </Container>
