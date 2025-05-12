@@ -43,7 +43,7 @@ const FooterSection = () => {
               <strong>PI per Sapienza:</strong> Orazio Carpenzano.
             </p>
           </Col>
-          
+
           {/* Right Column - Developers */}
           <Col md={3} className="text-center fs-6">
             <p>

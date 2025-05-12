@@ -9,7 +9,7 @@ const HeaderSection = () => (
       <div className="d-sm-flex align-items-center text-center">
         <Link to={"/"}>
         <StaticImage
-          src="../images/logo-Sabina-sacra.png"
+          src="../images/logo-sabina-sacra.png"
           alt="Sabina Sacra"
           width={150}
           quality={80}
@@ -19,7 +19,7 @@ const HeaderSection = () => (
         </Link>
         <div className="text-start ms-3">
           <h1>Sabina Sacra</h1>
-          <p className="lead">Panorami di diversità: ebrei, cristiani e spazio sacro in Sabina e nella Valle dell’Aniene, tra Tarda Antichità ed Età Contemporanea </p>
+          <p className="lead">Panorami di diversità: Ebrei, Cristiani e spazio sacro in Sabina e nella Valle dell’Aniene, tra Tarda Antichità ed Età Contemporanea </p>
         </div>
       </div>
     </Container>
