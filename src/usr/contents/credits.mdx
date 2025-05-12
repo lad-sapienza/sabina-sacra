@@ -32,9 +32,14 @@ Cultural Heritage Active Innovation for Sustainable Society
 - Alberto Camplani 
 - Umberto Gentiloni
 
-
-Il progetto è stato sviluppato nell'ambito delle attività della Fondazione [CHANGES](https://www.fondazionechanges.org/en/), e rientra nel Piano Nazionale di Ripresa e Resilienza (PNRR), **ITALIA DOMANI**.
-
+---
+<p className="mb-3">
+    Il progetto nasce dall’attività di ricerca del 
+    <a href="https://saras.web.uniroma1.it/it" className="text-decoration-none ms-1 text-primary">Dipartimento di Storia Antropologia Religioni Arte Spettacolo (SARAS)</a> 
+    della Sapienza Università di Roma, ed è inserito nell’ambito di un intervento finanziato dal 
+    Piano Nazionale di Ripresa e Resilienza (PNRR), promosso e coordinato dalla 
+    <a href="https://www.fondazionechanges.org" className="text-decoration-none ms-1 text-primary">Fondazione CHANGES</a>.
+</p>
 
 <div className="my-5 border-top"></div>
 
@@ -47,7 +52,7 @@ Il progetto è stato sviluppato nell'ambito delle attività della Fondazione [CH
   <Button 
     variant="outline-secondary" 
     className="me-3 rounded-pill px-4 py-2" 
-    onClick={() => document.getElementById("massa-critica").scrollIntoView({ behavior: "smooth" })}>Massa Critica</Button>
+    onClick={() => document.getElementById("collaboratori").scrollIntoView({ behavior: "smooth" })}>Collaboratori Scientifici</Button>
   <Button 
     variant="outline-dark" 
     className="rounded-pill px-4 py-2" 
@@ -82,22 +87,22 @@ Il progetto è stato sviluppato nell'ambito delle attività della Fondazione [CH
 
 <div className="my-5 border-top"></div>
 
-{/* Sezione Massa Critica */}
-<div id="massa-critica" className="text-center my-5">
-  <Badge bg="secondary" className="fs-5 px-3 py-2 rounded-pill">Massa Critica</Badge>
+{/* Sezione Collaboratori */}
+<div id="collaboratori" className="text-center my-5">
+  <Badge bg="secondary" className="fs-5 px-3 py-2 rounded-pill">Collaborati Scientifici</Badge>
 </div>
 
 <Row className="g-4 mb-5 justify-content-center">
   {[
     { name: "Marta Addessi", subtitle: "Assegnista di ricerca presso il dipartimento di Storia Antropologia Religioni Arte Spettacolo (SARAS) della Sapienza Università di Roma", link: "https://research.uniroma1.it/researcher/58e3177ba196c1515b00821b8ffa7a27de2d5a6fc9aac89ea00f4f4f", img: "/images/marta_addessi.PNG" },
     { name: "Alexa Bianchini", subtitle: "Assegnista di ricerca in storia medievale", link: "https://orcid.org/0000-0001-7487-6505", img: "/images/alexa_bianchini.jpg" },
-    { name: "Valentina Emiliani", subtitle: "", link: "#", img: "https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg" },
+    { name: "Valentina Emiliani", subtitle: "", link: "#", img: "/images/valentina_emiliani.jpg" },
     { name: "Luca Giangolini", subtitle: "Dottore di ricerca presso Dipartimento di Storia, Antropologia, Religioni, Arte, Spettacolo", link: "https://phd.uniroma1.it/web/LUCA-GIANGOLINI_nT1273362_IT.aspx", img: "/images/luca_giangolini.png" },
-    { name: "Giovanni Hermanin de Reichenfeld", subtitle: "", link: "#", img: "https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg" },
     { name: "Letizia Leo", subtitle: "", link: "https://research.uniroma1.it/researcher/7bc830e421dc902f7d739300758772385585b4487b5b65e5e70885b0", img: "/images/letizia_leo.png" },
     { name: "Antonio Mursia", subtitle: "", link: "#", img: "https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg" },
-    { name: "Luciano Villani", subtitle: "", link: "#", img: "https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg" },
-    { name: "Francesco D'Angelo", subtitle: "Assegnista di ricerca in storia medievale", link: "#", img: "https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg"}
+    { name: "Luciano Villani", subtitle: "", link: "#", img: "/images/luciano_villani.jpeg" },
+    { name: "Francesco D'Angelo", subtitle: "Assegnista di ricerca in storia medievale", link: "#", img: "/images/francesco_d_angelo.jpg"},
+    { name: "Giovanni Hermanin de Reichenfeld", subtitle: "", link: "#", img: "/images/giovanni_Hermanin.png" },
   ].map(person => (
     <Col xs={6} md={3} key={person.name}>
       <OverlayTrigger
@@ -131,9 +136,9 @@ Il progetto è stato sviluppato nell'ambito delle attività della Fondazione [CH
   {[
     { name: "Julian Bogdani", subtitle: "Professore Associato di Metodologie della Ricerca Archeologica presso il dipartimento di Storia Antropologia Religioni Arte Spettacolo (SARAS) della Sapienza Università di Roma", link: "https://corsidilaurea.uniroma1.it/it/users/julianbogdaniuniroma1it", img: "/images/julian_bogdani.jpg" },
     { name: "Bruno Bonomo", subtitle: "Professore associato di Storia contemporanea presso il dipartimento di Storia Antropologia Religioni Arte Spettacolo (SARAS) della Sapienza Università di Roma", link: "https://corsidilaurea.uniroma1.it/user/29953", img: "/images/bruno_buonuomo.png" },
-    { name: "Tessa Canella", subtitle: "", link: "https://corsidilaurea.uniroma1.it/it/users/tessacanellauniroma1it", img: "https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg" },
-    { name: "Serena Di Nepi", subtitle: "Professore associato in storia moderna nel Dipartimento di Storia, Culture, Religioni dell'Università di Roma La Sapienza", link: "https://corsidilaurea.uniroma1.it/user/26455", img: "https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg" },
-    { name: "Umberto Longo", subtitle: "Professore ordinario di storia medievale presso il dipartimento di Storia Antropologia Religioni Arte Spettacolo (SARAS) della Sapienza Università di Roma", link: "https://corsidilaurea.uniroma1.it/it/users/umbertolongouniroma1it", img: "https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg" },
+    { name: "Tessa Canella", subtitle: "", link: "https://corsidilaurea.uniroma1.it/it/users/tessacanellauniroma1it", img: "/images/tessa_canella.jpg" },
+    { name: "Serena Di Nepi", subtitle: "Professore associato in storia moderna nel Dipartimento di Storia, Culture, Religioni dell'Università di Roma La Sapienza", link: "https://corsidilaurea.uniroma1.it/user/26455", img: "/images/serena_di_nepi.jpg" },
+    { name: "Umberto Longo", subtitle: "Professore ordinario di storia medievale presso il dipartimento di Storia Antropologia Religioni Arte Spettacolo (SARAS) della Sapienza Università di Roma", link: "https://corsidilaurea.uniroma1.it/it/users/umbertolongouniroma1it", img: "/images/umberto_longo.png" },
     { name: "Andrea Zappia", subtitle: "RtdA, Università la sapienza di Roma", link: "https://corsidilaurea.uniroma1.it/user/44833", img: "/images/andrea_zappia.png" }
   ].map(person => (
     <Col xs={6} md={4} lg={3} key={person.name}>
