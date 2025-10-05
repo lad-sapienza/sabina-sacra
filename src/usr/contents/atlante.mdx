@@ -26,77 +26,79 @@ import { Row, Col, Accordion } from "react-bootstrap";
   Clicca sul selettore layer<br />per filtrare i monumenti in base<br />ai criteri stabiliti 👇
 </div>
 <div className="position-relative">
-  <MapLibre
-    height="800px"
-    baseLayers={["CartoDb"]}
-    sprite="https://openmaptiles.github.io/osm-bright-gl-style/sprite">
+<MapLibre
+  height="800px"
+  baseLayers={["CartoDb"]}
+  sprite="https://openmaptiles.github.io/osm-bright-gl-style/sprite">
 
-    {/* Layer MONUMENTI con icone differenziate */}
-    <VectorLayerLibre
-      name="Monumenti"
-      source={{
-        directus: {
-          table: "luogo_di_interesse",
-          geoField: "coordinate",
-          queryString: "filter[tipologia][_eq]=monumento&fields=id,tipo_monumento,nome_luogo,coordinate&limit=-1",
-          transType: "geojson",
-        }
-      }}
-      checked={true}
-      fitToContent={true}
-      type="geojson"
-      searchInFields={{
-        "nome_luogo": "Toponimo",
-        "tipo_monumento": {
-          "label": "Tipo di monumento",
-          "values": ["area a destinazione funeraria", "luogo dedicato alla memoria", "edificio di culto"],
-        },
-      }}
-      style={{
-        id: "luogo_di_interesse",
-        type: "symbol",
-        layout: {
-          "icon-image": [
-            "match",
-            ["get", "tipo_monumento"],
-            "area a destinazione funeraria", "cemetery_11",
-            "luogo dedicato alla memoria", "monument_11",
-            "edificio di culto", "town_hall_11",
-            "triangle_11" // Default
-          ],
-          "icon-size": 2,
-        },
-      }}
-      popupTemplate="<strong>${nome_luogo}</strong><p>${tipo_monumento}</p><a href='/monumento/?tb=luogo_di_interesse&id=${id}'>Dettagli</a>"
-    />
+  {/* Layer MONUMENTI con icone differenziate */}
+  <VectorLayerLibre
+    name="Monumenti"
+    source={{
+      directus: {
+        table: "luogo_di_interesse",
+        geoField: "coordinate",
+        queryString:
+          "filter[tipologia][_eq]=monumento&filter[project_group][_eq]=SARAS&fields=id,tipo_monumento,nome_luogo,coordinate&limit=-1",
+        transType: "geojson",
+      }
+    }}
+    checked={true}
+    fitToContent={true}
+    type="geojson"
+    searchInFields={{
+      "nome_luogo": "Toponimo",
+      "tipo_monumento": {
+        "label": "Tipo di monumento",
+        "values": ["area a destinazione funeraria", "luogo dedicato alla memoria", "edificio di culto"],
+      },
+    }}
+    style={{
+      id: "luogo_di_interesse",
+      type: "symbol",
+      layout: {
+        "icon-image": [
+          "match",
+          ["get", "tipo_monumento"],
+          "area a destinazione funeraria", "cemetery_11",
+          "luogo dedicato alla memoria", "monument_11",
+          "edificio di culto", "town_hall_11",
+          "triangle_11" // Default
+        ],
+        "icon-size": 2,
+      },
+    }}
+    popupTemplate="<strong>${nome_luogo}</strong><p>${tipo_monumento}</p><a href='/monumento/?tb=luogo_di_interesse&id=${id}'>Dettagli</a>"
+  />
 
-    {/* Layer LUOGHI con icona esistente (es. embassy_11) */}
-    <VectorLayerLibre
-      name="Luoghi"
-      source={{
-        directus: {
-          table: "luogo_di_interesse",
-          geoField: "coordinate",
-          queryString: "filter[tipologia][_eq]=luogo&fields=id,nome_luogo,coordinate&limit=-1",
-          transType: "geojson",
-        }
-      }}
-      checked={true}
-      type="geojson"
-      style={{
-        id: "luoghi_layer",
-        type: "symbol",
-        layout: {
-          "icon-image": "marker_11", // Icona esistente e visibile
-          "icon-size": 2.5,
-        },
-        metadata: {
-          label: "Luoghi"
-        }
-      }}
-      popupTemplate="<strong>${nome_luogo}</strong><p>Luogo</p><a href='/luogo/?tb=luogo_di_interesse&id=${id}'>Dettagli</a>"
-    />
-  </MapLibre>
+  {/* Layer LUOGHI con icona esistente (es. embassy_11) */}
+  <VectorLayerLibre
+    name="Luoghi"
+    source={{
+      directus: {
+        table: "luogo_di_interesse",
+        geoField: "coordinate",
+        queryString:
+          "filter[tipologia][_eq]=luogo&filter[project_group][_eq]=SARAS&fields=id,nome_luogo,coordinate&limit=-1",
+        transType: "geojson",
+      }
+    }}
+    checked={true}
+    type="geojson"
+    style={{
+      id: "luoghi_layer",
+      type: "symbol",
+      layout: {
+        "icon-image": "marker_11",
+        "icon-size": 2.5,
+      },
+      metadata: {
+        label: "Luoghi"
+      }
+    }}
+    popupTemplate="<strong>${nome_luogo}</strong><p>Luogo</p><a href='/luogo/?tb=luogo_di_interesse&id=${id}'>Dettagli</a>"
+  />
+</MapLibre>
 
   {/* Legenda aggiornata */}
   <div className="position-absolute bottom-0 start-0 m-3" style={{ zIndex: 1000, minWidth: "220px", maxWidth: "280px" }}>
