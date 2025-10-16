@@ -47,7 +47,8 @@ import Collabora from "../components/collabora"
       source={{
         directus: {
           table: "luogo_di_interesse",
-          queryString: "filter[tipologia][_eq]=monumento&fields=id,nome_luogo,tipo_monumento,anno_inizio,periodo_fine,caratteristica_di_dettaglio,link_immagine,fa_parte_di.nome_luogo,fa_parte_di.toponimo,fa_parte_di.localita&limit=-1"
+          queryString:
+            "filter[tipologia][_eq]=monumento&filter[project_group][_eq]=SARAS&fields=id,nome_luogo,tipo_monumento,anno_inizio,periodo_fine,caratteristica_di_dettaglio,link_immagine,fa_parte_di.nome_luogo,fa_parte_di.toponimo,fa_parte_di.localita&limit=-1"
         }
       }}
       striped
@@ -56,7 +57,7 @@ import Collabora from "../components/collabora"
       customStyles={{
         headCells: {
           style: {
-            backgroundColor: '#a81c1c', // Rosso tenue
+            backgroundColor: '#a81c1c',
             color: 'white',
             fontWeight: 'bold',
             fontSize: '1rem',
@@ -69,16 +70,8 @@ import Collabora from "../components/collabora"
           },
         },
         striped: {
-          default: {
-            style: {
-              backgroundColor: '#f8f9fa', // Grigio chiaro per le righe pari
-            }
-          },
-          striped: {
-            style: {
-              backgroundColor: '#ffffff', // Bianco per le righe dispari
-            }
-          }
+          default: { style: { backgroundColor: '#f8f9fa' } },
+          striped:  { style: { backgroundColor: '#ffffff' } }
         }
       }}
       defaultSortField="nome_luogo"
